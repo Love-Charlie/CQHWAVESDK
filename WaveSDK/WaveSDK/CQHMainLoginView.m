@@ -362,7 +362,7 @@ static dispatch_once_t onceToken;
     _kuaisuBtn.frame = CGRectMake(20, CGRectGetMaxY(_phontBtn.frame)+20*H_Adapter, self.width - 40, 40);
     _xieyiBtn.frame = CGRectMake(20, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, 65, 20);
     _tongyiBtn.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, _tongyiBtn.width, 20);
-    _redLine.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_tongyiBtn.frame)-5*H_Adapter, _tongyiBtn.width, 1);
+    _redLine.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_tongyiBtn.frame), _tongyiBtn.width, 1);
     _youkeBtn.frame = CGRectMake(self.width -_youkeBtn.width - 20  , CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, _youkeBtn.width, 20);
 }
 

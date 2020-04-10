@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "CQHKeyboardProcess.h"
 #import "CQHHUDView.h"
+#import <objc/runtime.h>
 
 @interface CQHRealNameVerificationView()
 
@@ -82,7 +83,7 @@ static dispatch_once_t onceToken;
         UILabel *label1 = [[UILabel alloc] init];
         _label1 = label1;
         label1.text = @"为了使大家更好的平衡游戏与生活，激浪游戏【健康系统】全面升级。";
-//        [label1 setTextColor:[UIColor darkGrayColor]];
+        [label1 setTextColor:[UIColor darkGrayColor]];
         [label1 setFont:[UIFont systemFontOfSize:12.0]];
         label1.numberOfLines = 0;
         [label1 sizeToFit];
@@ -91,6 +92,7 @@ static dispatch_once_t onceToken;
         UILabel *label2 = [[UILabel alloc] init];
         _label2 = label2;
         label2.text = @"检查到您的认证信息不全，在您认证通过前，您将无法登录游戏，请尽快完善信息哦。";
+        [label2 setTextColor:[UIColor darkGrayColor]];
         [label2 setFont:[UIFont systemFontOfSize:12.0]];
         label2.numberOfLines = 0;
         [label2 sizeToFit];
@@ -103,7 +105,14 @@ static dispatch_once_t onceToken;
         usernameTF.leftViewMode = UITextFieldViewModeAlways;
         _usernameTF = usernameTF;
         usernameTF.placeholder = @"  请输入姓名";
-        [usernameTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+//        [usernameTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+        
+        Ivar ivar2 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
+        UILabel *placeholderLabel2 = object_getIvar(usernameTF, ivar2);
+        placeholderLabel2.textColor = [UIColor lightGrayColor];
+        placeholderLabel2.text = @"  请输入姓名";
+        [placeholderLabel2 setFont:[UIFont systemFontOfSize:12.0]];
+        
         usernameTF.layer.cornerRadius = 6.0;
         usernameTF.layer.borderColor= [UIColor lightGrayColor].CGColor;
         usernameTF.layer.borderWidth= 1.0f;
@@ -114,12 +123,20 @@ static dispatch_once_t onceToken;
         
         UITextField *identityTF = [[UITextField alloc] init];
         UIView *tempView1 = [[UIView alloc] init];
-        identityTF.frame = CGRectMake(0, 0, 10*W_Adapter, 2);
+        tempView1.frame = CGRectMake(0, 0, 10*W_Adapter, 2);
+//        identityTF.frame = CGRectMake(0, 0, 10*W_Adapter, 2);
         identityTF.leftView = tempView1;
         identityTF.leftViewMode = UITextFieldViewModeAlways;
         _identityTF = identityTF;
         identityTF.placeholder = @"  请输入有效身份证号码";
-        [identityTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+//        [identityTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+        
+        Ivar ivar =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
+        UILabel *placeholderLabel = object_getIvar(identityTF, ivar);
+        placeholderLabel.textColor = [UIColor lightGrayColor];
+        placeholderLabel.text = @"  请输入有效身份证号码";
+        [placeholderLabel setFont:[UIFont systemFontOfSize:12.0]];
+        
         identityTF.layer.cornerRadius = 6.0;
         identityTF.layer.borderColor= [UIColor lightGrayColor].CGColor;
         identityTF.layer.borderWidth= 1.0f;

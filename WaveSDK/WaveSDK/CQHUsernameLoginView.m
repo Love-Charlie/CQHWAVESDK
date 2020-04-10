@@ -77,7 +77,8 @@
         
         Ivar ivar =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
         UILabel *placeholderLabel = object_getIvar(usernameTF, ivar);
-//        placeholderLabel.textColor = [UIColor whiteColor];
+        placeholderLabel.textColor = [UIColor lightGrayColor];
+        placeholderLabel.text = @" 请输入账号";
         [placeholderLabel setFont:[UIFont systemFontOfSize:12.0]];
         
         UIView *contentLeftView = [[UIView alloc] init];
@@ -127,7 +128,7 @@
         Ivar ivar1 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
         UILabel *placeholderLabel1 = object_getIvar(passwordTF, ivar1);
         placeholderLabel1.text = @" 请输入密码";
-//        placeholderLabel1.textColor = [UIColor whiteColor];
+        placeholderLabel1.textColor = [UIColor lightGrayColor];
         [placeholderLabel1 setFont:[UIFont systemFontOfSize:12.0]];
         
         UIView *contentLeftView1 = [[UIView alloc] init];

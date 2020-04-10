@@ -9,6 +9,7 @@
 #import "CQHRegisterView.h"
 #import "CQHTools.h"
 #import "UIView+Frame.h"
+#import <objc/runtime.h>
 
 @interface CQHRegisterView()
 @property (nonatomic , weak)  UIImageView *imageView;
@@ -69,7 +70,13 @@
         usernameTF.tintColor = [UIColor colorWithRed:214/255.0 green:6/255.0 blue:0/255.0 alpha:1];
         _usernameTF = usernameTF;
         usernameTF.placeholder=@" 请输入账号";
-        [usernameTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+//        [usernameTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+        
+        Ivar ivar =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
+        UILabel *placeholderLabel = object_getIvar(usernameTF, ivar);
+        placeholderLabel.text = @" 请输入账号";
+        [placeholderLabel setFont:[UIFont systemFontOfSize:12.0]];
+        placeholderLabel.textColor = [UIColor lightGrayColor];
         
         UIView *contentLeftView = [[UIView alloc] init];
         [contentLeftView setBackgroundColor:[UIColor whiteColor]];
@@ -114,7 +121,14 @@
         passwordTF.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         _passwordTF = passwordTF;
         passwordTF.placeholder=@" 请输入密码";
-        [passwordTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+//        [passwordTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+        
+        Ivar ivar1 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
+        UILabel *placeholderLabel1 = object_getIvar(passwordTF, ivar1);
+        placeholderLabel1.text = @" 请输入密码";
+        [placeholderLabel1 setFont:[UIFont systemFontOfSize:12.0]];
+        placeholderLabel1.textColor = [UIColor lightGrayColor];
+        
         
         UIView *contentLeftView1 = [[UIView alloc] init];
         [contentLeftView1 setBackgroundColor:[UIColor whiteColor]];

@@ -11,6 +11,7 @@
 #import "CQHTools.h"
 #import "CQHKeyboardProcess.h"
 #import "CQHMainLoginView.h"
+#import <objc/runtime.h>
 
 @interface CQHPhontLoginView()
 @property (nonatomic , weak) UILabel *registerLabel ;
@@ -80,7 +81,13 @@
         phoneTF.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         _phoneTF = phoneTF;
         phoneTF.placeholder=@" 请输入手机号";
-        [phoneTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+//        [phoneTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+        
+        Ivar ivar =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
+        UILabel *placeholderLabel = object_getIvar(phoneTF, ivar);
+        placeholderLabel.textColor = [UIColor lightGrayColor];
+        placeholderLabel.text = @" 请输入手机号";
+        [placeholderLabel setFont:[UIFont systemFontOfSize:12.0]];
         
         UIView *contentLeftView1 = [[UIView alloc] init];
         [contentLeftView1 setBackgroundColor:[UIColor whiteColor]];
@@ -130,7 +137,13 @@
         verificationCodeTF.layer.masksToBounds = YES;
         verificationCodeTF.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         verificationCodeTF.placeholder=@" 请输入验证码";
-        [verificationCodeTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+//        [verificationCodeTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+        
+        Ivar ivar1 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
+        UILabel *placeholderLabel1 = object_getIvar(verificationCodeTF, ivar1);
+        placeholderLabel1.textColor = [UIColor lightGrayColor];
+        placeholderLabel1.text = @" 请输入验证码";
+        [placeholderLabel1 setFont:[UIFont systemFontOfSize:12.0]];
         
         UIView *contentLeftView2 = [[UIView alloc] init];
         [contentLeftView2 setBackgroundColor:[UIColor whiteColor]];
@@ -164,7 +177,13 @@
         passwordTF.layer.masksToBounds = YES;
         passwordTF.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         passwordTF.placeholder=@" 请输入密码";
-        [passwordTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+//        [passwordTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
+        
+        Ivar ivar2 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
+        UILabel *placeholderLabel2 = object_getIvar(passwordTF, ivar2);
+        placeholderLabel2.textColor = [UIColor lightGrayColor];
+        placeholderLabel2.text = @" 请输入验证码";
+        [placeholderLabel2 setFont:[UIFont systemFontOfSize:12.0]];
         
         UIView *contentLeftView3 = [[UIView alloc] init];
         [contentLeftView3 setBackgroundColor:[UIColor whiteColor]];
