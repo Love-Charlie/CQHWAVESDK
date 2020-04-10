@@ -1,0 +1,81 @@
+//
+//  CQHWAVESDK.pch
+//  WaveSDK
+//
+//  Created by Love Charlie on 2020/3/18.
+//  Copyright © 2020年 Love Charlie. All rights reserved.
+//
+
+#ifndef CQHWAVESDK_pch
+#define CQHWAVESDK_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* CQHWAVESDK_pch */
+
+//微信的accessToken
+#define WX_ACCESS_TOKEN @"WX_ACCESS_TOKEN"
+//微信的openID
+#define WX_OPEN_ID @"WX_OPEN_ID"
+
+//微信的刷新token
+#define WX_REFRESH_TOKEN @"WX_REFRESH_TOKEN"
+
+//环境地址
+//#define BASE_URL @"http://sdk.wavesdk.com"
+#define BASE_URL @"http://test.sdk.wavesdk.com/"
+
+//注册密码的key
+#define PhoneKey @"EuT2GB0C9ZeLKYALFbPbYXSwFS%osrAxfTSlUjnu"
+
+#define SCREENW   [UIScreen mainScreen].bounds.size.width
+#define SCREENH   [UIScreen mainScreen].bounds.size.height
+
+#define MINW SCREENH>SCREENW?SCREENW:SCREENH
+
+#define isPortrait UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)
+#define iphone6_W ((isPortrait)?(375.0):(667.0))
+
+#define W_Adapter SCREENW/((isPortrait)?(375.0):(667.0))  //375.0
+#define H_Adapter SCREENH/((isPortrait)?(667.0):(375.0))//667.0
+
+#define KEYWINDOW [[[UIApplication sharedApplication] delegate] window]
+
+//签名key
+#define SIGNKEY @"signKey"
+//设备id
+#define DEVICEId @"deviceId"
+//游戏id
+#define GAMEID @"gameId"
+
+//configId
+#define CONFIGID @"configId"
+//包id
+#define PACKAGEID @"packageId"
+#define CHANNELID @"channelId"
+
+#define ACTIVECODE @"tcyouwan"
+
+#define REGISTERTOKEN @"registerToken"
+
+#define  USERID @"userId"
+
+#define LOGINTOKEN @"loginToken"
+
+#define OUTTradeNo @"outTradeNo"
+
+#define SUSPEND @"suspend"//是否显示悬浮窗
+
+#define PLIST @"plist"
+
+//平台code
+#define PLATFORMCODE @"wavesdk"
+
+#define appleid @"appleid"
+
+#define sdkVersion @"1";
+
+//数据库相关
+#define VERTIFYORDERDB @"vertifyOrderDB.sqlite"
+#define VERTIfyORDERTABLE @"VertifyOrderTable"

@@ -14,11 +14,10 @@
 
 # Precompiled Headers
 *.gch
-*.pch
+
 
 # Libraries
 *.lib
-*.a
 *.la
 *.lo
 
