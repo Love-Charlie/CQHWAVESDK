@@ -76,6 +76,7 @@ static AFHTTPSessionManager *manager ;
         [self addSubview:backBtn];
         
         UITextField *usernameTF = [[UITextField alloc] init];
+        usernameTF.textColor = [UIColor blackColor];
         usernameTF.clearButtonMode=UITextFieldViewModeWhileEditing;
         _usernameTF = usernameTF;
         UIImageView *leftView = [[UIImageView alloc] init];
@@ -128,6 +129,7 @@ static AFHTTPSessionManager *manager ;
         
         /*******************************************************************************************************/
         UITextField *passwordTF = [[UITextField alloc] init];
+        passwordTF.textColor = [UIColor blackColor];
         passwordTF.clearButtonMode=UITextFieldViewModeWhileEditing;
         UIImageView *leftView1 = [[UIImageView alloc] init];
         [leftView1 setImage:[CQHTools bundleForImage:@"账号icon深色" packageName:@""]];

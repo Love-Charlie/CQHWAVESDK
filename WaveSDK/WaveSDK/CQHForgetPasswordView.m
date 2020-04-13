@@ -342,8 +342,12 @@ static AFHTTPSessionManager *manager ;
     
     NSString *newCodeStr= [self.usernameTF.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (!(newCodeStr.length == 11) ) {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入11位手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请输入11位正确手机号", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
         return;
     }
     __block NSInteger count = VerTime;

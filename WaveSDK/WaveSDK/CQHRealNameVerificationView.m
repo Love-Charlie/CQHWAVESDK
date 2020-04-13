@@ -123,7 +123,7 @@ static dispatch_once_t onceToken;
         [self addSubview:usernameTF];
         
         UITextField *identityTF = [[UITextField alloc] init];
-        _identityTF.textColor = [UIColor blackColor];
+        identityTF.textColor = [UIColor blackColor];
         UIView *tempView1 = [[UIView alloc] init];
         tempView1.frame = CGRectMake(0, 0, 10*W_Adapter, 2);
 //        identityTF.frame = CGRectMake(0, 0, 10*W_Adapter, 2);
