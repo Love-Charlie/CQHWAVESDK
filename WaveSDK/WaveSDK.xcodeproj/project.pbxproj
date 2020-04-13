@@ -67,6 +67,8 @@
 		20A88B7D2431D95C00FD1ABB /* CQHPhontLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A88B7B2431D95C00FD1ABB /* CQHPhontLoginView.m */; };
 		20A88B802431D99C00FD1ABB /* CQHUsernameLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A88B7E2431D99C00FD1ABB /* CQHUsernameLoginView.h */; };
 		20A88B812431D99C00FD1ABB /* CQHUsernameLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A88B7F2431D99C00FD1ABB /* CQHUsernameLoginView.m */; };
+		20B279A5244436C300645AD9 /* CQHUserModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 20B279A3244436C300645AD9 /* CQHUserModel.h */; };
+		20B279A6244436C300645AD9 /* CQHUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B279A4244436C300645AD9 /* CQHUserModel.m */; };
 		20B8DFD6243C6E090032DFDA /* YQInAppPurchaseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 20B8DFD4243C6E080032DFDA /* YQInAppPurchaseTool.h */; };
 		20B8DFD7243C6E090032DFDA /* YQInAppPurchaseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B8DFD5243C6E090032DFDA /* YQInAppPurchaseTool.m */; };
 		20D1FF3A2420AC6100A70374 /* WSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 20D1FF382420AC6100A70374 /* WSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -164,6 +166,8 @@
 		20A88B7B2431D95C00FD1ABB /* CQHPhontLoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHPhontLoginView.m; sourceTree = "<group>"; };
 		20A88B7E2431D99C00FD1ABB /* CQHUsernameLoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHUsernameLoginView.h; sourceTree = "<group>"; };
 		20A88B7F2431D99C00FD1ABB /* CQHUsernameLoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHUsernameLoginView.m; sourceTree = "<group>"; };
+		20B279A3244436C300645AD9 /* CQHUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHUserModel.h; sourceTree = "<group>"; };
+		20B279A4244436C300645AD9 /* CQHUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHUserModel.m; sourceTree = "<group>"; };
 		20B8DFD4243C6E080032DFDA /* YQInAppPurchaseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQInAppPurchaseTool.h; sourceTree = "<group>"; };
 		20B8DFD5243C6E090032DFDA /* YQInAppPurchaseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQInAppPurchaseTool.m; sourceTree = "<group>"; };
 		20D1FF382420AC6100A70374 /* WSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WSDK.h; sourceTree = "<group>"; };
@@ -318,6 +322,8 @@
 				20D1FF392420AC6100A70374 /* WSDK.m */,
 				200C005D243F2221007DB6A5 /* CQHVerfityOrderModel.h */,
 				200C005E243F2221007DB6A5 /* CQHVerfityOrderModel.m */,
+				20B279A3244436C300645AD9 /* CQHUserModel.h */,
+				20B279A4244436C300645AD9 /* CQHUserModel.m */,
 				20B8DFD4243C6E080032DFDA /* YQInAppPurchaseTool.h */,
 				20B8DFD5243C6E090032DFDA /* YQInAppPurchaseTool.m */,
 				20E9520F2429DFAF004ECD73 /* CQHHUDView.h */,
@@ -413,6 +419,7 @@
 				203A152A24220D46000C6247 /* WXApiObject.h in Headers */,
 				200C005F243F2221007DB6A5 /* CQHVerfityOrderModel.h in Headers */,
 				20E952112429DFAF004ECD73 /* CQHHUDView.h in Headers */,
+				20B279A5244436C300645AD9 /* CQHUserModel.h in Headers */,
 				20A88B802431D99C00FD1ABB /* CQHUsernameLoginView.h in Headers */,
 				20D7DFA024236929005579D3 /* UIView+Frame.h in Headers */,
 				202A3933243714F900BD42AC /* CQHRegisterView.h in Headers */,
@@ -600,6 +607,7 @@
 				200C005C243F1659007DB6A5 /* JQFMDB.m in Sources */,
 				20D7DF982423687A005579D3 /* NSString+URL.m in Sources */,
 				20D38F472424BC170079F992 /* MBProgressHUD.m in Sources */,
+				20B279A6244436C300645AD9 /* CQHUserModel.m in Sources */,
 				20D7DF9B242368E7005579D3 /* CQHTools.m in Sources */,
 				20A88B792431D94300FD1ABB /* CQHRegisterAndLoginView.m in Sources */,
 				20A88B752431A6A600FD1ABB /* CQHAgreementView.m in Sources */,

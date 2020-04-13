@@ -26,12 +26,12 @@
 
 - (void)loginSuccessWithResponse:(id)response
 {
-    NSLog(@"%@,登录成功",response);
+    NSLog(@"%s,%@,登录成功",__func__,response);
 }
 
 - (void)loginFailed
 {
-    NSLog(@"登录失败");
+    NSLog(@"%s,登录失败",__func__);
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

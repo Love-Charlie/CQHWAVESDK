@@ -15,7 +15,7 @@
 @property (assign, nonatomic) BOOL haveRegisterObserver;
 @property (nonatomic , weak)  UIView *responderView;
 @property (nonatomic , assign) CGRect viewFrame;
-@property (nonatomic , weak) UIView *targetView;
+@property (nonatomic , strong) UIView *targetView;
 
 @end
 

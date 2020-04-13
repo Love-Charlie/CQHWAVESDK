@@ -79,3 +79,5 @@
 //数据库相关
 #define VERTIFYORDERDB @"vertifyOrderDB.sqlite"
 #define VERTIfyORDERTABLE @"VertifyOrderTable"
+//验证码时间
+#define VerTime 10;

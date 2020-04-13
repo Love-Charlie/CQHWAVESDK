@@ -12,6 +12,9 @@
 #import "CQHKeyboardProcess.h"
 #import "CQHMainLoginView.h"
 #import "CQHHUDView.h"
+#import "AFNetworking.h"
+#import "MBProgressHUD.h"
+
 #import <objc/runtime.h>
 
 @interface CQHForgetPasswordView()
@@ -26,9 +29,24 @@
 @property (nonatomic , weak) UITextField *passwordTF1;
 @property (nonatomic , weak) UIButton *loginBtn;
 @property (nonatomic , strong) CQHKeyboardProcess *process;
+@property (nonatomic, strong)dispatch_source_t time;//定时器
 @end
 
 @implementation CQHForgetPasswordView
+
+//解决AFN内存泄露的问题，使用单例模式解决
+static AFHTTPSessionManager *manager ;
+- (AFHTTPSessionManager *)sharedManager {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.requestSerializer.timeoutInterval = 20;
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"application/json",@"text/json",@"text/javascript", nil];
+    });
+    return manager;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -63,6 +81,7 @@
         [self addSubview:line];
         
         UITextField *usernameTF = [[UITextField alloc] init];
+        usernameTF.textColor = [UIColor blackColor];
         usernameTF.clearButtonMode=UITextFieldViewModeWhileEditing;
         _usernameTF = usernameTF;
         UIImageView *leftView = [[UIImageView alloc] init];
@@ -111,6 +130,7 @@
         /***************************************************************************************************/
         
         UITextField *verificationCodeTF = [[UITextField alloc] init];
+        verificationCodeTF.textColor = [UIColor blackColor];
         _verificationCodeTF = verificationCodeTF;
         [verificationCodeTF setBackgroundColor:[UIColor whiteColor]];
         verificationCodeTF.layer.cornerRadius = 6.0;
@@ -142,6 +162,7 @@
         [self addSubview:verificationCodeTF];
        
         UIButton *verificationCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [verificationCodeBtn addTarget:self action:@selector(verificationCodeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         verificationCodeBtn.layer.cornerRadius = 5.0;
         verificationCodeBtn.layer.masksToBounds = YES;
         [verificationCodeBtn  setBackgroundColor:[UIColor colorWithRed:226/255.0 green:88/255.0 blue:65/255.0 alpha:1]];
@@ -151,6 +172,7 @@
         [verificationCodeTF addSubview:verificationCodeBtn];
          /***************************************************************************************************/
         UITextField *passwordTF = [[UITextField alloc] init];
+        passwordTF.textColor = [UIColor blackColor];
         _passwordTF = passwordTF;
         [passwordTF setBackgroundColor:[UIColor whiteColor]];
         passwordTF.layer.cornerRadius = 6.0;
@@ -182,6 +204,7 @@
         [self addSubview:passwordTF];
         /***************************************************************************************************/
         UITextField *passwordTF1 = [[UITextField alloc] init];
+        passwordTF1.textColor = [UIColor blackColor];
         _passwordTF1 = passwordTF1;
         [passwordTF1 setBackgroundColor:[UIColor whiteColor]];
         passwordTF1.layer.cornerRadius = 6.0;
@@ -194,7 +217,7 @@
         
         Ivar ivar3 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
         UILabel *placeholderLabel3 = object_getIvar(passwordTF1, ivar3);
-        placeholderLabel3.text = @" 请输入密码";
+        placeholderLabel3.text = @" 请再次输入密码";
         [placeholderLabel3 setFont:[UIFont systemFontOfSize:12.0]];
         placeholderLabel3.textColor = [UIColor lightGrayColor];
         
@@ -213,15 +236,224 @@
         [self addSubview:passwordTF1];
         
         UIButton *loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [loginBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         loginBtn.layer.cornerRadius = 6.0;
         loginBtn.layer.masksToBounds = YES;
         [loginBtn setTitle:@"修改密码并登录" forState:UIControlStateNormal];
         [loginBtn.titleLabel setFont:[UIFont systemFontOfSize:13.0]];
-        [loginBtn setBackgroundColor:[UIColor colorWithRed:226/255.0 green:88/255.0 blue:65/255.0 alpha:1]];
+        [loginBtn setBackgroundColor:[UIColor colorWithRed:216/255.0 green:58/255.0 blue:41/255.0 alpha:1]];
         _loginBtn = loginBtn;
         [self addSubview:loginBtn];
     }
     return self;
+}
+
+- (void)loginBtnClick:(UIButton *)btn
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    //随机数
+    NSString *nonceStr = [CQHTools randomNumber];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"sdkVersion"]=sdkVersion;
+    dict[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+    dict[@"channelId"]= [userDefaults objectForKey:CHANNELID];
+    dict[@"gameId"]=[userDefaults objectForKey:GAMEID];
+    dict[@"platformCode"]=PLATFORMCODE;
+    dict[@"nonceStr"]=nonceStr;
+    dict[@"mobile"] = self.usernameTF.text;
+    dict[@"password"] = [CQHTools md5:self.passwordTF.text];
+    dict[@"captcha"] = self.verificationCodeTF.text;
+    NSString *stringA = [CQHTools sortArrWithDictionary:dict];
+    //sign
+    NSString *sign = [NSString stringWithFormat:@"%@&key=%@",stringA,[userDefaults objectForKey:SIGNKEY]];
+    //sign md5签名
+    NSString *md5String = [CQHTools md5:sign];
+    
+    NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
+    dict1[@"sdkVersion"]=sdkVersion;
+    dict1[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+    dict1[@"channelId"]= [userDefaults objectForKey:CHANNELID];
+    dict1[@"gameId"]=[userDefaults objectForKey:GAMEID];
+    dict1[@"platformCode"]=PLATFORMCODE;
+    dict1[@"nonceStr"]=nonceStr;
+    dict1[@"mobile"] = self.usernameTF.text;
+    dict1[@"password"] = [CQHTools md5:self.passwordTF.text];
+    dict1[@"captcha"] = self.verificationCodeTF.text;
+    dict1[@"sign"] = md5String;
+    
+    NSString *dictString = [CQHTools convertToJsonData:dict1];
+    NSString *base64String = [CQHTools base64EncodeString:dictString];
+    
+    //字符串前两位
+    NSString *qianStr = [base64String substringToIndex:2];
+    //字符串第六位开始后面的字符
+    NSString *houStr = [base64String substringFromIndex:6];
+    NSMutableString *newStr = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@",qianStr,houStr]];
+    NSString *jiequStr = [CQHTools stringJieQu:base64String];
+    [newStr insertString:jiequStr atIndex:newStr.length - 2];
+    NSMutableDictionary *dict3 = [NSMutableDictionary dictionary];
+    dict3[@"data"] = newStr;
+    
+    //    CQHNetworkingTools *tools =  [self sharedSingleton];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    hud.label.text = NSLocalizedString(@"登录中...", @"HUD loading title");
+    
+    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/password/forgot?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [hud hideAnimated:YES];
+        if ([responseObject[@"code"] integerValue] == 200) {
+            
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            //            [WSDK showHUDView];
+        }else{
+            //            [view removeFromSuperview];
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        [hud hideAnimated:YES];
+        //        [view removeFromSuperview];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请查看网络连接!", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        
+    }];
+}
+
+- (void)verificationCodeBtnClick:(UIButton *)btn
+{
+    
+    NSString *newCodeStr= [self.usernameTF.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (!(newCodeStr.length == 11) ) {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入11位手机号" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    __block NSInteger count = VerTime;
+    //获得队列
+    //    dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
+    //创建一个定时器
+    self.time = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+    //设置开始时间
+    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC));
+    //设置时间间隔
+    uint64_t interval = (uint64_t)(1.0* NSEC_PER_SEC);
+    //设置定时器
+    dispatch_source_set_timer(self.time, start, interval, 0);
+    //设置回调
+    dispatch_source_set_event_handler(self.time, ^{
+        //设置当执行五次是取消定时器
+        count--;
+        [btn setTitle:[NSString stringWithFormat:@"剩余%ld秒",count] forState:UIControlStateNormal];
+        btn.enabled = NO;
+        if(count == 0){
+            [btn setTitle:@"获取验证码" forState:UIControlStateNormal];
+            dispatch_cancel(self.time);
+            btn.enabled = YES;
+        }
+    });
+    //由于定时器默认是暂停的所以我们启动一下
+    //启动定时器
+    dispatch_resume(self.time);
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    //随机数
+    NSString *nonceStr = [CQHTools randomNumber];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"sdkVersion"]=sdkVersion;
+    dict[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+    dict[@"gameId"]=[userDefaults objectForKey:GAMEID];
+    dict[@"platformCode"]=PLATFORMCODE;
+    dict[@"nonceStr"]=nonceStr;
+    dict[@"mobile"] = self.usernameTF.text;
+    dict[@"activeCode"] = ACTIVECODE;
+    NSString *stringA = [CQHTools sortArrWithDictionary:dict];
+    //sign
+    NSString *sign = [NSString stringWithFormat:@"%@&key=%@",stringA,[userDefaults objectForKey:SIGNKEY]];
+    //sign md5签名
+    NSString *md5String = [CQHTools md5:sign];
+    
+    NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
+    dict1[@"sdkVersion"]=sdkVersion;
+    dict1[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+    dict1[@"gameId"]=[userDefaults objectForKey:GAMEID];
+    dict1[@"platformCode"]=PLATFORMCODE;
+    dict1[@"nonceStr"]=nonceStr;
+    dict1[@"mobile"] = self.usernameTF.text;
+    dict1[@"activeCode"] = ACTIVECODE;
+    dict1[@"sign"] = md5String;
+    
+    NSString *dictString = [CQHTools convertToJsonData:dict1];
+    NSString *base64String = [CQHTools base64EncodeString:dictString];
+    
+    //字符串前两位
+    NSString *qianStr = [base64String substringToIndex:2];
+    //字符串第六位开始后面的字符
+    NSString *houStr = [base64String substringFromIndex:6];
+    NSMutableString *newStr = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@",qianStr,houStr]];
+    NSString *jiequStr = [CQHTools stringJieQu:base64String];
+    [newStr insertString:jiequStr atIndex:newStr.length - 2];
+    NSMutableDictionary *dict3 = [NSMutableDictionary dictionary];
+    dict3[@"data"] = newStr;
+    
+    //    CQHNetworkingTools *tools =  [self sharedSingleton];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    hud.label.text = NSLocalizedString(@"获取验证码中...", @"HUD loading title");
+    
+    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/sms/code?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [hud hideAnimated:YES];
+        if ([responseObject[@"code"] integerValue] == 200) {
+            
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            //            [WSDK showHUDView];
+        }else{
+            //            [view removeFromSuperview];
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        [hud hideAnimated:YES];
+        //        [view removeFromSuperview];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请查看网络连接!", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        
+    }];
 }
 
 - (void)backBtnClick:(UIButton *)btn
@@ -240,6 +472,6 @@
     _verificationCodeBtn.frame = CGRectMake(_verificationCodeTF.width*0.7-3 , 5*H_Adapter, _verificationCodeTF.width*0.3-3, 25*H_Adapter);
     _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+10*H_Adapter, self.width - 50*W_Adapter, 35*H_Adapter);
     _passwordTF1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+10*H_Adapter, self.width - 50*W_Adapter, 35*H_Adapter);
-    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF1.frame)+(self.height - CGRectGetMaxY(_passwordTF1.frame) - 40*H_Adapter)*0.5, self.width - 50*W_Adapter, 40*H_Adapter);
+    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF1.frame)+(self.height - CGRectGetMaxY(_passwordTF1.frame) - 40*H_Adapter)*0.5, self.width - 50*W_Adapter, 40);
 }
 @end

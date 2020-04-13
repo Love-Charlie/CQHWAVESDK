@@ -188,7 +188,7 @@ static dispatch_once_t onceToken;
                     if ([responseObject[@"data"][@"authStatus"] integerValue] == 1) {
                         
                         if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
-                            NSLog(@"没有认证");
+//                            NSLog(@"没有认证");
                             //
                             [CQHHUDView sharedCQHVerView];
                         }
@@ -262,6 +262,7 @@ static dispatch_once_t onceToken;
     [userDefaults1 removeObjectForKey:GAMEID];
     [userDefaults1 removeObjectForKey:PACKAGEID];
     [userDefaults1 removeObjectForKey:CHANNELID];
+    [userDefaults1 removeObjectForKey:USERID];
     [userDefaults1 synchronize];
     
     if (config.gameId == nil || config.packageId == nil || config.channelId ==nil || config.key == nil || config.configId == nil) {
