@@ -60,7 +60,8 @@ static dispatch_once_t onceToken;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.layer.cornerRadius = 5.0;
+        self.layer.masksToBounds = YES;
         CQHKeyboardProcess *process = [[CQHKeyboardProcess alloc] init];
         _process = process;
         [process changeFrameWithView:[CQHHUDView sharedCQHHUDView]];

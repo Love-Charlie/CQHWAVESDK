@@ -76,6 +76,8 @@
 
 +(void)showHUDView;
 
++(void)showAutoView;
+
 + (void)dissHUDView;
 
 /*! @brief 苹果支付

@@ -9,6 +9,7 @@
 #import "CQHHUDView.h"
 #import "CQHMainLoginView.h"
 #import "CQHRealNameVerificationView.h"
+#import "CQHAutoLoginView.h"
 
 @interface CQHHUDView()
 
@@ -37,9 +38,41 @@ static dispatch_once_t onceToken;
             mainLoginView.bounds = CGRectMake(0, 0, a - 30, a - 30);
             mainLoginView.center = CGPointMake(sharedCQHHUDView.frame.size.width *0.5, sharedCQHHUDView.frame.size.height *0.5);
             [sharedCQHHUDView addSubview:mainLoginView];
+        
         }];
         
        
+    });
+    return sharedCQHHUDView;
+}
+
++ (instancetype)sharedCQHAutoLoginView {
+    dispatch_once(&onceToken, ^{
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+        
+        sharedCQHHUDView = [[self alloc] init];
+        [sharedCQHHUDView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];
+        sharedCQHHUDView.frame = KEYWINDOW.bounds;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [KEYWINDOW addSubview:sharedCQHHUDView];
+            
+//            double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
+//            CQHMainLoginView *mainLoginView = [CQHMainLoginView sharedMainLoginView];
+//            //            CQHMainLoginView *mainLoginView = [[CQHMainLoginView alloc] init];
+//            mainLoginView.bounds = CGRectMake(0, 0, a - 30, a - 30);
+//            mainLoginView.center = CGPointMake(sharedCQHHUDView.frame.size.width *0.5, sharedCQHHUDView.frame.size.height *0.5);
+//            [sharedCQHHUDView addSubview:mainLoginView];
+            CQHAutoLoginView *autoLoginView = [CQHAutoLoginView sharedAutoLoginView];
+            CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+            NSLog(@"%@",NSStringFromCGRect(statusBarFrame));
+            autoLoginView.frame = CGRectMake(10, statusBarFrame.size.height, 300, 30);
+            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
+            
+            [sharedCQHHUDView addSubview:autoLoginView];
+        }];
+        
+        
     });
     return sharedCQHHUDView;
 }

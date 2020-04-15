@@ -81,3 +81,6 @@
 #define VERTIfyORDERTABLE @"VertifyOrderTable"
 //验证码时间
 #define VerTime 10;
+
+//是否自动登录
+#define ISAUTO @"isauto"

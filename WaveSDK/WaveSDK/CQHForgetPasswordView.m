@@ -365,7 +365,7 @@ static AFHTTPSessionManager *manager ;
     dispatch_source_set_event_handler(self.time, ^{
         //设置当执行五次是取消定时器
         count--;
-        [btn setTitle:[NSString stringWithFormat:@"剩余%ld秒",count] forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"剩余%ld秒",(long)count] forState:UIControlStateNormal];
         btn.enabled = NO;
         if(count == 0){
             [btn setTitle:@"获取验证码" forState:UIControlStateNormal];

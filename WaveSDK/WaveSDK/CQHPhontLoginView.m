@@ -488,7 +488,7 @@ static AFHTTPSessionManager *manager ;
     dispatch_source_set_event_handler(self.time, ^{
         //设置当执行五次是取消定时器
         count--;
-        [btn setTitle:[NSString stringWithFormat:@"剩余%ld秒",count] forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"剩余%ld秒",(long)count] forState:UIControlStateNormal];
         btn.enabled = NO;
         if(count == 0){
             [btn setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -609,13 +609,14 @@ static AFHTTPSessionManager *manager ;
     _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , 20, _registerLabel.width, _registerLabel.height);
     _backBtn.frame = CGRectMake(25*W_Adapter, 20, _registerLabel.height , _registerLabel.height);
     _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+20, self.width - 50*W_Adapter, 1);
-    _phoneTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+15*H_Adapter, self.width - 50*W_Adapter, 35);
-    _desLabel.frame = CGRectMake(40*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+10*H_Adapter, self.width - 50*W_Adapter-_desLabel.height, _desLabel.height);
-    _imageView.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+10*H_Adapter,  _desLabel.height,  _desLabel.height);
-    _verificationCodeTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_desLabel.frame)+10*H_Adapter, self.width - 50*W_Adapter, 35);
-    _verificationCodeBtn.frame = CGRectMake(_verificationCodeTF.width*0.7-3 , 5, _verificationCodeTF.width*0.3-3, 25);
-    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+20*H_Adapter, self.width - 50*W_Adapter, 35);
-    _regAndLoginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+20*H_Adapter, self.width - 50*W_Adapter, 35);
+    _phoneTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+15, self.width - 50*W_Adapter, 40*H_Adapter);
+    _desLabel.frame = CGRectMake(40*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+10, self.width - 50*W_Adapter-_desLabel.height, _desLabel.height);
+    _imageView.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+10,  _desLabel.height,  _desLabel.height);
+    _verificationCodeTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_desLabel.frame)+10, self.width - 50*W_Adapter, 40*H_Adapter);
+    _verificationCodeBtn.frame = CGRectMake(_verificationCodeTF.width*0.7-3 , 5*H_Adapter, _verificationCodeTF.width*0.3-3, 30*H_Adapter);
+    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+20, self.width - 50*W_Adapter, 40*H_Adapter);
+//    _regAndLoginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+20*H_Adapter, self.width - 50*W_Adapter, 40*H_Adapter);
+    _regAndLoginBtn.frame = CGRectMake(25*W_Adapter, (self.width - CGRectGetMaxY(_passwordTF.frame)- 40)*0.5+CGRectGetMaxY(_passwordTF.frame), self.width - 50*W_Adapter, 40);
 }
 
 @end

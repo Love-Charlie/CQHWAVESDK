@@ -20,6 +20,7 @@
 #import "CQHConfig.h"
 #import "WaveSDK.h"
 #import "CQHHUDView.h"
+#import "CQHAutoLoginView.h"
 
 @interface CQHMainLoginView()
 
@@ -116,7 +117,7 @@ static dispatch_once_t onceToken;
         [kuaisuBtn addTarget:self action:@selector(kuaisuBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _kuaisuBtn = kuaisuBtn;
         [kuaisuBtn setBackgroundColor:[UIColor colorWithRed:216/255.0 green:58/255.0 blue:41/255.0 alpha:1]];
-        [kuaisuBtn setTitle:@"快速登录并进入游戏" forState:UIControlStateNormal];
+        [kuaisuBtn setTitle:@"快速游戏" forState:UIControlStateNormal];
         [kuaisuBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0]];
         kuaisuBtn.layer.cornerRadius = 5.0;
         kuaisuBtn.layer.masksToBounds = YES;
@@ -276,7 +277,7 @@ static dispatch_once_t onceToken;
             [respon removeObjectForKey:@"md5Password"];
             [respon removeObjectForKey:@"password"];
             
-            
+            [[CQHAutoLoginView sharedAutoLoginView] removeFromSuperview];
             [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
             [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
 //            [CQHHUDView dissCQHHUBView];
@@ -357,9 +358,9 @@ static dispatch_once_t onceToken;
     UIImage *image = [CQHTools bundleForImage:@"logo-en" packageName:@""];
     _imageView.frame = CGRectMake(self.width*0.5/3.0 , 10*H_Adapter, self.width*2.0/3.0, self.width*2.0/3.0 *image.size.height/image.size.width);
     _line.frame = CGRectMake(20, CGRectGetMaxY(_imageView.frame) +10*H_Adapter, self.width - 40, 1);
-    _wxBtn.frame = CGRectMake(20, CGRectGetMaxY(_line.frame)+20*H_Adapter, self.width - 40, 40);
-    _phontBtn.frame = CGRectMake(20, CGRectGetMaxY(_wxBtn.frame) + 20*H_Adapter, self.width - 40, 40);
-    _kuaisuBtn.frame = CGRectMake(20, CGRectGetMaxY(_phontBtn.frame)+20*H_Adapter, self.width - 40, 40);
+    _wxBtn.frame = CGRectMake(20, CGRectGetMaxY(_line.frame)+20*H_Adapter, self.width - 40, 40*H_Adapter);
+    _phontBtn.frame = CGRectMake(20, CGRectGetMaxY(_wxBtn.frame) + 20*H_Adapter, self.width - 40, 40*H_Adapter);
+    _kuaisuBtn.frame = CGRectMake(20, CGRectGetMaxY(_phontBtn.frame)+20*H_Adapter, self.width - 40, 40*H_Adapter);
     _xieyiBtn.frame = CGRectMake(20, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, 65, 20);
     _tongyiBtn.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, _tongyiBtn.width, 20);
     _redLine.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_tongyiBtn.frame), _tongyiBtn.width, 1);

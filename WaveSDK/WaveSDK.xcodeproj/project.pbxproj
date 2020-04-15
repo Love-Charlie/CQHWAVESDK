@@ -36,6 +36,8 @@
 		200C005C243F1659007DB6A5 /* JQFMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 200C005A243F1658007DB6A5 /* JQFMDB.m */; };
 		200C005F243F2221007DB6A5 /* CQHVerfityOrderModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 200C005D243F2221007DB6A5 /* CQHVerfityOrderModel.h */; };
 		200C0060243F2221007DB6A5 /* CQHVerfityOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 200C005E243F2221007DB6A5 /* CQHVerfityOrderModel.m */; };
+		201C0A92244701AC0026568B /* CQHAutoLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 201C0A90244701AC0026568B /* CQHAutoLoginView.h */; };
+		201C0A93244701AC0026568B /* CQHAutoLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 201C0A91244701AC0026568B /* CQHAutoLoginView.m */; };
 		202486772435C5CB0025AEEC /* CQHVerificationSuccessView.h in Headers */ = {isa = PBXBuildFile; fileRef = 202486752435C5CB0025AEEC /* CQHVerificationSuccessView.h */; };
 		202486782435C5CB0025AEEC /* CQHVerificationSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 202486762435C5CB0025AEEC /* CQHVerificationSuccessView.m */; };
 		2024867B2435D9CE0025AEEC /* CQHTipsView.h in Headers */ = {isa = PBXBuildFile; fileRef = 202486792435D9CE0025AEEC /* CQHTipsView.h */; };
@@ -129,6 +131,8 @@
 		200C005A243F1658007DB6A5 /* JQFMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQFMDB.m; sourceTree = "<group>"; };
 		200C005D243F2221007DB6A5 /* CQHVerfityOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHVerfityOrderModel.h; sourceTree = "<group>"; };
 		200C005E243F2221007DB6A5 /* CQHVerfityOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHVerfityOrderModel.m; sourceTree = "<group>"; };
+		201C0A90244701AC0026568B /* CQHAutoLoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHAutoLoginView.h; sourceTree = "<group>"; };
+		201C0A91244701AC0026568B /* CQHAutoLoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHAutoLoginView.m; sourceTree = "<group>"; };
 		202486752435C5CB0025AEEC /* CQHVerificationSuccessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHVerificationSuccessView.h; sourceTree = "<group>"; };
 		202486762435C5CB0025AEEC /* CQHVerificationSuccessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHVerificationSuccessView.m; sourceTree = "<group>"; };
 		202486792435D9CE0025AEEC /* CQHTipsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHTipsView.h; sourceTree = "<group>"; };
@@ -330,6 +334,8 @@
 				20E952102429DFAF004ECD73 /* CQHHUDView.m */,
 				20EE208D2429EE12002B4D7B /* CQHMainLoginView.h */,
 				20EE208E2429EE12002B4D7B /* CQHMainLoginView.m */,
+				201C0A90244701AC0026568B /* CQHAutoLoginView.h */,
+				201C0A91244701AC0026568B /* CQHAutoLoginView.m */,
 				20A88B722431A6A600FD1ABB /* CQHAgreementView.h */,
 				20A88B732431A6A600FD1ABB /* CQHAgreementView.m */,
 				20A88B762431D94300FD1ABB /* CQHRegisterAndLoginView.h */,
@@ -420,6 +426,7 @@
 				200C005F243F2221007DB6A5 /* CQHVerfityOrderModel.h in Headers */,
 				20E952112429DFAF004ECD73 /* CQHHUDView.h in Headers */,
 				20B279A5244436C300645AD9 /* CQHUserModel.h in Headers */,
+				201C0A92244701AC0026568B /* CQHAutoLoginView.h in Headers */,
 				20A88B802431D99C00FD1ABB /* CQHUsernameLoginView.h in Headers */,
 				20D7DFA024236929005579D3 /* UIView+Frame.h in Headers */,
 				202A3933243714F900BD42AC /* CQHRegisterView.h in Headers */,
@@ -592,6 +599,7 @@
 				200C0060243F2221007DB6A5 /* CQHVerfityOrderModel.m in Sources */,
 				202486782435C5CB0025AEEC /* CQHVerificationSuccessView.m in Sources */,
 				2024867C2435D9CE0025AEEC /* CQHTipsView.m in Sources */,
+				201C0A93244701AC0026568B /* CQHAutoLoginView.m in Sources */,
 				200C0057243F1599007DB6A5 /* FMResultSet.m in Sources */,
 				20D1FF3B2420AC6100A70374 /* WSDK.m in Sources */,
 				2053E3772434883300E0409C /* CQHRealNameVerificationView.m in Sources */,

@@ -29,6 +29,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        self.layer.cornerRadius = 5.0;
+        self.layer.masksToBounds = YES;
         [self setBackgroundColor:[UIColor whiteColor]];
         UIImageView *imageview = [[UIImageView alloc] init];
         _imageview = imageview;

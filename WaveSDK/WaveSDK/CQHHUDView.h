@@ -16,4 +16,6 @@
 
 + (instancetype)sharedCQHVerView;
 
++ (instancetype)sharedCQHAutoLoginView;
+
 @end

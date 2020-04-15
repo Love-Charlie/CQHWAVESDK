@@ -90,7 +90,7 @@ static CQHAgreementView *agreementView;
 {
     
 //    NSString *url = [NSString stringWithFormat:@"%@sdk/notice/%@",BASE_URL,PLATFORMCODE];@"http://test.sdk.wavesdk.com/sdk/agree"
-    NSString *url = @"http://test.sdk.wavesdk.com/sdk/agree";
+    NSString *url = @"http://test.sdk.wavesdk.com/sdk/agree1";
     
     NSURL *remoteURL = [NSURL URLWithString:url];
     

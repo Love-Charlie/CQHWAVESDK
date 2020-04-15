@@ -22,6 +22,13 @@
 //    [WSDK showHUDView];
     [WSDK sharedCQHSDK].delegate = self;
     
+//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+//    NSLog(@"%@",NSStringFromCGRect(statusBarFrame));
+//    UIView *view =[UIView new];
+//    [view setBackgroundColor:[UIColor greenColor]];
+//    view.frame = CGRectMake(0, statusBarFrame.size.height, statusBarFrame.size.width, 44);
+//    [self.view addSubview:view];
+    
 }
 
 - (void)loginSuccessWithResponse:(id)response

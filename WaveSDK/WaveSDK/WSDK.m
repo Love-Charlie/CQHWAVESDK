@@ -17,6 +17,7 @@
 #import "JQFMDB.h"
 #import "CQHVerfityOrderModel.h"
 #import "CQHMainLoginView.h"
+#import "CQHAutoLoginView.h"
 
 @interface WSDK() <WXApiDelegate,YQInAppPurchaseToolDelegate>
 
@@ -181,6 +182,7 @@ static dispatch_once_t onceToken;
                 [respon removeObjectForKey:@"password"];
 //                [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
 //                [CQHHUDView dissCQHHUBView];
+                [[CQHAutoLoginView sharedAutoLoginView] removeFromSuperview];
                 [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
                 [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
                 if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
@@ -423,7 +425,14 @@ static dispatch_once_t onceToken;
             hud.mode = MBProgressHUDModeText;
             hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
             [hud hideAnimated:YES afterDelay:1.f];
-            [WSDK showHUDView];
+            
+            NSInteger isAuto = (long)[userDefaults objectForKey:ISAUTO];
+            if (isAuto == 1) {
+                [WSDK showAutoView];
+            }else{
+                [WSDK showHUDView];
+            }
+            
         }else{
             //            [view removeFromSuperview];
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
@@ -452,6 +461,11 @@ static dispatch_once_t onceToken;
 +(void)showHUDView
 {
     [CQHHUDView sharedCQHHUDView];
+}
+
++(void)showAutoView
+{
+    [CQHHUDView sharedCQHAutoLoginView];
 }
 
 + (void)dissHUDView
