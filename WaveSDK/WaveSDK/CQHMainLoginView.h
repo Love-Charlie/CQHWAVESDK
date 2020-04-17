@@ -12,4 +12,6 @@
 
 + (CQHMainLoginView *)sharedMainLoginView;
 +(void)deallocMainLoginView;
+
++(instancetype)showMainView;
 @end

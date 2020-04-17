@@ -18,4 +18,6 @@
 
 + (instancetype)sharedCQHAutoLoginView;
 
++(instancetype)showMainView;
+
 @end

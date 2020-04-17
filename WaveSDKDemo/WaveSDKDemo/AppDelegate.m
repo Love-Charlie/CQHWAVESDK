@@ -20,6 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [UIApplication sharedApplication].statusBarHidden = YES;
     [WSDK registerAppID:@"wx343790ea3256d6dc" andUniversalLinks:@"https://www.waveinspire.com/universallinks/"];
     
     CQHConfig *config = [CQHConfig sharedConfig];

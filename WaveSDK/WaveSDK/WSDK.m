@@ -427,6 +427,7 @@ static dispatch_once_t onceToken;
             [hud hideAnimated:YES afterDelay:1.f];
             
             NSInteger isAuto = (long)[userDefaults objectForKey:ISAUTO];
+            isAuto = 1;
             if (isAuto == 1) {
                 [WSDK showAutoView];
             }else{
@@ -461,6 +462,7 @@ static dispatch_once_t onceToken;
 +(void)showHUDView
 {
     [CQHHUDView sharedCQHHUDView];
+//    [CQHHUDView showMainView];
 }
 
 +(void)showAutoView
