@@ -9,6 +9,7 @@
 #import "CQHAutoLoginView.h"
 #import "UIView+Frame.h"
 #import "WSDK.h"
+#import "CQHChangeAccountView.h"
 
 @interface CQHAutoLoginView()
 
@@ -47,6 +48,7 @@ static dispatch_once_t onceToken;
         [changeLoginBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [changeLoginBtn setTitle:@"切换账号" forState:UIControlStateNormal];
         [changeLoginBtn.titleLabel  setFont:[UIFont systemFontOfSize:11.0]];
+        [changeLoginBtn sizeToFit];
         
         
         
@@ -58,16 +60,23 @@ static dispatch_once_t onceToken;
 
 - (void)changeLoginBtnClick:(UIButton *)btn
 {
-    [self.superview removeFromSuperview];
+//    [self.superview removeFromSuperview];
+    
+//    [WSDK showHUDView];
+    CQHChangeAccountView *changeAccountView = [[CQHChangeAccountView alloc] init];
+    [self.superview addSubview:changeAccountView];
+    changeAccountView.frame = CGRectMake(100, 100, 100, 100 );
+    double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
+    changeAccountView.bounds = CGRectMake(0, 0, a - 30, a - 30);
+    changeAccountView.center = CGPointMake(self.superview.frame.size.width *0.5, self.superview.frame.size.height *0.5);
     [self removeFromSuperview];
-    [WSDK showHUDView];
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _accountNameLabel.frame = CGRectMake(10, 0, self.width*0.5, self.height);
-    _changeLoginBtn.frame = CGRectMake(self.width*0.5, 0, self.width*0.5, self.height);
+    _accountNameLabel.frame = CGRectMake(20, 0, self.width*0.5, self.height);
+    _changeLoginBtn.frame = CGRectMake(self.width - _changeLoginBtn.width - 20, 0, _changeLoginBtn.width, self.height);
 }
 
 @end

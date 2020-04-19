@@ -103,6 +103,10 @@
 		20EE20902429EE12002B4D7B /* CQHMainLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE208E2429EE12002B4D7B /* CQHMainLoginView.m */; };
 		20F2D7112424A60F0001533B /* CQHConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 20F2D70F2424A60F0001533B /* CQHConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		20F2D7122424A60F0001533B /* CQHConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F2D7102424A60F0001533B /* CQHConfig.m */; };
+		CBDAE2BD244C42F9004AD9E8 /* CQHButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CBDAE2BB244C42F9004AD9E8 /* CQHButton.h */; };
+		CBDAE2BE244C42F9004AD9E8 /* CQHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */; };
+		CBDB4261244C08320073A900 /* CQHChangeAccountView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBDB425F244C08320073A900 /* CQHChangeAccountView.h */; };
+		CBDB4262244C08320073A900 /* CQHChangeAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDB4260244C08320073A900 /* CQHChangeAccountView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,6 +208,10 @@
 		20EE208E2429EE12002B4D7B /* CQHMainLoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHMainLoginView.m; sourceTree = "<group>"; };
 		20F2D70F2424A60F0001533B /* CQHConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CQHConfig.h; sourceTree = "<group>"; };
 		20F2D7102424A60F0001533B /* CQHConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CQHConfig.m; sourceTree = "<group>"; };
+		CBDAE2BB244C42F9004AD9E8 /* CQHButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHButton.h; sourceTree = "<group>"; };
+		CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHButton.m; sourceTree = "<group>"; };
+		CBDB425F244C08320073A900 /* CQHChangeAccountView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHChangeAccountView.h; sourceTree = "<group>"; };
+		CBDB4260244C08320073A900 /* CQHChangeAccountView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHChangeAccountView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +332,8 @@
 				206E140C2418D7810045B947 /* WaveSDK.h */,
 				20D1FF382420AC6100A70374 /* WSDK.h */,
 				20D1FF392420AC6100A70374 /* WSDK.m */,
+				CBDAE2BB244C42F9004AD9E8 /* CQHButton.h */,
+				CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */,
 				200C005D243F2221007DB6A5 /* CQHVerfityOrderModel.h */,
 				200C005E243F2221007DB6A5 /* CQHVerfityOrderModel.m */,
 				20B279A3244436C300645AD9 /* CQHUserModel.h */,
@@ -336,6 +346,8 @@
 				20EE208E2429EE12002B4D7B /* CQHMainLoginView.m */,
 				201C0A90244701AC0026568B /* CQHAutoLoginView.h */,
 				201C0A91244701AC0026568B /* CQHAutoLoginView.m */,
+				CBDB425F244C08320073A900 /* CQHChangeAccountView.h */,
+				CBDB4260244C08320073A900 /* CQHChangeAccountView.m */,
 				20A88B722431A6A600FD1ABB /* CQHAgreementView.h */,
 				20A88B732431A6A600FD1ABB /* CQHAgreementView.m */,
 				20A88B762431D94300FD1ABB /* CQHRegisterAndLoginView.h */,
@@ -413,6 +425,7 @@
 				20D7DF9324230C09005579D3 /* AFURLSessionManager.h in Headers */,
 				20D7DF8F24230C09005579D3 /* AFURLRequestSerialization.h in Headers */,
 				20A88B7C2431D95C00FD1ABB /* CQHPhontLoginView.h in Headers */,
+				CBDB4261244C08320073A900 /* CQHChangeAccountView.h in Headers */,
 				200C004D243F1599007DB6A5 /* FMDatabase.h in Headers */,
 				20D38F462424BC170079F992 /* MBProgressHUD.h in Headers */,
 				20F2D7112424A60F0001533B /* CQHConfig.h in Headers */,
@@ -441,6 +454,7 @@
 				203A152924220D46000C6247 /* WXApi.h in Headers */,
 				200C0053243F1599007DB6A5 /* FMDatabaseQueue.h in Headers */,
 				20D7DF8824230C09005579D3 /* AFHTTPSessionManager.h in Headers */,
+				CBDAE2BD244C42F9004AD9E8 /* CQHButton.h in Headers */,
 				200C0056243F1599007DB6A5 /* FMResultSet.h in Headers */,
 				20D7DF9124230C09005579D3 /* AFURLResponseSerialization.h in Headers */,
 				202A393E24372E2700BD42AC /* CQHKeyboardProcess.h in Headers */,
@@ -590,6 +604,7 @@
 				20EE20902429EE12002B4D7B /* CQHMainLoginView.m in Sources */,
 				20D7DF8924230C09005579D3 /* AFHTTPSessionManager.m in Sources */,
 				20D7DF9424230C09005579D3 /* AFURLSessionManager.m in Sources */,
+				CBDB4262244C08320073A900 /* CQHChangeAccountView.m in Sources */,
 				202A393F24372E2700BD42AC /* CQHKeyboardProcess.m in Sources */,
 				200C0052243F1599007DB6A5 /* FMDatabasePool.m in Sources */,
 				200C0054243F1599007DB6A5 /* FMDatabaseQueue.m in Sources */,
@@ -618,6 +633,7 @@
 				20B279A6244436C300645AD9 /* CQHUserModel.m in Sources */,
 				20D7DF9B242368E7005579D3 /* CQHTools.m in Sources */,
 				20A88B792431D94300FD1ABB /* CQHRegisterAndLoginView.m in Sources */,
+				CBDAE2BE244C42F9004AD9E8 /* CQHButton.m in Sources */,
 				20A88B752431A6A600FD1ABB /* CQHAgreementView.m in Sources */,
 				20F2D7122424A60F0001533B /* CQHConfig.m in Sources */,
 				202A3934243714F900BD42AC /* CQHRegisterView.m in Sources */,
