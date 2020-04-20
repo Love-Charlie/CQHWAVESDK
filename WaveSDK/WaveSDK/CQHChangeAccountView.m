@@ -2,7 +2,7 @@
 //  CQHChangeAccountView.m
 //  WaveSDK
 //
-//  Created by  Charlie on 2020/4/19.
+//  Created by  Charlie on 2020/4/10.
 //  Copyright © 2020 Love Charlie. All rights reserved.
 //
 
@@ -10,6 +10,7 @@
 #import "CQHTools.h"
 #import "UIView+Frame.h"
 #import "CQHButton.h"
+#import "CQHPhoneBindingView.h"
 #import <objc/runtime.h>
 
 @interface CQHChangeAccountView()
@@ -210,7 +211,7 @@
         [WXBtn setImage:[CQHTools bundleForImage:@"wx登录" packageName:@""] forState:UIControlStateNormal];
         [WXBtn addTarget:self action:@selector(WXBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [WXBtn.titleLabel setFont:[UIFont systemFontOfSize:12.0]];
+        [WXBtn.titleLabel setFont:[UIFont systemFontOfSize:11.0]];
         [WXBtn setTitle:@"微信登录" forState:UIControlStateNormal];
         [WXBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [WXBtn sizeToFit];
@@ -224,7 +225,7 @@
         [resetBtn setImage:[CQHTools bundleForImage:@"绑定手机" packageName:@""] forState:UIControlStateNormal];
         [resetBtn addTarget:self action:@selector(resetBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [resetBtn.titleLabel setFont:[UIFont systemFontOfSize:12.0]];
+        [resetBtn.titleLabel setFont:[UIFont systemFontOfSize:11.0]];
         [resetBtn setTitle:@"重置密码" forState:UIControlStateNormal];
         [resetBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [resetBtn sizeToFit];
@@ -237,7 +238,7 @@
         [bangdingBtn setImage:[CQHTools bundleForImage:@"绑定手机" packageName:@""] forState:UIControlStateNormal];
         [bangdingBtn addTarget:self action:@selector(bangdingBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [bangdingBtn.titleLabel setFont:[UIFont systemFontOfSize:12.0]];
+        [bangdingBtn.titleLabel setFont:[UIFont systemFontOfSize:11.0]];
         [bangdingBtn setTitle:@"绑定手机" forState:UIControlStateNormal];
         [bangdingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [bangdingBtn sizeToFit];
@@ -251,6 +252,9 @@
 - (void)bangdingBtnClick:(UIButton *)btn
 {
     NSLog(@"%s",__FUNCTION__);
+    CQHPhoneBindingView *phoneBingView = [[CQHPhoneBindingView alloc] init];
+    phoneBingView.frame = self.bounds;
+    [self addSubview:phoneBingView];
 }
 
 - (void)resetBtnClick:(UIButton *)btn
@@ -281,6 +285,12 @@
 
 }
 
+- (void)setUserModel:(CQHUserModel *)userModel
+{
+    _userModel = userModel;
+    _phoneTF.text = userModel.accountName;
+}
+
 - (void)statusBarOrientationChange1
 {
     self.superview.frame = KEYWINDOW.bounds;
@@ -293,13 +303,13 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , 20, _registerLabel.width, _registerLabel.height);
+    _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , 15, _registerLabel.width, _registerLabel.height);
     _backBtn.frame = CGRectMake(25*W_Adapter, 20, _registerLabel.height , _registerLabel.height);
-    _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+20, self.width - 50*W_Adapter, 1);
+    _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+15, self.width - 50*W_Adapter, 1);
     
-    _phoneTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+15, self.width - 50*W_Adapter, 40*H_Adapter);
-    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+15,  self.width - 50*W_Adapter, 40*H_Adapter);
-    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+15, self.width - 50*W_Adapter, 40*H_Adapter);
+    _phoneTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+15, self.width - 50*W_Adapter, 44);
+    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+15,  self.width - 50*W_Adapter, 44);
+    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+15, self.width - 50*W_Adapter, 44);
     _xinRegisterBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+10, _xinRegisterBtn.width, _xinRegisterBtn.height);
     _forgetBtn.frame = CGRectMake(self.width - _forgetBtn.width - 25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+10, _forgetBtn.width, _forgetBtn.height);
     _line1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_forgetBtn.frame)+10, self.width - 50*W_Adapter, 1);

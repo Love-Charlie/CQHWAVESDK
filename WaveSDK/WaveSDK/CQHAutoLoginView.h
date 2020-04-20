@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CQHUserModel.h"
 
 @interface CQHAutoLoginView : UIView
+
+@property (nonatomic , strong) CQHUserModel *userModel;
 
 + (CQHAutoLoginView *)sharedAutoLoginView;
 

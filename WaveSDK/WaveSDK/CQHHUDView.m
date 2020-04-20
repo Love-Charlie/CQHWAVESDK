@@ -87,6 +87,11 @@ static dispatch_once_t onceToken1;
             autoLoginView.frame = CGRectMake((SCREENW - a +60)*0.5, statusBarFrame.size.height, a - 60, 40);
             autoLoginView.layer.cornerRadius = 20;
             autoLoginView.layer.masksToBounds = YES;
+            
+            
+            CQHUserModel *userMdoel = [[CQHUserModel alloc] init];
+            userMdoel.accountName = @"123124sfa4fdfasdfasdfasdfsdfassdf";
+            autoLoginView.userModel = userMdoel;
             [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
 
             [sharedCQHHUDView addSubview:autoLoginView];
@@ -160,6 +165,7 @@ static dispatch_once_t onceToken1;
 //    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
             CQHAutoLoginView *autoLoginView = [CQHAutoLoginView sharedAutoLoginView];
+    autoLoginView.superview.frame = KEYWINDOW.bounds;
             CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
         //    NSLog(@"%@",statusBarFrame);
             autoLoginView.frame = CGRectMake((SCREENW - a +60)*0.5, statusBarFrame.size.height, a - 60, 40);

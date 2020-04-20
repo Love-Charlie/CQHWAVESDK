@@ -37,9 +37,10 @@ static dispatch_once_t onceToken;
         [self setBackgroundColor:[UIColor whiteColor]];
         UILabel *accountNameLabel = [[UILabel alloc] init];
         _accountNameLabel = accountNameLabel;
-        [accountNameLabel setTextColor:[UIColor redColor]];
+//        [accountNameLabel setTextColor:[UIColor redColor]];
         [accountNameLabel setFont:[UIFont systemFontOfSize:11.0]];
         accountNameLabel.text = @"312312423";
+        
         
         
         UIButton *changeLoginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -58,12 +59,25 @@ static dispatch_once_t onceToken;
     return self;
 }
 
+- (void)setUserModel:(CQHUserModel *)userModel
+{
+    _userModel = userModel;
+    
+    NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ , 正在登录",userModel.accountName]];
+    NSUInteger length = [userModel.accountName length];
+    [Att addAttribute:NSForegroundColorAttributeName value:[UIColor  redColor] range:NSMakeRange(0,length)];
+    _accountNameLabel.attributedText = Att;
+    _accountNameLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+}
+
+
 - (void)changeLoginBtnClick:(UIButton *)btn
 {
 //    [self.superview removeFromSuperview];
     
 //    [WSDK showHUDView];
     CQHChangeAccountView *changeAccountView = [[CQHChangeAccountView alloc] init];
+    changeAccountView.userModel = _userModel;
     [self.superview addSubview:changeAccountView];
     changeAccountView.frame = CGRectMake(100, 100, 100, 100 );
     double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
