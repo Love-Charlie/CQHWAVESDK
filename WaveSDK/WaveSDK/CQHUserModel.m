@@ -10,4 +10,23 @@
 
 @implementation CQHUserModel
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.accountName forKey:@"accountName"];
+    [aCoder encodeObject:self.password forKey:@"password"];
+    [aCoder encodeObject:self.username forKey:@"username"];
+    [aCoder encodeObject:self.userId forKey:@"userId"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.username = [aDecoder decodeObjectForKey:@"username"];
+        self.password = [aDecoder decodeObjectForKey:@"password"];
+        self.accountName = [aDecoder decodeObjectForKey:@"accountName"];
+        self.userId = [aDecoder decodeObjectForKey:@"userId"];
+    }
+    return self;
+}
+
 @end

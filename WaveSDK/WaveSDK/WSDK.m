@@ -426,8 +426,8 @@ static dispatch_once_t onceToken;
             hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
             [hud hideAnimated:YES afterDelay:1.f];
             
-            NSInteger isAuto = (long)[userDefaults objectForKey:ISAUTO];
-            isAuto = 1;
+            NSInteger isAuto = [[userDefaults objectForKey:ISAUTO] integerValue];;
+//            isAuto = 0;
             if (isAuto == 1) {
                 [WSDK showAutoView];
             }else{

@@ -39,7 +39,7 @@ static dispatch_once_t onceToken;
         _accountNameLabel = accountNameLabel;
 //        [accountNameLabel setTextColor:[UIColor redColor]];
         [accountNameLabel setFont:[UIFont systemFontOfSize:11.0]];
-        accountNameLabel.text = @"312312423";
+//        accountNameLabel.text = @"312312423";
         
         
         
@@ -63,7 +63,7 @@ static dispatch_once_t onceToken;
 {
     _userModel = userModel;
     
-    NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ , 正在登录",userModel.accountName]];
+    NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ , 正在登录...",userModel.accountName]];
     NSUInteger length = [userModel.accountName length];
     [Att addAttribute:NSForegroundColorAttributeName value:[UIColor  redColor] range:NSMakeRange(0,length)];
     _accountNameLabel.attributedText = Att;

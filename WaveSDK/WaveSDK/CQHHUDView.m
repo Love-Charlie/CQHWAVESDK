@@ -88,9 +88,11 @@ static dispatch_once_t onceToken1;
             autoLoginView.layer.cornerRadius = 20;
             autoLoginView.layer.masksToBounds = YES;
             
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSData *data = [userDefaults objectForKey:CQHUSERMODEL];
+            CQHUserModel*userMdoel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             
-            CQHUserModel *userMdoel = [[CQHUserModel alloc] init];
-            userMdoel.accountName = @"123124sfa4fdfasdfasdfasdfsdfassdf";
+          
             autoLoginView.userModel = userMdoel;
             [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
 

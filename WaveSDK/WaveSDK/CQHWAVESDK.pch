@@ -79,6 +79,12 @@
 //数据库相关
 #define VERTIFYORDERDB @"vertifyOrderDB.sqlite"
 #define VERTIfyORDERTABLE @"VertifyOrderTable"
+
+#define CQHUSERMODELDB @"CQHUSERMODELDB.sqlite"
+#define CQHUSERMODELTABLE @"CQHUSERMODELTABLE"
+
+
+#define CQHUSERMODEL @"CQHUSERMODEL"
 //验证码时间
 #define VerTime 10;
 

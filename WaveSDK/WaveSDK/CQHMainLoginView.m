@@ -21,6 +21,8 @@
 #import "WaveSDK.h"
 #import "CQHHUDView.h"
 #import "CQHAutoLoginView.h"
+#import "JQFMDB.h"
+#import "CQHUserModel.h"
 
 @interface CQHMainLoginView()
 
@@ -267,11 +269,52 @@ static dispatch_once_t onceToken;
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/guest/register?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, NSMutableDictionary *responseObject) {
 //        NSLog(@"%@",responseObject);
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+//        if ([responseObject[@"code"] integerValue] == 505)) {
+//            [userDefaults setInteger:0 forKey:ISAUTO];
+//            [userDefaults synchronize];
+//            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+//
+//            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+//            //            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+//            hud.mode = MBProgressHUDModeText;
+//            hud.label.text = NSLocalizedString(@"密码错误!", @"HUD message title");
+//            [hud hideAnimated:YES afterDelay:2.f];
+//        }
+        
         if ([responseObject[@"code"] integerValue] == 200) {
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             
             [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
+            [userDefaults setObject:@"1" forKey:ISAUTO];
+           
+            
+            
+            JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+            CQHUserModel *userModel = [[CQHUserModel alloc] init];
+            if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+            }
+//            model.outTradeNo = [userDefaults objectForKey:OUTTradeNo];
+//            model.receiptData = receiptData;
+//            model.platformCode = PLATFORMCODE;
+//            model.userId = [userDefaults objectForKey:USERID];
+            userModel.accountName = responseObject[@"data"][@"accountName"];
+            userModel.password = responseObject[@"data"][@"password"];
+            userModel.username = responseObject[@"data"][@"username"];
+            [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+            
+            
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
+            
+            [userDefaults setObject:data forKey:CQHUSERMODEL];
+            
             [userDefaults synchronize];
+            
+            NSArray *personArr = [db jq_lookupTable:CQHUSERMODELTABLE dicOrModel:userModel whereFormat:nil];
+            for (CQHUserModel *model in personArr) {
+                NSLog(@"%@,%@",model.accountName,model.password);
+            }
             
             NSMutableDictionary *respon = [NSMutableDictionary dictionaryWithDictionary:responseObject[@"data"]];
             [respon removeObjectForKey:@"md5Password"];

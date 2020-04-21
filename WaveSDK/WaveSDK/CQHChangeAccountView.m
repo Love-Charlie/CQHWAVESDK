@@ -11,9 +11,11 @@
 #import "UIView+Frame.h"
 #import "CQHButton.h"
 #import "CQHPhoneBindingView.h"
+#import "JQFMDB.h"
+#import "CQHUserModel.h"
 #import <objc/runtime.h>
 
-@interface CQHChangeAccountView()
+@interface CQHChangeAccountView()<UITableViewDelegate , UITableViewDataSource>
 
 @property (nonatomic , weak) UILabel *registerLabel ;
 @property (nonatomic , weak) UIButton *backBtn ;
@@ -28,9 +30,28 @@
 @property (nonatomic , weak) CQHButton *WXBtn;
 @property (nonatomic , weak) CQHButton *resetBtn;
 @property (nonatomic , weak) CQHButton *bangdingBtn;
+@property (nonatomic , strong) UITableView *tableview;
+
+@property (nonatomic , strong) NSArray *userModelData;
+
+@property (nonatomic , weak) UIButton *rightView;
+
 @end
 
 @implementation CQHChangeAccountView
+
+- (NSArray *)userModelData
+{
+    if (!_userModelData) {
+        JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+        if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+            [db jq_createTable:CQHUSERMODELTABLE dicOrModel:[CQHUserModel class]];
+        }
+        NSArray *arr =  [db jq_lookupTable:CQHUSERMODELTABLE dicOrModel:[CQHUserModel class] whereFormat:nil];
+        _userModelData = arr;
+    }
+    return _userModelData;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -76,6 +97,7 @@
         UIView *rightViewContent = [[UIView alloc] init];
         rightViewContent.frame = CGRectMake(0, 0, 30, 30);
                 UIButton *rightView = [UIButton buttonWithType:UIButtonTypeCustom];
+        _rightView = rightView;
         [rightView addTarget:self action:@selector(rightViewClick:) forControlEvents:UIControlEventTouchUpInside];
                 [rightView setImage:[CQHTools bundleForImage:@"下拉按钮" packageName:@""] forState:UIControlStateNormal];
         rightView.frame = CGRectMake(0, 5, 20, 20);
@@ -118,6 +140,19 @@
                 usernameTFRightView1.frame = CGRectMake(0, 0, 15*W_Adapter, 15*H_Adapter);
                 [usernameTFRightView1 setImage:[CQHTools bundleForImage:@"6" packageName:@"1"] forState:UIControlStateNormal];
                 [self addSubview:phoneTF];
+        
+        
+        
+        //下拉列表
+        UITableView *tableview = [[UITableView alloc] init];
+        UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
+        [tableview setTableFooterView:v];
+        tableview.bounces = NO;
+        tableview.indicatorStyle=UIScrollViewIndicatorStyleWhite;
+        _tableview = tableview;
+        tableview.delegate = self;
+        tableview.dataSource = self;
+        [tableview setBackgroundColor:[UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1]];
         
         /*******************************************************************************************************/
                 UITextField *passwordTF = [[UITextField alloc] init];
@@ -270,6 +305,22 @@
 -(void)rightViewClick:(UIButton *)btn
 {
     NSLog(@"%s",__FUNCTION__);
+    btn.selected = !btn.selected;
+    if (btn.selected) {
+        [self addSubview:_tableview];
+        [_tableview.subviews enumerateObjectsUsingBlock:^( id obj, NSUInteger idx, BOOL * _Nonnull stop)
+         {
+             if ([obj isKindOfClass:[UIImageView class]]) {
+                 UIImageView * imageView = [[UIImageView alloc] init];
+                 imageView = obj;
+                 //必须先设置imageView的image为空的，否则颜色显示偏灰，之前默认的颜色会对背景颜色有影响，然后再设置背景颜色
+                 imageView.image = [UIImage imageNamed:@""];
+                 imageView.backgroundColor = [UIColor colorWithRed:27/255.0 green:172/255.0 blue:177/255.0 alpha:1];
+             }
+         }];
+    }else{
+        [_tableview removeFromSuperview];
+    }
 
 }
 
@@ -308,6 +359,9 @@
     _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+15, self.width - 50*W_Adapter, 1);
     
     _phoneTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+15, self.width - 50*W_Adapter, 44);
+    
+    _tableview.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame), self.width - 50*W_Adapter, 160*H_Adapter);
+    
     _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+15,  self.width - 50*W_Adapter, 44);
     _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+15, self.width - 50*W_Adapter, 44);
     _xinRegisterBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+10, _xinRegisterBtn.width, _xinRegisterBtn.height);
@@ -319,6 +373,49 @@
     CGFloat marge = (_btnContentView.width- 3*_WXBtn.width)*0.5;
     _resetBtn.frame = CGRectMake(CGRectGetMaxX(_WXBtn.frame)+marge, 5, _btnContentView.height-5, _btnContentView.height-5);
     _bangdingBtn.frame = CGRectMake(CGRectGetMaxX(_resetBtn.frame)+marge, 5, _btnContentView.height-5, _btnContentView.height-5);
+}
+
+
+#pragma mark tableview代理方法
+//tableview代理方法
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.userModelData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID = @"ID";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+    }
+    cell.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
+    CQHUserModel *model = self.userModelData[indexPath.row];
+    
+    cell.textLabel.text =model.accountName;
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    self.phoneTF.text = cell.textLabel.text;
+//    self.usernameTFRightView.selected = !self.usernameTFRightView.selected;
+    _rightView.selected = !_rightView.selected;
+    [self.tableview removeFromSuperview];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
 }
 
 - (void)dealloc
