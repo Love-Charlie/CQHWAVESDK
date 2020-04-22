@@ -262,7 +262,7 @@ static AFHTTPSessionManager *manager ;
     dict[@"platformCode"]=PLATFORMCODE;
     dict[@"nonceStr"]=nonceStr;
     dict[@"mobile"] = self.usernameTF.text;
-    dict[@"password"] = [CQHTools md5:self.passwordTF.text];
+    dict[@"password"] = [CQHTools jiami:self.passwordTF.text];
     dict[@"captcha"] = self.verificationCodeTF.text;
     NSString *stringA = [CQHTools sortArrWithDictionary:dict];
     //sign
@@ -278,7 +278,7 @@ static AFHTTPSessionManager *manager ;
     dict1[@"platformCode"]=PLATFORMCODE;
     dict1[@"nonceStr"]=nonceStr;
     dict1[@"mobile"] = self.usernameTF.text;
-    dict1[@"password"] = [CQHTools md5:self.passwordTF.text];
+    dict1[@"password"] = [CQHTools jiami:self.passwordTF.text];
     dict1[@"captcha"] = self.verificationCodeTF.text;
     dict1[@"sign"] = md5String;
     

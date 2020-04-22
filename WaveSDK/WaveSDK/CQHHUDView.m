@@ -46,7 +46,7 @@ static dispatch_once_t onceToken;
         sharedCQHHUDView.frame = KEYWINDOW.bounds;
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [KEYWINDOW addSubview:sharedCQHHUDView];
-
+            
              double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
             CQHMainLoginView *mainLoginView = [CQHMainLoginView sharedMainLoginView];
             mainLoginView.bounds = CGRectMake(0, 0, a - 30, a - 30);
@@ -93,10 +93,14 @@ static dispatch_once_t onceToken1;
             CQHUserModel*userMdoel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             
           
-            autoLoginView.userModel = userMdoel;
+//            autoLoginView.userModel = userMdoel;
             [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
+            
 
             [sharedCQHHUDView addSubview:autoLoginView];
+            [CQHHUDView dissCQHHUBView];
+            autoLoginView.userModel = userMdoel;
+            
         }];
 
 
@@ -115,12 +119,12 @@ static dispatch_once_t onceToken1;
             [KEYWINDOW addSubview:sharedCQHHUDView];
             
             double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
-            //            CQHMainLoginView *mainLoginView = [CQHMainLoginView sharedMainLoginView];
+            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
             CQHRealNameVerificationView *verificationView = [CQHRealNameVerificationView sharedVerificationView];
             verificationView.bounds = CGRectMake(0, 0, a - 30, a - 30);
             verificationView.center = CGPointMake(sharedCQHHUDView.frame.size.width *0.5, sharedCQHHUDView.frame.size.height *0.5);
             [sharedCQHHUDView addSubview:verificationView];
-            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
+//            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
         }];
 
     return sharedCQHHUDView;

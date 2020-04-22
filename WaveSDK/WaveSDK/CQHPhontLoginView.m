@@ -250,7 +250,7 @@ static AFHTTPSessionManager *manager ;
     dict[@"platformCode"]=PLATFORMCODE;
     dict[@"nonceStr"]=nonceStr;
     dict[@"mobile"] = self.phoneTF.text;
-    dict[@"password"] =  [CQHTools md5:self.passwordTF.text];
+    dict[@"password"] =  [CQHTools jiami:self.passwordTF.text];
     dict[@"captcha"] = self.verificationCodeTF.text;
     dict[@"channelId"] = [userDefaults objectForKey:CHANNELID];
     
@@ -268,7 +268,7 @@ static AFHTTPSessionManager *manager ;
     dict1[@"platformCode"]=PLATFORMCODE;
     dict1[@"nonceStr"]=nonceStr;
     dict1[@"mobile"] = self.phoneTF.text;
-    dict1[@"password"] =  [CQHTools md5:self.passwordTF.text];
+    dict1[@"password"] =  [CQHTools jiami:self.passwordTF.text];
     dict1[@"captcha"] = self.verificationCodeTF.text;
     dict1[@"channelId"] = [userDefaults objectForKey:CHANNELID];
     dict1[@"sign"] = md5String;

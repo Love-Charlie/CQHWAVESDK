@@ -14,6 +14,8 @@
 #import "WSDK.h"
 #import "AFNetworking.h"
 #import "CQHHUDView.h"
+#import "CQHUserModel.h"
+#import "JQFMDB.h"
 #import <objc/runtime.h>
 
 @interface CQHRegisterView()
@@ -210,7 +212,7 @@ static AFHTTPSessionManager *manager ;
     NSString *nonceStr = [CQHTools randomNumber];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[@"username"] = self.usernameTF.text;
-    dict[@"password"] = [CQHTools md5:self.passwordTF.text];
+    dict[@"password"] = [CQHTools jiami:self.passwordTF.text];
     dict[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
     dict[@"deviceType"]= @"1";
     dict[@"gameId"]=[userDefaults objectForKey:GAMEID];
@@ -226,7 +228,7 @@ static AFHTTPSessionManager *manager ;
     
     NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
     dict1[@"username"] = self.usernameTF.text;
-    dict1[@"password"] = [CQHTools md5:self.passwordTF.text];
+    dict1[@"password"] = [CQHTools jiami:self.passwordTF.text];
     dict1[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
     dict1[@"deviceType"]= @"1";
     dict1[@"gameId"]=[userDefaults objectForKey:GAMEID];
@@ -254,11 +256,31 @@ static AFHTTPSessionManager *manager ;
     hud.label.text = NSLocalizedString(@"验证中...", @"HUD loading title");
      WSDK *wsdk = [WSDK sharedCQHSDK];
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/register?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+        NSLog(@"%@",responseObject);
         [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
             
             [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
+            
+            [userDefaults setObject:@"1" forKey:ISAUTO];
+            
+            
+            JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+            CQHUserModel *userModel = [[CQHUserModel alloc] init];
+            if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+            }
+
+            userModel.accountName = responseObject[@"data"][@"accountName"];
+            userModel.password = self.usernameTF.text;
+            [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+            
+            
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
+            
+            [userDefaults setObject:data forKey:CQHUSERMODEL];
+            
+            
             [userDefaults synchronize];
             
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];

@@ -220,7 +220,7 @@ static AFHTTPSessionManager *manager ;
     dict[@"platformCode"]=PLATFORMCODE;
     dict[@"nonceStr"]=nonceStr;
     dict[@"username"] = self.usernameTF.text;
-    dict[@"password"] =  [CQHTools md5:self.passwordTF.text];
+    dict[@"password"] =  [CQHTools jiami:self.passwordTF.text];
     
     
     NSString *stringA = [CQHTools sortArrWithDictionary:dict];
@@ -238,7 +238,7 @@ static AFHTTPSessionManager *manager ;
     dict1[@"platformCode"]=PLATFORMCODE;
     dict1[@"nonceStr"]=nonceStr;
     dict1[@"username"] = self.usernameTF.text;
-    dict1[@"password"] =  [CQHTools md5:self.passwordTF.text];
+    dict1[@"password"] =  [CQHTools jiami:self.passwordTF.text];
     dict1[@"sign"] = md5String;
     
     NSString *dictString = [CQHTools convertToJsonData:dict1];

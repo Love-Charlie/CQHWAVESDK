@@ -325,6 +325,7 @@ static dispatch_once_t onceToken;
             [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
 //            [CQHHUDView dissCQHHUBView];
             
+            
             if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                 [wsdk.delegate loginSuccessWithResponse:respon];
                 
