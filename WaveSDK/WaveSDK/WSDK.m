@@ -427,7 +427,6 @@ static dispatch_once_t onceToken;
             [hud hideAnimated:YES afterDelay:1.f];
             
             NSInteger isAuto = [[userDefaults objectForKey:ISAUTO] integerValue];;
-//            isAuto = 0;
             if (isAuto == 1) {
                 [WSDK showAutoView];
             }else{
@@ -435,7 +434,6 @@ static dispatch_once_t onceToken;
             }
             
         }else{
-            //            [view removeFromSuperview];
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
             hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
@@ -448,7 +446,6 @@ static dispatch_once_t onceToken;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
         [hud hideAnimated:YES];
-        //        [view removeFromSuperview];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
         hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
         hud.mode = MBProgressHUDModeText;
@@ -461,13 +458,14 @@ static dispatch_once_t onceToken;
 
 +(void)showHUDView
 {
-    [CQHHUDView sharedCQHHUDView];
-//    [CQHHUDView showMainView];
+//    [CQHHUDView sharedCQHHUDView];
+    [CQHHUDView showMainView];
 }
 
 +(void)showAutoView
 {
-    [CQHHUDView sharedCQHAutoLoginView];
+//    [CQHHUDView sharedCQHAutoLoginView];
+    [CQHHUDView showAutoView];
 }
 
 + (void)dissHUDView

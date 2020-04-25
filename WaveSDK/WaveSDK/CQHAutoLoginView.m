@@ -59,6 +59,7 @@ static dispatch_once_t onceToken;
     if (self) {
         [self setBackgroundColor:[UIColor whiteColor]];
         UILabel *accountNameLabel = [[UILabel alloc] init];
+        [accountNameLabel setTextColor:[UIColor blackColor]];
         _accountNameLabel = accountNameLabel;
         [accountNameLabel setFont:[UIFont systemFontOfSize:11.0]];
         
@@ -70,8 +71,6 @@ static dispatch_once_t onceToken;
         [changeLoginBtn setTitle:@"切换账号" forState:UIControlStateNormal];
         [changeLoginBtn.titleLabel  setFont:[UIFont systemFontOfSize:11.0]];
         [changeLoginBtn sizeToFit];
-        
-        
         
         [self addSubview:accountNameLabel];
         [self addSubview:changeLoginBtn];
@@ -145,31 +144,17 @@ static dispatch_once_t onceToken;
     
     WSDK *wsdk = [WSDK sharedCQHSDK];
     
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
-//
-//    });
-    
-//     [CQHHUDView dissCQHHUBView];
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/login?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
             
             [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
             [userDefaults synchronize];
-//             [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
 
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 //是否点击了切换按钮
-                
-                [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
-               
-
                 [self.superview removeFromSuperview];
                 [self removeFromSuperview];
-
-                
                 if (isSwitch == 0) {
                     if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                         [wsdk.delegate loginSuccessWithResponse:responseObject[@"data"]];
@@ -179,7 +164,7 @@ static dispatch_once_t onceToken;
                             if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
                                 NSLog(@"没有认证");
                                 //
-                                [CQHHUDView sharedCQHVerView];
+                                [CQHHUDView showVerView];
                             }
                         }
                     }
@@ -217,9 +202,6 @@ static dispatch_once_t onceToken;
 
 - (void)changeLoginBtnClick:(UIButton *)btn
 {
-//    [self.superview removeFromSuperview];
-    
-//    [WSDK showHUDView];
     isSwitch = 1 ;
     CQHChangeAccountView *changeAccountView = [[CQHChangeAccountView alloc] init];
     changeAccountView.userModel = _userModel;

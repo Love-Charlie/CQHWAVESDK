@@ -20,4 +20,9 @@
 
 +(instancetype)showMainView;
 
+///////////////////////////////////
++(instancetype)showAutoView;
++(instancetype)showVerView;
++(instancetype)shareHUDView;
+
 @end

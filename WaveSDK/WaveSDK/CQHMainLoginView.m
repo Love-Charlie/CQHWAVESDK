@@ -320,11 +320,6 @@ static dispatch_once_t onceToken;
             [respon removeObjectForKey:@"md5Password"];
             [respon removeObjectForKey:@"password"];
             
-            [[CQHAutoLoginView sharedAutoLoginView] removeFromSuperview];
-            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
-            [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
-//            [CQHHUDView dissCQHHUBView];
-            
             
             if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                 [wsdk.delegate loginSuccessWithResponse:respon];
@@ -334,7 +329,8 @@ static dispatch_once_t onceToken;
                     if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
                         NSLog(@"没有认证");
 //
-                        [CQHHUDView sharedCQHVerView];
+//                        [CQHHUDView sharedCQHVerView];
+                        [CQHHUDView showVerView];
                     }
                 }
             }

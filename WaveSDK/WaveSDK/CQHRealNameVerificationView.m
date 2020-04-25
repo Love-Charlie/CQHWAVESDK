@@ -64,7 +64,7 @@ static dispatch_once_t onceToken;
         self.layer.masksToBounds = YES;
         CQHKeyboardProcess *process = [[CQHKeyboardProcess alloc] init];
         _process = process;
-        [process changeFrameWithView:[CQHHUDView sharedCQHHUDView]];
+        [process changeFrameWithView:[CQHHUDView shareHUDView]];
         
         [self setBackgroundColor:[UIColor whiteColor]];
         UILabel *titleLabel = [[UILabel alloc] init];

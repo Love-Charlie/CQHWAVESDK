@@ -304,7 +304,6 @@
 
 -(void)rightViewClick:(UIButton *)btn
 {
-    NSLog(@"%s",__FUNCTION__);
     btn.selected = !btn.selected;
     if (btn.selected) {
         [self addSubview:_tableview];
@@ -400,6 +399,7 @@
     CQHUserModel *model = self.userModelData[indexPath.row];
     
     cell.textLabel.text =model.accountName;
+    cell.textLabel.textColor = [UIColor grayColor];
     return cell;
 }
 
