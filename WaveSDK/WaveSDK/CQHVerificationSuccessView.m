@@ -71,7 +71,7 @@
 {
     [self removeFromSuperview];
     [[CQHRealNameVerificationView sharedVerificationView] removeFromSuperview];
-    [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
+//    [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
 //    [CQHHUDView dissCQHHUBView];
 }
 

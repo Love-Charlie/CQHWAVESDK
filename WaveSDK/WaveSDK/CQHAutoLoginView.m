@@ -172,7 +172,6 @@ static dispatch_once_t onceToken;
             });
             
         }else{
-            //            [view removeFromSuperview];
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
             hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
