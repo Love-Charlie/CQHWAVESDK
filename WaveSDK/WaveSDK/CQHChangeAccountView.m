@@ -13,6 +13,9 @@
 #import "CQHPhoneBindingView.h"
 #import "JQFMDB.h"
 #import "CQHUserModel.h"
+#import "MBProgressHUD.h"
+#import "AFNetworking.h"
+#import "CQHResetPasswordView.h"
 #import <objc/runtime.h>
 
 @interface CQHChangeAccountView()<UITableViewDelegate , UITableViewDataSource>
@@ -39,6 +42,20 @@
 @end
 
 @implementation CQHChangeAccountView
+
+//解决AFN内存泄露的问题，使用单例模式解决
+static AFHTTPSessionManager *manager ;
+- (AFHTTPSessionManager *)sharedManager {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        //        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.requestSerializer.timeoutInterval = 20;
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"application/json",@"text/json",@"text/javascript", nil];
+    });
+    return manager;
+}
 
 - (NSArray *)userModelData
 {
@@ -220,6 +237,7 @@
         
         
         UIButton *forgetBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [forgetBtn addTarget:self action:@selector(forgetBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _forgetBtn = forgetBtn;
         [forgetBtn setTitle:@"忘记密码?" forState:UIControlStateNormal];
         [forgetBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -284,12 +302,211 @@
     return self;
 }
 
+- (void)forgetBtnClick:(UIButton *)btn
+{
+    NSString *text = [_phoneTF.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([text isEqualToString:@""]) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请填写用户名", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        return;
+    }
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *nonceStr = [CQHTools randomNumber];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+
+    dict[@"gameId"]= [userDefaults objectForKey:GAMEID];
+    dict[@"nonceStr"]=nonceStr;
+    dict[@"username"] = text;
+    
+    
+    NSString *stringA = [CQHTools sortArrWithDictionary:dict];
+    //sign
+    NSString *sign = [NSString stringWithFormat:@"%@&key=%@",stringA,[userDefaults objectForKey:SIGNKEY]];
+    //sign md5签名
+    NSString *md5String = [CQHTools md5:sign];
+    
+    NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
+    dict1[@"gameId"]= [userDefaults objectForKey:GAMEID];
+    dict1[@"nonceStr"]=nonceStr;
+    dict1[@"username"] = text;
+    dict1[@"sign"] = md5String;
+    
+    NSString *dictString = [CQHTools convertToJsonData:dict1];
+    NSString *base64String = [CQHTools base64EncodeString:dictString];
+    //字符串前两位
+    NSString *qianStr = [base64String substringToIndex:2];
+    //字符串第六位开始后面的字符
+    NSString *houStr = [base64String substringFromIndex:6];
+    NSMutableString *newStr = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@",qianStr,houStr]];
+    NSString *jiequStr = [CQHTools stringJieQu:base64String];
+    [newStr insertString:jiequStr atIndex:newStr.length - 2];
+    NSMutableDictionary *dict3 = [NSMutableDictionary dictionary];
+    dict3[@"data"] = newStr;
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+    //    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    hud.label.text = NSLocalizedString(@"检查是否绑定手机号...", @"HUD loading title");
+    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/checkmobile?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, NSMutableDictionary *responseObject) {
+        
+        if ([responseObject[@"code"] integerValue] == 500) {
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+//            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            return ;
+        }
+        
+        if ([responseObject[@"code"] integerValue] == 200) {
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            
+            if ([responseObject[@"data"][@"mobile"] isEqualToString:@""]) {
+                [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+                [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+                //            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.font = [UIFont systemFontOfSize:12.0];
+                hud.label.text = NSLocalizedString(@"您的账号未绑定手机号,无法找回密码！", @"HUD message title");
+                [hud hideAnimated:YES afterDelay:1.f];
+                return;
+            }
+            
+            CQHResetPasswordView *resetPasswordView = [[CQHResetPasswordView alloc] init];
+            resetPasswordView.frame = self.bounds;
+            [self addSubview:resetPasswordView];
+            
+            
+        }else{
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            //            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            return ;
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        //        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请查看网络!", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:2.f];
+    }];
+    
+}
+
 - (void)bangdingBtnClick:(UIButton *)btn
 {
-    NSLog(@"%s",__FUNCTION__);
-    CQHPhoneBindingView *phoneBingView = [[CQHPhoneBindingView alloc] init];
-    phoneBingView.frame = self.bounds;
-    [self addSubview:phoneBingView];
+    NSString *text = [_phoneTF.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([text isEqualToString:@""]) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请填写用户名", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        return;
+    }
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *nonceStr = [CQHTools randomNumber];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    dict[@"gameId"]= [userDefaults objectForKey:GAMEID];
+    dict[@"nonceStr"]=nonceStr;
+    dict[@"username"] = text;
+    
+    
+    NSString *stringA = [CQHTools sortArrWithDictionary:dict];
+    //sign
+    NSString *sign = [NSString stringWithFormat:@"%@&key=%@",stringA,[userDefaults objectForKey:SIGNKEY]];
+    //sign md5签名
+    NSString *md5String = [CQHTools md5:sign];
+    
+    NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
+    dict1[@"gameId"]= [userDefaults objectForKey:GAMEID];
+    dict1[@"nonceStr"]=nonceStr;
+    dict1[@"username"] = text;
+    dict1[@"sign"] = md5String;
+    
+    NSString *dictString = [CQHTools convertToJsonData:dict1];
+    NSString *base64String = [CQHTools base64EncodeString:dictString];
+    //字符串前两位
+    NSString *qianStr = [base64String substringToIndex:2];
+    //字符串第六位开始后面的字符
+    NSString *houStr = [base64String substringFromIndex:6];
+    NSMutableString *newStr = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@",qianStr,houStr]];
+    NSString *jiequStr = [CQHTools stringJieQu:base64String];
+    [newStr insertString:jiequStr atIndex:newStr.length - 2];
+    NSMutableDictionary *dict3 = [NSMutableDictionary dictionary];
+    dict3[@"data"] = newStr;
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+    //    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    hud.label.text = NSLocalizedString(@"检查是否绑定手机号...", @"HUD loading title");
+    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/checkmobile?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, NSMutableDictionary *responseObject) {
+
+        if ([responseObject[@"code"] integerValue] == 500) {
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            //            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            return ;
+        }
+        
+        if ([responseObject[@"code"] integerValue] == 200) {
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            
+            if ([responseObject[@"data"][@"mobile"] isEqualToString:@""]) {
+                [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+                CQHPhoneBindingView *phoneBingView = [[CQHPhoneBindingView alloc] init];
+                phoneBingView.frame = self.bounds;
+                [self addSubview:phoneBingView];
+                return;
+            }else{
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.label.text = NSLocalizedString(@"您的账号已绑定手机", @"HUD message title");
+                [hud hideAnimated:YES afterDelay:2.f];
+                return;
+            }
+            
+            
+        }else{
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            //            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            return ;
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        //        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请查看网络!", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:2.f];
+    }];
+ 
 }
 
 - (void)resetBtnClick:(UIButton *)btn

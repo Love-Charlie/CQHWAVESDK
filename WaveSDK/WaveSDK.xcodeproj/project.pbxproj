@@ -36,6 +36,8 @@
 		200C005C243F1659007DB6A5 /* JQFMDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 200C005A243F1658007DB6A5 /* JQFMDB.m */; };
 		200C005F243F2221007DB6A5 /* CQHVerfityOrderModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 200C005D243F2221007DB6A5 /* CQHVerfityOrderModel.h */; };
 		200C0060243F2221007DB6A5 /* CQHVerfityOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 200C005E243F2221007DB6A5 /* CQHVerfityOrderModel.m */; };
+		2013E6AD246A8A3A00675537 /* CQHResetPasswordView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2013E6AB246A8A3A00675537 /* CQHResetPasswordView.h */; };
+		2013E6AE246A8A3A00675537 /* CQHResetPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2013E6AC246A8A3A00675537 /* CQHResetPasswordView.m */; };
 		201C0A92244701AC0026568B /* CQHAutoLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 201C0A90244701AC0026568B /* CQHAutoLoginView.h */; };
 		201C0A93244701AC0026568B /* CQHAutoLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 201C0A91244701AC0026568B /* CQHAutoLoginView.m */; };
 		202486772435C5CB0025AEEC /* CQHVerificationSuccessView.h in Headers */ = {isa = PBXBuildFile; fileRef = 202486752435C5CB0025AEEC /* CQHVerificationSuccessView.h */; };
@@ -137,6 +139,8 @@
 		200C005A243F1658007DB6A5 /* JQFMDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JQFMDB.m; sourceTree = "<group>"; };
 		200C005D243F2221007DB6A5 /* CQHVerfityOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHVerfityOrderModel.h; sourceTree = "<group>"; };
 		200C005E243F2221007DB6A5 /* CQHVerfityOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHVerfityOrderModel.m; sourceTree = "<group>"; };
+		2013E6AB246A8A3A00675537 /* CQHResetPasswordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHResetPasswordView.h; sourceTree = "<group>"; };
+		2013E6AC246A8A3A00675537 /* CQHResetPasswordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHResetPasswordView.m; sourceTree = "<group>"; };
 		201C0A90244701AC0026568B /* CQHAutoLoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHAutoLoginView.h; sourceTree = "<group>"; };
 		201C0A91244701AC0026568B /* CQHAutoLoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHAutoLoginView.m; sourceTree = "<group>"; };
 		202486752435C5CB0025AEEC /* CQHVerificationSuccessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHVerificationSuccessView.h; sourceTree = "<group>"; };
@@ -352,6 +356,8 @@
 				201C0A91244701AC0026568B /* CQHAutoLoginView.m */,
 				CBDB425F244C08320073A900 /* CQHChangeAccountView.h */,
 				CBDB4260244C08320073A900 /* CQHChangeAccountView.m */,
+				2013E6AB246A8A3A00675537 /* CQHResetPasswordView.h */,
+				2013E6AC246A8A3A00675537 /* CQHResetPasswordView.m */,
 				20D2BB51244D6EF00089AE87 /* CQHPhoneBindingView.h */,
 				20D2BB52244D6EF00089AE87 /* CQHPhoneBindingView.m */,
 				20A88B722431A6A600FD1ABB /* CQHAgreementView.h */,
@@ -435,6 +441,7 @@
 				200C004D243F1599007DB6A5 /* FMDatabase.h in Headers */,
 				20D38F462424BC170079F992 /* MBProgressHUD.h in Headers */,
 				20F2D7112424A60F0001533B /* CQHConfig.h in Headers */,
+				2013E6AD246A8A3A00675537 /* CQHResetPasswordView.h in Headers */,
 				20EE208F2429EE12002B4D7B /* CQHMainLoginView.h in Headers */,
 				202A39372437172300BD42AC /* CQHForgetPasswordView.h in Headers */,
 				200C004F243F1599007DB6A5 /* FMDatabaseAdditions.h in Headers */,
@@ -625,6 +632,7 @@
 				200C0057243F1599007DB6A5 /* FMResultSet.m in Sources */,
 				20D1FF3B2420AC6100A70374 /* WSDK.m in Sources */,
 				2053E3772434883300E0409C /* CQHRealNameVerificationView.m in Sources */,
+				2013E6AE246A8A3A00675537 /* CQHResetPasswordView.m in Sources */,
 				202A394124372E2700BD42AC /* UIResponder+FirstResponder.m in Sources */,
 				200C004E243F1599007DB6A5 /* FMDatabase.m in Sources */,
 				20D7DF9024230C09005579D3 /* AFURLRequestSerialization.m in Sources */,
