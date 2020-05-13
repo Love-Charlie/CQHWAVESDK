@@ -16,6 +16,7 @@
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
 #import "CQHResetPasswordView.h"
+#import "WSDK.h"
 #import <objc/runtime.h>
 
 @interface CQHChangeAccountView()<UITableViewDelegate , UITableViewDataSource>
@@ -475,6 +476,7 @@ static AFHTTPSessionManager *manager ;
             if ([responseObject[@"data"][@"mobile"] isEqualToString:@""]) {
                 [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
                 CQHPhoneBindingView *phoneBingView = [[CQHPhoneBindingView alloc] init];
+                phoneBingView.username = text;
                 phoneBingView.frame = self.bounds;
                 [self addSubview:phoneBingView];
                 return;
@@ -517,6 +519,7 @@ static AFHTTPSessionManager *manager ;
 - (void)WXBtnClick:(UIButton *)btn
 {
     NSLog(@"%s",__FUNCTION__);
+    [WSDK wechatLogin];
 }
 
 -(void)rightViewClick:(UIButton *)btn

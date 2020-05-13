@@ -15,6 +15,7 @@
 @property (nonatomic , weak) UILabel *registerLabel ;
 @property (nonatomic , weak) UIButton *backBtn ;
 @property (nonatomic , weak) UIView *line;
+@property (nonatomic , weak) UILabel *contentLabel;
 
 @end
 
@@ -50,14 +51,32 @@
         line.alpha = 0.5;
         [self addSubview:line];
         
+        
+        UILabel *contentLabel = [[UILabel alloc] init];
+        _contentLabel = contentLabel;
+        [self addSubview:contentLabel];
+        
     }
     return self;
+}
+
+- (void)setUsername:(NSString *)username
+{
+    _username = username;
+    if (username.length > 16) {
+         username = [username stringByReplacingCharactersInRange:NSMakeRange(5, username.length - 10) withString:@"...."];
+    }
+    
+    NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"正在给账号 : %@, 进行手机绑定",username]];
+    [Att addAttribute:NSForegroundColorAttributeName value:[UIColor  redColor] range:NSMakeRange(8,username.length)];
+    _contentLabel.attributedText = Att;
+    _contentLabel.font = [UIFont systemFontOfSize:13.0];
+    [_contentLabel sizeToFit];
 }
 
 - (void)backBtnClick:(UIButton *)btn
 {
     [self removeFromSuperview];
-    
 }
 
 - (void)statusBarOrientationChange1
@@ -72,7 +91,7 @@
     _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , 15, _registerLabel.width, _registerLabel.height);
     _backBtn.frame = CGRectMake(25*W_Adapter, 20, _registerLabel.height , _registerLabel.height);
     _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+15, self.width - 50*W_Adapter, 1);
-    
+    _contentLabel.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+15, self.width - 50*W_Adapter, _contentLabel.height);
 }
 
 - (void)dealloc

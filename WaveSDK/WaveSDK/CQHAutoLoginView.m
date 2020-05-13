@@ -84,8 +84,6 @@ static dispatch_once_t onceToken;
 {
     _userModel = userModel;
     
-    NSLog(@"%@,%@",userModel.accountName,userModel.password);
-    
     NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ , 正在登录...",userModel.accountName]];
     NSUInteger length = [userModel.accountName length];
     [Att addAttribute:NSForegroundColorAttributeName value:[UIColor  redColor] range:NSMakeRange(0,length)];

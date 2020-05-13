@@ -67,6 +67,11 @@ static dispatch_once_t onceToken;
         [WXApi sendReq:req completion:nil];
     }else{
 //        [self setupAlertController];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+//        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请安装微信！", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:2.f];
     }
 }
 

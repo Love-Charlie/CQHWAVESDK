@@ -10,4 +10,6 @@
 
 @interface CQHPhoneBindingView : UIView
 
+@property (nonatomic , copy) NSString *username;
+
 @end
