@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
-            timestampString = "609843585.480774"
+            timestampString = "611462587.9651591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "129"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
-            timestampString = "609843585.481208"
+            timestampString = "611462587.965217"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "156"
@@ -42,43 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
-            timestampString = "609843585.481395"
+            timestampString = "611462587.9652621"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
-            landmarkName = "+sharedCQHVerView"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
-            timestampString = "609843585.481575"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "+dissCQHHUBView"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
-            timestampString = "609843585.48175"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "+statusBarOrientationChange"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,12 +58,169 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
-            timestampString = "609843585.481923"
+            timestampString = "611462587.9653029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "+statusBarOrientationChange1"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
+            timestampString = "611462587.965344"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "+dissCQHHUBView"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WaveSDK/WaveSDK/CQHHUDView.m"
+            timestampString = "611462587.965384"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "+sharedCQHVerView"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WaveSDK/WaveSDK/CQHPhoneBindingView.m"
+            timestampString = "611744480.4545749"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "-bindAndLoginClick:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[CQHPhoneBindingView bindAndLoginClick:]"
+                  moduleName = "WaveSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lovecharlie/Desktop/CQHWAVESDK/WaveSDK/WaveSDK/CQHPhoneBindingView.m"
+                  timestampString = "611744480.514222"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "287"
+                  endingLineNumber = "287"
+                  offsetFromSymbolStart = "3474">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[CQHPhoneBindingView bindAndLoginClick:]_block_invoke"
+                  moduleName = "WaveSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lovecharlie/Desktop/CQHWAVESDK/WaveSDK/WaveSDK/CQHPhoneBindingView.m"
+                  timestampString = "611744480.516215"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "287"
+                  endingLineNumber = "287"
+                  offsetFromSymbolStart = "3120">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__copy_helper_block_"
+                  moduleName = "WaveSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lovecharlie/Desktop/CQHWAVESDK/WaveSDK/WaveSDK/CQHPhoneBindingView.m"
+                  timestampString = "611744480.518124"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "287"
+                  endingLineNumber = "287"
+                  offsetFromSymbolStart = "186">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_"
+                  moduleName = "WaveSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lovecharlie/Desktop/CQHWAVESDK/WaveSDK/WaveSDK/CQHPhoneBindingView.m"
+                  timestampString = "611744480.5199209"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "287"
+                  endingLineNumber = "287"
+                  offsetFromSymbolStart = "99">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[CQHPhoneBindingView bindAndLoginClick:]_block_invoke.302"
+                  moduleName = "WaveSDKDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lovecharlie/Desktop/CQHWAVESDK/WaveSDK/WaveSDK/CQHPhoneBindingView.m"
+                  timestampString = "611744480.521809"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "287"
+                  endingLineNumber = "287"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WaveSDK/WaveSDK/CQHMainLoginView.m"
+            timestampString = "611744795.96075"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "-kuaisuBtnClick:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WaveSDK/WaveSDK/CQHMainLoginView.m"
+            timestampString = "611744893.556252"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "-kuaisuBtnClick:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

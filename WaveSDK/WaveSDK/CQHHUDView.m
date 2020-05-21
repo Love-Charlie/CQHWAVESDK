@@ -184,8 +184,6 @@ static dispatch_once_t onceToken1;
             autoLoginView.userModel = userMdoel;
             
         }];
-
-
     });
     return sharedCQHHUDView;
 

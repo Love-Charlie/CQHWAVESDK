@@ -193,6 +193,7 @@ static AFHTTPSessionManager *manager ;
         /***************************************************************************************************/
         UITextField *passwordTF = [[UITextField alloc] init];
         passwordTF.textColor = [UIColor blackColor];
+        passwordTF.secureTextEntry = YES;
         _passwordTF = passwordTF;
         [passwordTF setBackgroundColor:[UIColor whiteColor]];
         passwordTF.layer.cornerRadius = 6.0;
@@ -309,8 +310,8 @@ static AFHTTPSessionManager *manager ;
             //            [WSDK showHUDView];
             
             [self removeFromSuperview];
-            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
-            [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
+//            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
+            [[CQHHUDView shareHUDView] removeFromSuperview];
             
             if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                 [wsdk.delegate loginSuccessWithResponse:responseObject[@"data"]];
@@ -339,7 +340,6 @@ static AFHTTPSessionManager *manager ;
 //                [hud hideAnimated:YES afterDelay:1.f];
 //            }
         }else{
-            //            [view removeFromSuperview];
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
             hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
@@ -354,7 +354,6 @@ static AFHTTPSessionManager *manager ;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
         [hud hideAnimated:YES];
-        //        [view removeFromSuperview];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
         hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
         hud.mode = MBProgressHUDModeText;

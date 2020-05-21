@@ -29,7 +29,7 @@
     config.channelId = @"100002";
     config.key = @"cvFbf3rdmTqcpQWSTu5eIG8Av5L17Flv";
     config.configId = @"0";
-    config.appleID = @"wx9778a96a23f26d84";
+    config.appleID = @"wx343790ea3256d6dc";
     [WSDK initWithSDKWithConfig:config];
     
     return YES;

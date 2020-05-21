@@ -178,6 +178,14 @@ static dispatch_once_t onceToken;
             [hud hideAnimated:YES afterDelay:1.f];
             if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
                 [wsdk.delegate loginFailed];
+                CQHChangeAccountView *changeAccountView = [[CQHChangeAccountView alloc] init];
+                changeAccountView.userModel = _userModel;
+                [self.superview addSubview:changeAccountView];
+                changeAccountView.frame = CGRectMake(100, 100, 100, 100 );
+                double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
+                changeAccountView.bounds = CGRectMake(0, 0, a - 30, a - 30);
+                changeAccountView.center = CGPointMake(self.superview.frame.size.width *0.5, self.superview.frame.size.height *0.5);
+                [self removeFromSuperview];
             }
         }
         
@@ -192,6 +200,14 @@ static dispatch_once_t onceToken;
         [hud hideAnimated:YES afterDelay:1.f];
         if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
             [wsdk.delegate loginFailed];
+            CQHChangeAccountView *changeAccountView = [[CQHChangeAccountView alloc] init];
+            changeAccountView.userModel = _userModel;
+            [self.superview addSubview:changeAccountView];
+            changeAccountView.frame = CGRectMake(100, 100, 100, 100 );
+            double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
+            changeAccountView.bounds = CGRectMake(0, 0, a - 30, a - 30);
+            changeAccountView.center = CGPointMake(self.superview.frame.size.width *0.5, self.superview.frame.size.height *0.5);
+            [self removeFromSuperview];
         }
     }];
 }

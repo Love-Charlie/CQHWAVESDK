@@ -265,7 +265,7 @@ static AFHTTPSessionManager *manager ;
         [WXBtn setImage:[CQHTools bundleForImage:@"wx登录" packageName:@""] forState:UIControlStateNormal];
         [WXBtn addTarget:self action:@selector(WXBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [WXBtn.titleLabel setFont:[UIFont systemFontOfSize:11.0]];
+        [WXBtn.titleLabel setFont:[UIFont systemFontOfSize:10.0]];
         [WXBtn setTitle:@"微信登录" forState:UIControlStateNormal];
         [WXBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [WXBtn sizeToFit];
@@ -279,7 +279,7 @@ static AFHTTPSessionManager *manager ;
         [resetBtn setImage:[CQHTools bundleForImage:@"绑定手机" packageName:@""] forState:UIControlStateNormal];
         [resetBtn addTarget:self action:@selector(resetBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [resetBtn.titleLabel setFont:[UIFont systemFontOfSize:11.0]];
+        [resetBtn.titleLabel setFont:[UIFont systemFontOfSize:10.0]];
         [resetBtn setTitle:@"重置密码" forState:UIControlStateNormal];
         [resetBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [resetBtn sizeToFit];
@@ -292,7 +292,7 @@ static AFHTTPSessionManager *manager ;
         [bangdingBtn setImage:[CQHTools bundleForImage:@"绑定手机" packageName:@""] forState:UIControlStateNormal];
         [bangdingBtn addTarget:self action:@selector(bangdingBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [bangdingBtn.titleLabel setFont:[UIFont systemFontOfSize:11.0]];
+        [bangdingBtn.titleLabel setFont:[UIFont systemFontOfSize:10.0]];
         [bangdingBtn setTitle:@"绑定手机" forState:UIControlStateNormal];
         [bangdingBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [bangdingBtn sizeToFit];
@@ -573,29 +573,30 @@ static AFHTTPSessionManager *manager ;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , 15, _registerLabel.width, _registerLabel.height);
-    _backBtn.frame = CGRectMake(25*W_Adapter, 20, _registerLabel.height , _registerLabel.height);
-    _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+15, self.width - 50*W_Adapter, 1);
+    _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , self.height/25.0, _registerLabel.width, _registerLabel.height);
+    _backBtn.frame = CGRectMake(25*W_Adapter, self.height/20.0, _registerLabel.height , _registerLabel.height);
+    _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+self.height/25.0, self.width - 50*W_Adapter, 1);
     
-    _phoneTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+15, self.width - 50*W_Adapter, 44);
+    _phoneTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+self.height/25.0, self.width - 50*W_Adapter, self.height/7.0);
     
-    _tableview.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame), self.width - 50*W_Adapter, 160*H_Adapter);
+    _tableview.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame), self.width - 50*W_Adapter, 160);
     
-    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+15,  self.width - 50*W_Adapter, 44);
-    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+15, self.width - 50*W_Adapter, 44);
-    _xinRegisterBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+10, _xinRegisterBtn.width, _xinRegisterBtn.height);
-    _forgetBtn.frame = CGRectMake(self.width - _forgetBtn.width - 25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+10, _forgetBtn.width, _forgetBtn.height);
-    _line1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_forgetBtn.frame)+10, self.width - 50*W_Adapter, 1);
+    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_phoneTF.frame)+self.height/25.0,  self.width - 50*W_Adapter, self.height/7.0);
+    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+self.height/25.0, self.width - 50*W_Adapter, self.height/7.0);
+    _xinRegisterBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+self.height/60.0, _xinRegisterBtn.width, _xinRegisterBtn.height);
+    _forgetBtn.frame = CGRectMake(self.width - _forgetBtn.width - 25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+self.height/60.0, _forgetBtn.width, _forgetBtn.height);
+    _line1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_forgetBtn.frame)+self.height/60.0, self.width - 50*W_Adapter, 1);
     _btnContentView.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line1.frame), self.width - 50*W_Adapter, self.width - CGRectGetMaxY(_line1.frame));
-    _WXBtn.frame = CGRectMake(0, 5, _btnContentView.height-5, _btnContentView.height-5);
+    _WXBtn.frame = CGRectMake(0, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
     
     CGFloat marge = (_btnContentView.width- 3*_WXBtn.width)*0.5;
-    _resetBtn.frame = CGRectMake(CGRectGetMaxX(_WXBtn.frame)+marge, 5, _btnContentView.height-5, _btnContentView.height-5);
-    _bangdingBtn.frame = CGRectMake(CGRectGetMaxX(_resetBtn.frame)+marge, 5, _btnContentView.height-5, _btnContentView.height-5);
+    _resetBtn.frame = CGRectMake(CGRectGetMaxX(_WXBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
+    _bangdingBtn.frame = CGRectMake(CGRectGetMaxX(_resetBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
+    NSLog(@"%lf",self.height/50.0);
 }
 
-
 #pragma mark tableview代理方法
+
 //tableview代理方法
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

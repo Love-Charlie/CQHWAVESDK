@@ -277,8 +277,8 @@ static AFHTTPSessionManager *manager ;
             //            [WSDK showHUDView];
             
             [self removeFromSuperview];
-            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
-            [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
+//            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
+            [[CQHHUDView shareHUDView] removeFromSuperview];
             
             if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                 [wsdk.delegate loginSuccessWithResponse:responseObject[@"data"]];

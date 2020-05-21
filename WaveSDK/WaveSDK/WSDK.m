@@ -189,7 +189,7 @@ static dispatch_once_t onceToken;
 //                [CQHHUDView dissCQHHUBView];
                 [[CQHAutoLoginView sharedAutoLoginView] removeFromSuperview];
                 [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
-                [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
+//                [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
                 if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                     [wsdk.delegate loginSuccessWithResponse:respon];
                     if ([responseObject[@"data"][@"authStatus"] integerValue] == 1) {
@@ -197,7 +197,9 @@ static dispatch_once_t onceToken;
                         if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
 //                            NSLog(@"没有认证");
                             //
-                            [CQHHUDView sharedCQHVerView];
+//                            [CQHHUDView sharedCQHVerView];
+                            [CQHHUDView showVerView];
+                            
                         }
                     }
                 }
