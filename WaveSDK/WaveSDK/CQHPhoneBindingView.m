@@ -266,7 +266,8 @@ static AFHTTPSessionManager *manager ;
                 if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
                     NSLog(@"没有认证");
                     //
-                    [CQHHUDView sharedCQHVerView];
+//                    [CQHHUDView sharedCQHVerView];
+                    [CQHHUDView showVerView];
                 }
             }
         }
