@@ -277,7 +277,6 @@ static AFHTTPSessionManager *manager ;
             //            [WSDK showHUDView];
             
             [self removeFromSuperview];
-//            [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
             [[CQHHUDView shareHUDView] removeFromSuperview];
             
             if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
@@ -361,9 +360,9 @@ static AFHTTPSessionManager *manager ;
     _imageView.frame = CGRectMake(self.width*0.5/3.0 , 10*H_Adapter, self.width*2.0/3.0, self.width*2.0/3.0 *image.size.height/image.size.width);
     _line.frame = CGRectMake(20, CGRectGetMaxY(_imageView.frame) +10*H_Adapter, self.width - 40, 1);
     _backBtn.frame = CGRectMake(15*W_Adapter, (CGRectGetMaxY(_line.frame) - 15)*0.5, 20, 15);
-    _usernameTF.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_line.frame)+25*H_Adapter, self.width - 60*W_Adapter, 40);
-    _passwordTF.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+25*H_Adapter, self.width - 60*W_Adapter, 40);
-    _loginBtn.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+30*H_Adapter, self.width - 60*W_Adapter, 40);
+    _usernameTF.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_line.frame)+25*H_Adapter, self.width - 60*W_Adapter, self.height/7.0);
+    _passwordTF.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+25*H_Adapter, self.width - 60*W_Adapter, self.height/7.0);
+    _loginBtn.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+25*H_Adapter, self.width - 60*W_Adapter, self.height/7.0);
     _forgetBtn.frame = CGRectMake(CGRectGetMinX(_loginBtn.frame), CGRectGetMaxY(_loginBtn.frame) +(self.height - CGRectGetMaxY(_loginBtn.frame)-_forgetBtn.height)*0.5, _forgetBtn.width, _forgetBtn.height);
     _registerBtn.frame = CGRectMake(self.width -30*W_Adapter - _registerBtn.width , CGRectGetMinY(_forgetBtn.frame), _registerBtn.width, _registerBtn.height);
 }

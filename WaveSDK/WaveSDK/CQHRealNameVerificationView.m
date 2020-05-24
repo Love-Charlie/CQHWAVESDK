@@ -281,16 +281,16 @@ static dispatch_once_t onceToken;
     _backBtn.frame = CGRectMake(25*W_Adapter,  20*H_Adapter, _titleLabel.height, _titleLabel.height);
     
     CGRect rect = [_label1.text boundingRectWithSize:CGSizeMake(self.width - 50*W_Adapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_label1.font} context:nil];
-    _label1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_titleLabel.frame)+20*H_Adapter, CGRectGetWidth(rect), CGRectGetHeight(rect));
+    _label1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_titleLabel.frame)+10*H_Adapter, CGRectGetWidth(rect), CGRectGetHeight(rect));
     
     CGRect rect1 = [_label2.text boundingRectWithSize:CGSizeMake(self.width - 50*W_Adapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_label2.font} context:nil];
     _label2.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_label1.frame)+3*H_Adapter, CGRectGetWidth(rect1), CGRectGetHeight(rect1));
     
-    _usernameTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_label2.frame)+20*H_Adapter, self.width - 50*W_Adapter, 35);
-    _identityTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+20*H_Adapter, self.width - 50*W_Adapter, 35);
+    _usernameTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_label2.frame)+10*H_Adapter, self.width - 50*W_Adapter, self.height/7.0);
+    _identityTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+10*H_Adapter, self.width - 50*W_Adapter, self.height/7.0);
     _desLabel.frame = CGRectMake(40*W_Adapter, CGRectGetMaxY(_identityTF.frame)+10*H_Adapter, self.width - 50*W_Adapter-_desLabel.height, _desLabel.height);
     _imageView.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_identityTF.frame)+10*H_Adapter,  _desLabel.height,  _desLabel.height);
-    _tijiaoBtn.frame = CGRectMake(25*W_Adapter, (self.height - CGRectGetMaxY(_desLabel.frame)-35)*0.5 +CGRectGetMaxY(_desLabel.frame), self.width - 50*W_Adapter, 35);
+    _tijiaoBtn.frame = CGRectMake(25*W_Adapter, (self.height - CGRectGetMaxY(_desLabel.frame)-self.height/7.0)*0.5 +CGRectGetMaxY(_desLabel.frame), self.width - 50*W_Adapter, self.height/7.0);
 }
 
 @end

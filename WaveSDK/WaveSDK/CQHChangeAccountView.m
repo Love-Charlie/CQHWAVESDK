@@ -17,6 +17,8 @@
 #import "AFNetworking.h"
 #import "CQHResetPasswordView.h"
 #import "WSDK.h"
+#import "CQHRegisterView.h"
+#import "CQHEditPasswordView.h"
 #import <objc/runtime.h>
 
 @interface CQHChangeAccountView()<UITableViewDelegate , UITableViewDataSource>
@@ -228,6 +230,7 @@ static AFHTTPSessionManager *manager ;
                [self addSubview:loginBtn];
         
         UIButton *xinRegisterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [xinRegisterBtn addTarget:self action:@selector(xinRegisterBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _xinRegisterBtn = xinRegisterBtn;
         [xinRegisterBtn setTitle:@"新账号注册" forState:UIControlStateNormal];
         [xinRegisterBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -280,7 +283,7 @@ static AFHTTPSessionManager *manager ;
         [resetBtn addTarget:self action:@selector(resetBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
         [resetBtn.titleLabel setFont:[UIFont systemFontOfSize:10.0]];
-        [resetBtn setTitle:@"重置密码" forState:UIControlStateNormal];
+        [resetBtn setTitle:@"修改密码" forState:UIControlStateNormal];
         [resetBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [resetBtn sizeToFit];
         
@@ -301,6 +304,13 @@ static AFHTTPSessionManager *manager ;
 
     }
     return self;
+}
+
+- (void)xinRegisterBtnClick:(UIButton *)btn
+{
+    CQHRegisterView *registerView = [[CQHRegisterView alloc] init];
+    registerView.frame = self.bounds;
+    [self addSubview:registerView];
 }
 
 - (void)forgetBtnClick:(UIButton *)btn
@@ -382,6 +392,8 @@ static AFHTTPSessionManager *manager ;
             }
             
             CQHResetPasswordView *resetPasswordView = [[CQHResetPasswordView alloc] init];
+            resetPasswordView.mobile = responseObject[@"data"][@"mobile"];
+            resetPasswordView.username = _phoneTF.text;
             resetPasswordView.frame = self.bounds;
             [self addSubview:resetPasswordView];
             
@@ -514,6 +526,10 @@ static AFHTTPSessionManager *manager ;
 - (void)resetBtnClick:(UIButton *)btn
 {
     NSLog(@"%s",__FUNCTION__);
+    CQHEditPasswordView *editPasswordView = [[CQHEditPasswordView alloc] init];
+    editPasswordView.frame = self.bounds;
+    editPasswordView.username = self.phoneTF.text;
+    [self addSubview:editPasswordView];
 }
 
 - (void)WXBtnClick:(UIButton *)btn
@@ -592,7 +608,6 @@ static AFHTTPSessionManager *manager ;
     CGFloat marge = (_btnContentView.width- 3*_WXBtn.width)*0.5;
     _resetBtn.frame = CGRectMake(CGRectGetMaxX(_WXBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
     _bangdingBtn.frame = CGRectMake(CGRectGetMaxX(_resetBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
-    NSLog(@"%lf",self.height/50.0);
 }
 
 #pragma mark tableview代理方法

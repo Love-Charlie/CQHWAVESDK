@@ -107,6 +107,8 @@
 		20EE20902429EE12002B4D7B /* CQHMainLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE208E2429EE12002B4D7B /* CQHMainLoginView.m */; };
 		20F2D7112424A60F0001533B /* CQHConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 20F2D70F2424A60F0001533B /* CQHConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		20F2D7122424A60F0001533B /* CQHConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F2D7102424A60F0001533B /* CQHConfig.m */; };
+		CBCF66DF247A69E50059722E /* CQHEditPasswordView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBCF66DD247A69E50059722E /* CQHEditPasswordView.h */; };
+		CBCF66E0247A69E50059722E /* CQHEditPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBCF66DE247A69E50059722E /* CQHEditPasswordView.m */; };
 		CBDAE2BD244C42F9004AD9E8 /* CQHButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CBDAE2BB244C42F9004AD9E8 /* CQHButton.h */; };
 		CBDAE2BE244C42F9004AD9E8 /* CQHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */; };
 		CBDB4261244C08320073A900 /* CQHChangeAccountView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBDB425F244C08320073A900 /* CQHChangeAccountView.h */; };
@@ -216,6 +218,8 @@
 		20EE208E2429EE12002B4D7B /* CQHMainLoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHMainLoginView.m; sourceTree = "<group>"; };
 		20F2D70F2424A60F0001533B /* CQHConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CQHConfig.h; sourceTree = "<group>"; };
 		20F2D7102424A60F0001533B /* CQHConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CQHConfig.m; sourceTree = "<group>"; };
+		CBCF66DD247A69E50059722E /* CQHEditPasswordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHEditPasswordView.h; sourceTree = "<group>"; };
+		CBCF66DE247A69E50059722E /* CQHEditPasswordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHEditPasswordView.m; sourceTree = "<group>"; };
 		CBDAE2BB244C42F9004AD9E8 /* CQHButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHButton.h; sourceTree = "<group>"; };
 		CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHButton.m; sourceTree = "<group>"; };
 		CBDB425F244C08320073A900 /* CQHChangeAccountView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHChangeAccountView.h; sourceTree = "<group>"; };
@@ -358,6 +362,8 @@
 				CBDB4260244C08320073A900 /* CQHChangeAccountView.m */,
 				2013E6AB246A8A3A00675537 /* CQHResetPasswordView.h */,
 				2013E6AC246A8A3A00675537 /* CQHResetPasswordView.m */,
+				CBCF66DD247A69E50059722E /* CQHEditPasswordView.h */,
+				CBCF66DE247A69E50059722E /* CQHEditPasswordView.m */,
 				20D2BB51244D6EF00089AE87 /* CQHPhoneBindingView.h */,
 				20D2BB52244D6EF00089AE87 /* CQHPhoneBindingView.m */,
 				20A88B722431A6A600FD1ABB /* CQHAgreementView.h */,
@@ -442,6 +448,7 @@
 				20D38F462424BC170079F992 /* MBProgressHUD.h in Headers */,
 				20F2D7112424A60F0001533B /* CQHConfig.h in Headers */,
 				2013E6AD246A8A3A00675537 /* CQHResetPasswordView.h in Headers */,
+				CBCF66DF247A69E50059722E /* CQHEditPasswordView.h in Headers */,
 				20EE208F2429EE12002B4D7B /* CQHMainLoginView.h in Headers */,
 				202A39372437172300BD42AC /* CQHForgetPasswordView.h in Headers */,
 				200C004F243F1599007DB6A5 /* FMDatabaseAdditions.h in Headers */,
@@ -615,6 +622,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBCF66E0247A69E50059722E /* CQHEditPasswordView.m in Sources */,
 				20EE20902429EE12002B4D7B /* CQHMainLoginView.m in Sources */,
 				20D7DF8924230C09005579D3 /* AFHTTPSessionManager.m in Sources */,
 				20D7DF9424230C09005579D3 /* AFURLSessionManager.m in Sources */,

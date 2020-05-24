@@ -176,6 +176,13 @@ static dispatch_once_t onceToken;
             hud.mode = MBProgressHUDModeText;
             hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
             [hud hideAnimated:YES afterDelay:1.f];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (isSwitch == 0) {
+                    
+                }
+            });
+            
             if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
                 [wsdk.delegate loginFailed];
                 CQHChangeAccountView *changeAccountView = [[CQHChangeAccountView alloc] init];

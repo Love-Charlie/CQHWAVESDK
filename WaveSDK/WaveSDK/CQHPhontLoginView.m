@@ -616,7 +616,7 @@ static AFHTTPSessionManager *manager ;
     _verificationCodeBtn.frame = CGRectMake(_verificationCodeTF.width*0.7-3 , 5*H_Adapter, _verificationCodeTF.width*0.3-3, 30*H_Adapter);
     _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+20, self.width - 50*W_Adapter, 40*H_Adapter);
 //    _regAndLoginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+20*H_Adapter, self.width - 50*W_Adapter, 40*H_Adapter);
-    _regAndLoginBtn.frame = CGRectMake(25*W_Adapter, (self.width - CGRectGetMaxY(_passwordTF.frame)- 40)*0.5+CGRectGetMaxY(_passwordTF.frame), self.width - 50*W_Adapter, 40);
+    _regAndLoginBtn.frame = CGRectMake(25*W_Adapter, (self.width - CGRectGetMaxY(_passwordTF.frame)- self.height/7.0)*0.5+CGRectGetMaxY(_passwordTF.frame), self.width - 50*W_Adapter, self.height/7.0);
 }
 
 @end

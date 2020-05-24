@@ -112,6 +112,12 @@ static AFHTTPSessionManager *manager ;
         usernameTF.layer.masksToBounds = YES;
         usernameTF.tintColor = [UIColor colorWithRed:214/255.0 green:6/255.0 blue:0/255.0 alpha:1];
         usernameTF.placeholder=@" 请输入手机号";
+//        usernameTF.attributedPlaceholder
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:@"请输入手机号" attributes:
+        @{NSForegroundColorAttributeName:[UIColor grayColor],
+                     NSFontAttributeName:usernameTF.font
+             }];
+        usernameTF.attributedPlaceholder = attrString;
         [self addSubview:usernameTF];
         
         UIView *tipsView = [[UIView alloc] init];
@@ -141,6 +147,12 @@ static AFHTTPSessionManager *manager ;
         verificationCodeTF.layer.masksToBounds = YES;
         verificationCodeTF.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         verificationCodeTF.placeholder=@" 请输入验证码";
+        NSAttributedString *attrString1 = [[NSAttributedString alloc] initWithString:@" 请输入验证码" attributes:
+        @{NSForegroundColorAttributeName:[UIColor grayColor],
+                     NSFontAttributeName:verificationCodeTF.font
+             }];
+        verificationCodeTF.attributedPlaceholder = attrString1;
+        
 
         
         UIView *contentLeftView2 = [[UIView alloc] init];
@@ -432,6 +444,8 @@ static AFHTTPSessionManager *manager ;
          username = [username stringByReplacingCharactersInRange:NSMakeRange(5, username.length - 10) withString:@"...."];
     }
     
+    [_contentLabel setTextColor:[UIColor blackColor]];
+    
     NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"正在给账号 : %@, 进行手机绑定",username]];
     [Att addAttribute:NSForegroundColorAttributeName value:[UIColor  redColor] range:NSMakeRange(8,username.length)];
     _contentLabel.attributedText = Att;
@@ -464,7 +478,7 @@ static AFHTTPSessionManager *manager ;
     
     _verificationCodeTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_tipsView.frame)+self.height/50.0, self.width - 50*W_Adapter, self.height/7.0);
     _verificationCodeBtn.frame = CGRectMake(_verificationCodeTF.width*0.7-3 , (self.height/7.0-self.height/9.0)*0.5, _verificationCodeTF.width*0.3-3, self.height/9.0);
-    _bindAndLogin.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+self.height/10.0, self.width - 50*W_Adapter, self.height/6.0);
+    _bindAndLogin.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+self.height/10.0, self.width - 50*W_Adapter, self.height/7.0);
     _label1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_bindAndLogin.frame)+self.height/75.0, self.width - 50*W_Adapter, 15);
 }
 

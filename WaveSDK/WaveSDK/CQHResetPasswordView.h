@@ -10,4 +10,8 @@
 
 @interface CQHResetPasswordView : UIView
 
+
+@property (nonatomic , copy) NSString *mobile;
+@property (nonatomic , copy) NSString *username;
+
 @end
