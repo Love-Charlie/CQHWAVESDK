@@ -13,6 +13,8 @@
 #import "UIView+Frame.h"
 #import "MBProgressHUD.h"
 #import "AFNetworking.h"
+#import "CQHUserModel.h"
+#import "WSDK.h"
 
 @interface CQHResetPasswordView()
 
@@ -276,11 +278,71 @@ static AFHTTPSessionManager *manager ;
        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
        hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
 //       hud.label.text = NSLocalizedString(@"获取验证码...", @"HUD loading title");
+    WSDK *wsdk = [WSDK sharedCQHSDK];
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/password/forgot?data=%@",BASE_URL,newStr] parameters:dict3 headers:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [hud hideAnimated:YES];
-//        NSLog(@"%@",responseObject[@"message"]);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if ([responseObject[@"code"] integerValue] == 200) {
+            
+            
+            CQHUserModel *userModel = [[CQHUserModel alloc] init];
+            userModel.accountName = responseObject[@"data"][@"accountName"];
+            userModel.password = responseObject[@"data"][@"password"];
+            userModel.username = responseObject[@"data"][@"username"];
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
+            [userDefaults setObject:data forKey:CQHUSERMODEL];
+//            [userDefaults synchronize];
+            [userDefaults setObject:@"1" forKey:ISAUTO];
+            
+            [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
+            [userDefaults synchronize];
+            
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            //            [WSDK showHUDView];
+            
+            [self removeFromSuperview];
+            [[CQHHUDView shareHUDView] removeFromSuperview];
+            
+            if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
+                [wsdk.delegate loginSuccessWithResponse:responseObject[@"data"]];
+                
+                if ([responseObject[@"data"][@"authStatus"] integerValue] == 1) {
+                    
+                    if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
+                        NSLog(@"没有认证");
+                        [CQHHUDView showVerView];
+                    }
+                }
+            }
+        }else{
+            //            [view removeFromSuperview];
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
+                [wsdk.delegate loginFailed];
+            }
+        }
         
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        [hud hideAnimated:YES];
+        //        [view removeFromSuperview];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请查看网络连接!", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
+            [wsdk.delegate loginFailed];
+        }
     }];
 }
 

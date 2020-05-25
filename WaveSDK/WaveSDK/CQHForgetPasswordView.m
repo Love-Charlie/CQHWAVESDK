@@ -468,14 +468,14 @@ static AFHTTPSessionManager *manager ;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , 20, _registerLabel.width, _registerLabel.height);
-    _backBtn.frame = CGRectMake(25*W_Adapter, 20, _registerLabel.height , _registerLabel.height);
-    _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+20*H_Adapter, self.width - 50*W_Adapter, 1);
-    _usernameTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+10*H_Adapter, self.width - 50*W_Adapter, 35*H_Adapter);
-    _verificationCodeTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+10*H_Adapter, self.width - 50*W_Adapter, 35*H_Adapter);
-    _verificationCodeBtn.frame = CGRectMake(_verificationCodeTF.width*0.7-3 , 5*H_Adapter, _verificationCodeTF.width*0.3-3, 25*H_Adapter);
-    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+10*H_Adapter, self.width - 50*W_Adapter, 35*H_Adapter);
-    _passwordTF1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+10*H_Adapter, self.width - 50*W_Adapter, 35*H_Adapter);
-    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF1.frame)+(self.height - CGRectGetMaxY(_passwordTF1.frame) - 40*H_Adapter)*0.5, self.width - 50*W_Adapter, 40);
+    _registerLabel.frame = CGRectMake((self.width -_registerLabel.width)*0.5 , self.height/30.0, _registerLabel.width, _registerLabel.height);
+    _backBtn.frame = CGRectMake(25*W_Adapter, self.height/30.0, _registerLabel.height , _registerLabel.height);
+    _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+self.height/30.0, self.width - 50*W_Adapter, 1);
+    _usernameTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+self.height/30.0, self.width - 50*W_Adapter, self.height/8.0);
+    _verificationCodeTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+self.height/30.0, self.width - 50*W_Adapter, self.height/8.0);
+    _verificationCodeBtn.frame = CGRectMake(_verificationCodeTF.width*0.7-3 , (self.height/8.0-self.height/9.0)*0.5, _verificationCodeTF.width*0.3-3, self.height/9.0);
+    _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_verificationCodeTF.frame)+self.height/30.0, self.width - 50*W_Adapter, self.height/8.0);
+    _passwordTF1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+self.height/30.0, self.width - 50*W_Adapter, self.height/8.0);
+    _loginBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_passwordTF1.frame)+(self.height - CGRectGetMaxY(_passwordTF1.frame) - self.height/7.0)*0.5, self.width - 50*W_Adapter, self.height/8.0);
 }
 @end

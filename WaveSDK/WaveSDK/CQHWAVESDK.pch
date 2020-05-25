@@ -23,8 +23,8 @@
 #define WX_REFRESH_TOKEN @"WX_REFRESH_TOKEN"
 
 //环境地址
-//#define BASE_URL @"http://sdk.wavesdk.com"
-#define BASE_URL @"http://test.sdk.wavesdk.com/"
+#define BASE_URL @"http://sdk.wavesdk.com/"
+//#define BASE_URL @"http://test.sdk.wavesdk.com/"
 
 //注册密码的key
 #define PhoneKey @"EuT2GB0C9ZeLKYALFbPbYXSwFS%osrAxfTSlUjnu"

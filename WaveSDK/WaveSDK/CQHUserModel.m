@@ -16,6 +16,7 @@
     [aCoder encodeObject:self.password forKey:@"password"];
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.userId forKey:@"userId"];
+    [aCoder encodeObject:self.md5Password forKey:@"md5Password"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -25,6 +26,7 @@
         self.password = [aDecoder decodeObjectForKey:@"password"];
         self.accountName = [aDecoder decodeObjectForKey:@"accountName"];
         self.userId = [aDecoder decodeObjectForKey:@"userId"];
+        self.md5Password = [aDecoder decodeObjectForKey:@"md5Password"];
     }
     return self;
 }

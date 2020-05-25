@@ -19,6 +19,8 @@
 #import "WSDK.h"
 #import "CQHRegisterView.h"
 #import "CQHEditPasswordView.h"
+#import "CQHHUDView.h"
+#import "WSDK.h"
 #import <objc/runtime.h>
 
 @interface CQHChangeAccountView()<UITableViewDelegate , UITableViewDataSource>
@@ -95,7 +97,7 @@ static AFHTTPSessionManager *manager ;
         [backBtn addTarget:self action:@selector(backBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _backBtn = backBtn;
         [backBtn setImage:[CQHTools bundleForImage:@"箭头" packageName:@""] forState:UIControlStateNormal];
-        [self addSubview:backBtn];
+//        [self addSubview:backBtn];
         
         UIView *line = [[UIView alloc] init];
         _line = line;
@@ -562,6 +564,125 @@ static AFHTTPSessionManager *manager ;
 - (void)loginBtnClick:(UIButton *)btn
 {
     NSLog(@"%s",__FUNCTION__);
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    //随机数
+    NSString *nonceStr = [CQHTools randomNumber];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"sdkVersion"]=sdkVersion;
+    dict[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+    dict[@"deviceType"]= @"1";
+    dict[@"gameId"]=[userDefaults objectForKey:GAMEID];
+    dict[@"channelId"] = [userDefaults objectForKey:CHANNELID];
+    dict[@"platformCode"]=PLATFORMCODE;
+    dict[@"nonceStr"]=nonceStr;
+    dict[@"username"] = self.phoneTF.text;
+    dict[@"password"] =  [CQHTools jiami:self.passwordTF.text];
+    
+    
+    NSString *stringA = [CQHTools sortArrWithDictionary:dict];
+    //sign
+    NSString *sign = [NSString stringWithFormat:@"%@&key=%@",stringA,[userDefaults objectForKey:SIGNKEY]];
+    //sign md5签名
+    NSString *md5String = [CQHTools md5:sign];
+    
+    NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
+    dict1[@"sdkVersion"]=sdkVersion;
+    dict1[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+    dict1[@"deviceType"]= @"1";
+    dict1[@"gameId"]=[userDefaults objectForKey:GAMEID];
+    dict1[@"channelId"] = [userDefaults objectForKey:CHANNELID];
+    dict1[@"platformCode"]=PLATFORMCODE;
+    dict1[@"nonceStr"]=nonceStr;
+    dict1[@"username"] = self.phoneTF.text;
+    dict1[@"password"] =  [CQHTools jiami:self.passwordTF.text];
+    dict1[@"sign"] = md5String;
+    
+    NSString *dictString = [CQHTools convertToJsonData:dict1];
+    NSString *base64String = [CQHTools base64EncodeString:dictString];
+    
+    //字符串前两位
+    NSString *qianStr = [base64String substringToIndex:2];
+    //字符串第六位开始后面的字符
+    NSString *houStr = [base64String substringFromIndex:6];
+    NSMutableString *newStr = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@",qianStr,houStr]];
+    NSString *jiequStr = [CQHTools stringJieQu:base64String];
+    [newStr insertString:jiequStr atIndex:newStr.length - 2];
+    NSMutableDictionary *dict3 = [NSMutableDictionary dictionary];
+    dict3[@"data"] = newStr;
+    
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    hud.label.text = NSLocalizedString(@"登录中...", @"HUD loading title");
+    WSDK *wsdk = [WSDK sharedCQHSDK];
+    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/login?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [hud hideAnimated:YES];
+        if ([responseObject[@"code"] integerValue] == 200) {
+            
+            
+            CQHUserModel *userModel = [[CQHUserModel alloc] init];
+            userModel.accountName = responseObject[@"data"][@"accountName"];
+            userModel.password = self.passwordTF.text;
+//            userModel.username = responseObject[@"data"][@"username"];
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
+            
+            [userDefaults setObject:data forKey:CQHUSERMODEL];
+            
+            [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
+            [userDefaults synchronize];
+            
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            //            [WSDK showHUDView];
+            
+            [self removeFromSuperview];
+            [[CQHHUDView shareHUDView] removeFromSuperview];
+            
+            if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
+                [wsdk.delegate loginSuccessWithResponse:responseObject[@"data"]];
+                
+                if ([responseObject[@"data"][@"authStatus"] integerValue] == 1) {
+                    
+                    if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
+                        NSLog(@"没有认证");
+                  
+                        [CQHHUDView showVerView];
+                    }
+                }
+            }
+
+        }else{
+            //            [view removeFromSuperview];
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+            [hud hideAnimated:YES afterDelay:1.f];
+            if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
+                [wsdk.delegate loginFailed];
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+        [hud hideAnimated:YES];
+        //        [view removeFromSuperview];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请查看网络连接!", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
+            [wsdk.delegate loginFailed];
+        }
+    }];
 
 }
 

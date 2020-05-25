@@ -257,7 +257,7 @@ static AFHTTPSessionManager *manager ;
     hud.label.text = NSLocalizedString(@"验证中...", @"HUD loading title");
      WSDK *wsdk = [WSDK sharedCQHSDK];
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/register?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
             

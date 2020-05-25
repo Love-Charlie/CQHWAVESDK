@@ -15,5 +15,6 @@
 @property (nonatomic , copy) NSString *userId;
 
 @property (nonatomic , copy) NSString *accountName;
+@property (nonatomic , copy) NSString *md5Password;
 
 @end

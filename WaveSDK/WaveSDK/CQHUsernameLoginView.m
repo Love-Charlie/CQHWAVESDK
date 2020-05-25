@@ -129,6 +129,8 @@ static AFHTTPSessionManager *manager ;
         
         /*******************************************************************************************************/
         UITextField *passwordTF = [[UITextField alloc] init];
+        passwordTF.secureTextEntry = YES;
+    
         passwordTF.textColor = [UIColor blackColor];
         passwordTF.clearButtonMode=UITextFieldViewModeWhileEditing;
         UIImageView *leftView1 = [[UIImageView alloc] init];

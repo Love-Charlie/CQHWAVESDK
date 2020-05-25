@@ -104,8 +104,12 @@ static dispatch_once_t onceToken;
     dict[@"nonceStr"]=nonceStr;
     dict[@"username"] = userModel.accountName;
 //    dict[@"password"] =  [CQHTools md5:userModel.password];
-    dict[@"password"] =  [CQHTools jiami:userModel.password];
     
+//    if (userModel.md5Password) {
+//         dict[@"password"] =  [CQHTools jiami:userModel.md5Password];
+//    }else{
+         dict[@"password"] =  [CQHTools jiami:userModel.password];
+//    }
     
     
     NSString *stringA = [CQHTools sortArrWithDictionary:dict];
@@ -124,7 +128,13 @@ static dispatch_once_t onceToken;
     dict1[@"nonceStr"]=nonceStr;
     dict1[@"username"] = userModel.accountName;
 //    dict1[@"password"] =  [CQHTools md5:userModel.password];
-    dict1[@"password"] =  [CQHTools jiami:userModel.password];
+//    dict1[@"password"] =  [CQHTools jiami:userModel.password];
+    
+//    if (userModel.md5Password) {
+//        dict1[@"password"] =  [CQHTools jiami:userModel.md5Password];;
+//    }else{
+        dict1[@"password"] =  [CQHTools jiami:userModel.password];
+//    }
     dict1[@"sign"] = md5String;
     
     NSString *dictString = [CQHTools convertToJsonData:dict1];

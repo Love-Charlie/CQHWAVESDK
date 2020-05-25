@@ -18,6 +18,7 @@
 #import "CQHVerfityOrderModel.h"
 #import "CQHMainLoginView.h"
 #import "CQHAutoLoginView.h"
+//#import "CQHUserModel.h"
 
 @interface WSDK() <WXApiDelegate,YQInAppPurchaseToolDelegate>
 
@@ -119,11 +120,11 @@ static dispatch_once_t onceToken;
 }
 + (void)onResp:(BaseResp *)resp
 {
-    NSLog(@"%@",resp);
+//    NSLog(@"%@",resp);
     if([resp isKindOfClass:[SendAuthResp class]]){
         SendAuthResp *resp2 = (SendAuthResp *)resp;
         code = [resp2 code];
-        NSLog(@"%@",code);
+//        NSLog(@"%@",code);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"wxLogin" object:resp2];
 
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -178,8 +179,37 @@ static dispatch_once_t onceToken;
         hud.label.text = NSLocalizedString(@"微信登录中...", @"HUD loading title");
         WSDK *wsdk = [WSDK sharedCQHSDK];
         [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/wx/login?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
             if ([responseObject[@"code"] integerValue] == 200) {
                [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+                
+                CQHUserModel *userModel = [[CQHUserModel alloc] init];
+                userModel.accountName = responseObject[@"data"][@"accountName"];
+                userModel.password = responseObject[@"data"][@"password"];
+                userModel.md5Password = responseObject[@"data"][@"md5Password"];
+                userModel.username = responseObject[@"data"][@"username"];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
+                [userDefaults setObject:@"1" forKey:ISAUTO];
+                [userDefaults setObject:data forKey:CQHUSERMODEL];
+                
+                JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+//                CQHUserModel *userModel = [[CQHUserModel alloc] init];
+                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+                }
+                
+//                NSArray *personArr = [db jq_lookupTable:CQHUSERMODELTABLE dicOrModel:userModel whereFormat:nil];
+//                
+//                BOOL isHave = NO;
+//                for (CQHUserModel *model1 in personArr) {
+////                    NSLog(@"%@,%@",model.accountName,model.password);
+//                    if ([model1.accountName isEqualToString:userModel.accountName]) {
+//                        isHave = YES;
+//                    }
+//                }
+//                if (!isHave) {
+//                    [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+//                }
                 NSMutableDictionary *respon = [NSMutableDictionary dictionaryWithDictionary:responseObject[@"data"]];
 //                [respon removeObjectForKey:@"md5Password"];
                 [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
