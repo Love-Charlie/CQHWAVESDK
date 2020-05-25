@@ -764,7 +764,9 @@ static AFHTTPSessionManager *manager ;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    self.phoneTF.text = cell.textLabel.text;
+    CQHUserModel *model = self.userModelData[indexPath.row];
+    self.phoneTF.text = model.accountName;
+    self.passwordTF.text = model.password;
 //    self.usernameTFRightView.selected = !self.usernameTFRightView.selected;
     _rightView.selected = !_rightView.selected;
     [self.tableview removeFromSuperview];
