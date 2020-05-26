@@ -649,13 +649,22 @@ static dispatch_once_t onceToken;
     hud.label.text = @"购买失败!";//NSLocalizedString(@"Message here!", @"HUD message title");
     hud.label.textColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
     [hud hideAnimated:YES afterDelay:2.f];
-    NSLog(@"购买失败");
+//    NSLog(@"购买失败");
+    WSDK *wsdk = [WSDK sharedCQHSDK];
+    if ([wsdk.delegate respondsToSelector:@selector(pFailed)]) {
+        [wsdk.delegate pFailed];
+    }
 }
 
 
 //购买成功
 + (void)CQHToolBoughtProductSuccessedWithProductID:(SKPaymentTransaction *)transaction andInfo:(NSDictionary *)infoDic
 {
+    
+    WSDK *wsdk = [WSDK sharedCQHSDK];
+    if ([wsdk.delegate respondsToSelector:@selector(pSuccess)]) {
+        [wsdk.delegate pSuccess];
+    }
     [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
 //    NSLog(@"购买成功");
     
@@ -696,12 +705,12 @@ static dispatch_once_t onceToken;
     model.platformCode = PLATFORMCODE;
     model.userId = [userDefaults objectForKey:USERID];
     [db jq_insertTable:VERTIfyORDERTABLE dicOrModel:model];
-    NSLog(@"00000=%@",model.outTradeNo);
+//    NSLog(@"00000=%@",model.outTradeNo);
     
-    NSArray *personArr = [db jq_lookupTable:VERTIfyORDERTABLE dicOrModel:model whereFormat:nil];
-    for (CQHVerfityOrderModel *model in personArr) {
-        NSLog(@"11111==%@",model.outTradeNo);
-    }
+//    NSArray *personArr = [db jq_lookupTable:VERTIfyORDERTABLE dicOrModel:model whereFormat:nil];
+//    for (CQHVerfityOrderModel *model in personArr) {
+//        NSLog(@"11111==%@",model.outTradeNo);
+//    }
     
     NSString *url = [NSString stringWithFormat:@"%@sdk/pt/appstore/query?outTradeNo=%@&receiptData=%@&platformCode=%@&userId=%@",BASE_URL,[userDefaults objectForKey:OUTTradeNo],receiptData,PLATFORMCODE,[userDefaults objectForKey:USERID]];
     [[self sharedManager] POST:url parameters:dict success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

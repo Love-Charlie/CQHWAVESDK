@@ -45,6 +45,16 @@
     NSLog(@"%s,登录失败",__func__);
 }
 
+- (void)pSuccess
+{
+    NSLog(@"%s,支付成功",__func__);
+}
+
+- (void)pFailed
+{
+     NSLog(@"%s,支付失败",__func__);
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 //    [WSDK wechatLogin];
