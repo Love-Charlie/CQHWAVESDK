@@ -152,7 +152,7 @@ static dispatch_once_t onceToken;
         UILabel *desLabel = [[UILabel alloc] init];
         desLabel.numberOfLines = 0;
         _desLabel = desLabel;
-        desLabel.text = @"您的隐私将受到保护,手机号码仅会用于账号登录及密码找回";
+        desLabel.text = @"您的隐私将受到保护，身份信息仅会用于实名验证";
         [desLabel setFont:[UIFont systemFontOfSize:8.0]];
         //        [desLabel setLineBreakMode:NSLineBreakByWordWrapping];
         desLabel.textColor = [UIColor colorWithRed:226/255.0 green:88/255.0 blue:65/255.0 alpha:1];

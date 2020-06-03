@@ -63,7 +63,7 @@ static dispatch_once_t onceTokenHUDView;
                                 CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
                               
                                 double a = [UIScreen mainScreen].bounds.size.height >  [UIScreen mainScreen].bounds.size.width?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].bounds.size.height;
-                                autoLoginView.frame = CGRectMake((SCREENW - a +60)*0.5, statusBarFrame.size.height, a - 60, 40);
+                                autoLoginView.frame = CGRectMake((SCREENW - a +60)*0.5, statusBarFrame.size.height, a - 60, 44);
                                 autoLoginView.layer.cornerRadius = 20;
                                 autoLoginView.layer.masksToBounds = YES;
                                 

@@ -192,7 +192,7 @@ static AFHTTPSessionManager *manager ;
         
         UILabel *label1 = [[UILabel alloc] init];
         _label1 = label1;
-        [label1 setText:@"*绑定手机号码成功后，可直接用手机号座位账号登录游戏"];
+        [label1 setText:@"*绑定手机号码成功后，可直接用手机号作为账号登录游戏"];
         [label1 setFont:[UIFont systemFontOfSize:8.0]];
         [label1 setTextColor:[UIColor blackColor]];
         [self addSubview:label1];

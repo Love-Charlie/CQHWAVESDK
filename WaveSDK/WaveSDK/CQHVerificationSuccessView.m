@@ -84,7 +84,7 @@
     
     CGRect rect = [_label.text boundingRectWithSize:CGSizeMake(self.width - 50*W_Adapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_label.font} context:nil];
     _label.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_labelSucc.frame)+ 10*H_Adapter, self.width - 50*W_Adapter, CGRectGetHeight(rect));
-    _intoGameBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_label.frame)+(self.height - CGRectGetMaxY(_label.frame)- 30)*0.5, self.width - 50*W_Adapter, 30);
+    _intoGameBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_label.frame)+(self.height - CGRectGetMaxY(_label.frame)- self.height/7.0)*0.5, self.width - 50*W_Adapter, self.height/7.0);
 }
 
 @end

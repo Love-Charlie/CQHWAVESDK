@@ -23,6 +23,7 @@
 @property (nonatomic , weak)  UIView *line;
 @property (nonatomic , weak) UIButton *backBtn ;
 @property (nonatomic , weak) UITextField *usernameTF ;
+@property (nonatomic , weak) UILabel *explainLabel;
 @property (nonatomic , weak) UITextField *passwordTF ;
 @property (nonatomic , weak) UIButton *loginBtn ;
 @property (nonatomic , weak) UIButton *forgetBtn;
@@ -126,6 +127,15 @@ static AFHTTPSessionManager *manager ;
         [self addSubview:usernameTF];
         
         
+        UILabel *explainLabel = [[UILabel alloc] init];
+        _explainLabel = explainLabel;
+        [explainLabel setText:@"请输入6-12位字符，可使用数字、字母、下划线"];
+        [explainLabel setTextColor:[UIColor redColor]];
+        [explainLabel setFont:[UIFont systemFontOfSize:11.0]];
+        [explainLabel sizeToFit];
+        [self addSubview:explainLabel];
+        
+        
         /*******************************************************************************************************/
         UITextField *passwordTF = [[UITextField alloc] init];
         passwordTF.secureTextEntry = YES;
@@ -144,12 +154,12 @@ static AFHTTPSessionManager *manager ;
         passwordTF.layer.masksToBounds = YES;
         passwordTF.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         _passwordTF = passwordTF;
-        passwordTF.placeholder=@" 请输入密码";
+        passwordTF.placeholder=@"请输入密码(6-16位)";
 //        [passwordTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
         
         Ivar ivar1 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
         UILabel *placeholderLabel1 = object_getIvar(passwordTF, ivar1);
-        placeholderLabel1.text = @" 请输入密码";
+        placeholderLabel1.text = @"请输入密码(6-16位)";
         [placeholderLabel1 setFont:[UIFont systemFontOfSize:12.0]];
         placeholderLabel1.textColor = [UIColor lightGrayColor];
         
@@ -171,6 +181,15 @@ static AFHTTPSessionManager *manager ;
         UIButton *usernameTFRightView1 = [[UIButton alloc] init];
         usernameTFRightView1.frame = CGRectMake(0, 0, 15*W_Adapter, 15*H_Adapter);
         [usernameTFRightView1 setImage:[CQHTools bundleForImage:@"6" packageName:@"1"] forState:UIControlStateNormal];
+        
+        UIButton *passwordTFRightView = [[UIButton alloc] init];
+        passwordTFRightView.frame = CGRectMake(0, 0, 44*W_Adapter, 44*H_Adapter);
+        [passwordTFRightView setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
+        [passwordTFRightView setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
+        passwordTF.rightView = passwordTFRightView;
+        passwordTF.rightViewMode = UITextFieldViewModeAlways;
+        [passwordTFRightView addTarget:self action:@selector(eyeClick:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self addSubview:passwordTF];
         
         /*******************************************************************************************************/
@@ -180,7 +199,7 @@ static AFHTTPSessionManager *manager ;
         [loginBtn addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [loginBtn setBackgroundColor:[UIColor colorWithRed:216/255.0 green:58/255.0 blue:41/255.0 alpha:1]];
         [loginBtn setTitle:@"注册并登录" forState:UIControlStateNormal];
-        [loginBtn.titleLabel setFont:[UIFont systemFontOfSize:12.0]];
+        [loginBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0]];
         loginBtn.layer.cornerRadius = 5.0;
         loginBtn.layer.masksToBounds = YES;
         [self addSubview:loginBtn];
@@ -207,6 +226,31 @@ static AFHTTPSessionManager *manager ;
 
 - (void)loginBtnClick:(UIButton *)btn
 {
+    
+    NSString *text =self.usernameTF.text;
+    NSString *temp = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];//清空空格
+    if([text isEqualToString:@""] || temp.length==0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请输入账号", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        return;
+    }
+    
+    
+    NSString *text1 =self.passwordTF.text;
+    NSString *temp1 = [text1 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];//清空空格
+    if([text1 isEqualToString:@""] || temp1.length==0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请输入密码", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        return;
+    }
+    
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     //随机数
@@ -315,6 +359,7 @@ static AFHTTPSessionManager *manager ;
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
             hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
             hud.mode = MBProgressHUDModeText;
+            [hud.label setFont:[UIFont systemFontOfSize:12.0]];
             hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
             [hud hideAnimated:YES afterDelay:1.f];
             if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
@@ -337,6 +382,17 @@ static AFHTTPSessionManager *manager ;
     }];
 }
 
+#pragma mark点击眼睛图标
+- (void)eyeClick:(UIButton *)btn
+{
+    btn.selected = !btn.selected;
+    self.passwordTF.secureTextEntry = !btn.selected;
+    NSString *psd = self.passwordTF.text;
+    self.passwordTF.text = @"";
+    self.passwordTF.text = psd;
+    
+}
+
 - (void)registerBtnClick:(UIButton *)btn
 {
     
@@ -355,7 +411,8 @@ static AFHTTPSessionManager *manager ;
     _line.frame = CGRectMake(20, CGRectGetMaxY(_imageView.frame) +10*H_Adapter, self.width - 40, 1);
     _backBtn.frame = CGRectMake(15*W_Adapter, (CGRectGetMaxY(_line.frame) - 15)*0.5, 20, 15);
     _usernameTF.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_line.frame)+25*H_Adapter, self.width - 60*W_Adapter, self.height/7.0);
-    _passwordTF.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+25*H_Adapter, self.width - 60*W_Adapter, self.height/7.0);
+    _explainLabel.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_usernameTF.frame)+self.height/60.0, _explainLabel.width, _explainLabel.height);
+    _passwordTF.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_explainLabel.frame)+15*H_Adapter, self.width - 60*W_Adapter, self.height/7.0);
     _loginBtn.frame = CGRectMake(30*W_Adapter, CGRectGetMaxY(_passwordTF.frame)+30*H_Adapter, self.width - 60*W_Adapter, self.height/7.0);
 //    _forgetBtn.frame = CGRectMake(CGRectGetMinX(_loginBtn.frame), CGRectGetMaxY(_loginBtn.frame) +(self.height - CGRectGetMaxY(_loginBtn.frame)-_forgetBtn.height)*0.5, _forgetBtn.width, _forgetBtn.height);
 //    _registerBtn.frame = CGRectMake(self.width -30*W_Adapter - _registerBtn.width , CGRectGetMinY(_forgetBtn.frame), _registerBtn.width, _registerBtn.height);

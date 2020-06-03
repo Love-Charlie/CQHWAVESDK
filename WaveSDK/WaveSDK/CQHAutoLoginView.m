@@ -69,7 +69,7 @@ static dispatch_once_t onceToken;
         _changeLoginBtn = changeLoginBtn;
         [changeLoginBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [changeLoginBtn setTitle:@"切换账号" forState:UIControlStateNormal];
-        [changeLoginBtn.titleLabel  setFont:[UIFont systemFontOfSize:11.0]];
+        [changeLoginBtn.titleLabel  setFont:[UIFont systemFontOfSize:12.0]];
         [changeLoginBtn sizeToFit];
         
         [self addSubview:accountNameLabel];
@@ -83,12 +83,16 @@ static dispatch_once_t onceToken;
 - (void)setUserModel:(CQHUserModel *)userModel
 {
     _userModel = userModel;
+    if ([userModel.isWX isEqualToString:WXIS]) {
+        userModel.accountName = @"微信登录";
+    }
     
     NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ , 正在登录...",userModel.accountName]];
     NSUInteger length = [userModel.accountName length];
     [Att addAttribute:NSForegroundColorAttributeName value:[UIColor  redColor] range:NSMakeRange(0,length)];
     _accountNameLabel.attributedText = Att;
     _accountNameLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    [_accountNameLabel setFont:[UIFont systemFontOfSize:12.0]];
     //自动登录请求
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -102,7 +106,7 @@ static dispatch_once_t onceToken;
     dict[@"channelId"] = [userDefaults objectForKey:CHANNELID];
     dict[@"platformCode"]=PLATFORMCODE;
     dict[@"nonceStr"]=nonceStr;
-    dict[@"username"] = userModel.accountName;
+    dict[@"username"] = userModel.username;
 //    dict[@"password"] =  [CQHTools md5:userModel.password];
     
 //    if (userModel.md5Password) {
@@ -126,7 +130,7 @@ static dispatch_once_t onceToken;
     dict1[@"channelId"] = [userDefaults objectForKey:CHANNELID];
     dict1[@"platformCode"]=PLATFORMCODE;
     dict1[@"nonceStr"]=nonceStr;
-    dict1[@"username"] = userModel.accountName;
+    dict1[@"username"] = userModel.username;
 //    dict1[@"password"] =  [CQHTools md5:userModel.password];
 //    dict1[@"password"] =  [CQHTools jiami:userModel.password];
     

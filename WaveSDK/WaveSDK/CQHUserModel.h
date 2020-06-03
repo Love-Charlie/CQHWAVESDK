@@ -17,4 +17,6 @@
 @property (nonatomic , copy) NSString *accountName;
 @property (nonatomic , copy) NSString *md5Password;
 
+@property (nonatomic , copy) NSString *isWX;
+
 @end

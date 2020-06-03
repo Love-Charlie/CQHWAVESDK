@@ -188,6 +188,7 @@ static dispatch_once_t onceToken;
                 userModel.password = responseObject[@"data"][@"password"];
                 userModel.md5Password = responseObject[@"data"][@"md5Password"];
                 userModel.username = responseObject[@"data"][@"username"];
+                userModel.isWX = WXIS;
                 NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
                 [userDefaults setObject:@"1" forKey:ISAUTO];
                 [userDefaults setObject:data forKey:CQHUSERMODEL];

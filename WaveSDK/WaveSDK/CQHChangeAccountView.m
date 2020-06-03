@@ -135,13 +135,13 @@ static AFHTTPSessionManager *manager ;
                 phoneTF.layer.masksToBounds = YES;
                 phoneTF.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
                 _phoneTF = phoneTF;
-                phoneTF.placeholder=@" 请输入手机号";
+                phoneTF.placeholder=@" 请输入手机号/账号";
         //        [phoneTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
                 
                 Ivar ivar =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
                 UILabel *placeholderLabel = object_getIvar(phoneTF, ivar);
                 placeholderLabel.textColor = [UIColor lightGrayColor];
-                placeholderLabel.text = @" 请输入手机号";
+                placeholderLabel.text = @" 请输入手机号/账号";
                 [placeholderLabel setFont:[UIFont systemFontOfSize:12.0]];
                 
                 UIView *contentLeftView1 = [[UIView alloc] init];
@@ -214,6 +214,14 @@ static AFHTTPSessionManager *manager ;
                 [contentLeftView2 addSubview:usernameTFLeftView2];
                 passwordTF.leftView = contentLeftView2;
                 passwordTF.leftViewMode = UITextFieldViewModeAlways;
+        
+        UIButton *passwordTFRightView = [[UIButton alloc] init];
+        passwordTFRightView.frame = CGRectMake(0, 0, 44*W_Adapter, 44*H_Adapter);
+        [passwordTFRightView setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
+        [passwordTFRightView setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
+        passwordTF.rightView = passwordTFRightView;
+        passwordTF.rightViewMode = UITextFieldViewModeAlways;
+        [passwordTFRightView addTarget:self action:@selector(eyeClick:) forControlEvents:UIControlEventTouchUpInside];
                 
 //
 //                UIButton *usernameTFRightView2 = [[UIButton alloc] init];
@@ -281,7 +289,7 @@ static AFHTTPSessionManager *manager ;
         
         CQHButton *resetBtn = [CQHButton buttonWithType:UIButtonTypeCustom];
         _resetBtn = resetBtn;
-        [resetBtn setImage:[CQHTools bundleForImage:@"绑定手机" packageName:@""] forState:UIControlStateNormal];
+        [resetBtn setImage:[CQHTools bundleForImage:@"修改密码" packageName:@""] forState:UIControlStateNormal];
         [resetBtn addTarget:self action:@selector(resetBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
         [resetBtn.titleLabel setFont:[UIFont systemFontOfSize:10.0]];
@@ -308,6 +316,17 @@ static AFHTTPSessionManager *manager ;
     return self;
 }
 
+#pragma mark点击眼睛图标
+- (void)eyeClick:(UIButton *)btn
+{
+    btn.selected = !btn.selected;
+    self.passwordTF.secureTextEntry = !btn.selected;
+    NSString *psd = self.passwordTF.text;
+    self.passwordTF.text = @"";
+    self.passwordTF.text = psd;
+    
+}
+
 - (void)xinRegisterBtnClick:(UIButton *)btn
 {
     CQHRegisterView *registerView = [[CQHRegisterView alloc] init];
@@ -323,7 +342,7 @@ static AFHTTPSessionManager *manager ;
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
         hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = NSLocalizedString(@"请填写用户名", @"HUD message title");
+        hud.label.text = NSLocalizedString(@"请输入账号", @"HUD message title");
         [hud hideAnimated:YES afterDelay:1.f];
         return;
     }
@@ -388,7 +407,7 @@ static AFHTTPSessionManager *manager ;
                 //            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
                 hud.mode = MBProgressHUDModeText;
                 hud.label.font = [UIFont systemFontOfSize:12.0];
-                hud.label.text = NSLocalizedString(@"您的账号未绑定手机号,无法找回密码！", @"HUD message title");
+                hud.label.text = NSLocalizedString(@"需要先绑定手机才能找回密码！", @"HUD message title");
                 [hud hideAnimated:YES afterDelay:1.f];
                 return;
             }
@@ -430,7 +449,7 @@ static AFHTTPSessionManager *manager ;
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
         hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = NSLocalizedString(@"请填写用户名", @"HUD message title");
+        hud.label.text = NSLocalizedString(@"请输入账号", @"HUD message title");
         [hud hideAnimated:YES afterDelay:1.f];
         return;
     }
@@ -527,7 +546,18 @@ static AFHTTPSessionManager *manager ;
 
 - (void)resetBtnClick:(UIButton *)btn
 {
-    NSLog(@"%s",__FUNCTION__);
+//    NSLog(@"%s",__FUNCTION__);
+    NSString *text =self.phoneTF.text;
+    NSString *temp = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];//清空空格
+    if([text isEqualToString:@""] || temp.length==0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请输入账号", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        return;
+    }
+    
     CQHEditPasswordView *editPasswordView = [[CQHEditPasswordView alloc] init];
     editPasswordView.frame = self.bounds;
     editPasswordView.username = self.phoneTF.text;
@@ -563,7 +593,31 @@ static AFHTTPSessionManager *manager ;
 
 - (void)loginBtnClick:(UIButton *)btn
 {
-    NSLog(@"%s",__FUNCTION__);
+    NSString *text =self.phoneTF.text;
+    NSString *temp = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];//清空空格
+    if([text isEqualToString:@""] || temp.length==0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请输入账号", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        return;
+    }
+    
+    
+    NSString *text1 =self.passwordTF.text;
+    NSString *temp1 = [text1 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];//清空空格
+    if([text1 isEqualToString:@""] || temp1.length==0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"请输入密码", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:1.f];
+        return;
+    }
+    
+    
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     //随机数
@@ -695,7 +749,13 @@ static AFHTTPSessionManager *manager ;
 - (void)setUserModel:(CQHUserModel *)userModel
 {
     _userModel = userModel;
+    
+    if ([userModel.isWX isEqualToString:WXIS]) {
+        userModel.accountName = @"";
+        userModel.password = @"";
+    }
     _phoneTF.text = userModel.accountName;
+    _passwordTF.text = userModel.password;
 }
 
 - (void)statusBarOrientationChange1

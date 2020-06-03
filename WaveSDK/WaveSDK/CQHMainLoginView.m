@@ -120,7 +120,7 @@ static dispatch_once_t onceToken;
         _kuaisuBtn = kuaisuBtn;
         [kuaisuBtn setBackgroundColor:[UIColor colorWithRed:216/255.0 green:58/255.0 blue:41/255.0 alpha:1]];
         [kuaisuBtn setTitle:@"快速游戏" forState:UIControlStateNormal];
-        [kuaisuBtn.titleLabel setFont:[UIFont systemFontOfSize:14.0]];
+        [kuaisuBtn.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
         kuaisuBtn.layer.cornerRadius = 5.0;
         kuaisuBtn.layer.masksToBounds = YES;
         [self addSubview:kuaisuBtn];
