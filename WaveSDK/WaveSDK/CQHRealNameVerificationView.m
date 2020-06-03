@@ -16,7 +16,7 @@
 #import "CQHHUDView.h"
 #import <objc/runtime.h>
 
-@interface CQHRealNameVerificationView()
+@interface CQHRealNameVerificationView()<UITextFieldDelegate>
 
 @property (nonatomic , weak) UILabel *titleLabel;
 @property (nonatomic , weak) UIButton *backBtn;
@@ -100,6 +100,8 @@ static dispatch_once_t onceToken;
         [self addSubview:label2];
         
         UITextField *usernameTF = [[UITextField alloc] init];
+        usernameTF.returnKeyType = UIReturnKeyNext;
+        usernameTF.delegate = self;
         usernameTF.textColor = [UIColor blackColor];
         UIView *tempView = [[UIView alloc] init];
         tempView.frame = CGRectMake(0, 0, 10*W_Adapter, 2);
@@ -124,6 +126,8 @@ static dispatch_once_t onceToken;
         [self addSubview:usernameTF];
         
         UITextField *identityTF = [[UITextField alloc] init];
+        identityTF.delegate = self;
+        identityTF.returnKeyType = UIReturnKeyDone;
         identityTF.textColor = [UIColor blackColor];
         UIView *tempView1 = [[UIView alloc] init];
         tempView1.frame = CGRectMake(0, 0, 10*W_Adapter, 2);
@@ -178,6 +182,19 @@ static dispatch_once_t onceToken;
         
     }
     return self;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField isEqual:_usernameTF] && [string isEqualToString:@"\n"]) {
+        [_identityTF becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_identityTF] && [string isEqualToString:@"\n"]) {
+        [_identityTF resignFirstResponder];
+    }
+    
+    return YES;
 }
 
 - (void)tijiaoBtnClick:(UIButton *)btn

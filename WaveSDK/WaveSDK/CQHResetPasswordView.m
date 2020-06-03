@@ -16,7 +16,7 @@
 #import "CQHUserModel.h"
 #import "WSDK.h"
 
-@interface CQHResetPasswordView()
+@interface CQHResetPasswordView()<UITextFieldDelegate>
 
 @property (nonatomic , strong) CQHKeyboardProcess *process;
 @property (nonatomic , weak) UILabel *registerLabel;
@@ -87,6 +87,8 @@ static AFHTTPSessionManager *manager ;
         
         
         UITextField *verificationCodeTF = [[UITextField alloc] init];
+        verificationCodeTF.returnKeyType = UIReturnKeyNext;
+        verificationCodeTF.delegate = self;
         verificationCodeTF.textColor = [UIColor blackColor];
         _verificationCodeTF = verificationCodeTF;
         [verificationCodeTF setBackgroundColor:[UIColor whiteColor]];
@@ -130,6 +132,8 @@ static AFHTTPSessionManager *manager ;
         
         
         UITextField *passwordTF = [[UITextField alloc] init];
+        passwordTF.returnKeyType = UIReturnKeyNext;
+        passwordTF.delegate = self;
         passwordTF.secureTextEntry = YES;
         passwordTF.textColor = [UIColor blackColor];
         passwordTF.clearButtonMode=UITextFieldViewModeWhileEditing;
@@ -171,6 +175,8 @@ static AFHTTPSessionManager *manager ;
         
         //////////////////////////////////////////////////////////
         UITextField *passwordTF1 = [[UITextField alloc] init];
+        passwordTF1.returnKeyType = UIReturnKeyDone;
+        passwordTF1.delegate = self;
         passwordTF1.secureTextEntry = YES;
         passwordTF1.textColor = [UIColor blackColor];
         passwordTF1.clearButtonMode=UITextFieldViewModeWhileEditing;
@@ -224,6 +230,24 @@ static AFHTTPSessionManager *manager ;
     }
     return self;
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField isEqual:_verificationCodeTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_passwordTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF1 becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_passwordTF1] && [string isEqualToString:@"\n"]) {
+        [_passwordTF1 resignFirstResponder];
+    }
+    
+    return YES;
+}
+
 
 - (void)editAndLoginBtnClick:(UIButton *)btn
 {

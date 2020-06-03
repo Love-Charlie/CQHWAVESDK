@@ -18,7 +18,7 @@
 #import "CQHHUDView.h"
 #import <objc/runtime.h>
 
-@interface CQHPhontLoginView()
+@interface CQHPhontLoginView()<UITextFieldDelegate>
 @property (nonatomic , weak) UILabel *registerLabel ;
 @property (nonatomic , weak) UIButton *backBtn ;
 @property (nonatomic , weak) UIView *line;
@@ -86,6 +86,8 @@ static AFHTTPSessionManager *manager ;
         
         /***************************************************************************************************/
         UITextField *phoneTF = [[UITextField alloc] init];
+        phoneTF.returnKeyType = UIReturnKeyNext;
+        phoneTF.delegate = self;
         phoneTF.textColor = [UIColor blackColor];
         phoneTF.clearButtonMode=UITextFieldViewModeWhileEditing;
         UIImageView *leftView1 = [[UIImageView alloc] init];
@@ -150,6 +152,9 @@ static AFHTTPSessionManager *manager ;
          /***************************************************************************************************/
         
         UITextField *verificationCodeTF = [[UITextField alloc] init];
+        verificationCodeTF.returnKeyType = UIReturnKeyNext;
+        verificationCodeTF.delegate = self;
+        
         verificationCodeTF.textColor = [UIColor blackColor];
         _verificationCodeTF = verificationCodeTF;
         [verificationCodeTF setBackgroundColor:[UIColor whiteColor]];
@@ -192,6 +197,8 @@ static AFHTTPSessionManager *manager ;
         [verificationCodeTF addSubview:verificationCodeBtn];
         /***************************************************************************************************/
         UITextField *passwordTF = [[UITextField alloc] init];
+        passwordTF.returnKeyType = UIReturnKeyDone;
+        passwordTF.delegate = self;
         passwordTF.textColor = [UIColor blackColor];
         passwordTF.secureTextEntry = YES;
         _passwordTF = passwordTF;
@@ -235,6 +242,23 @@ static AFHTTPSessionManager *manager ;
         [self addSubview:regAndLoginBtn];
     }
     return self;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField isEqual:_phoneTF] && [string isEqualToString:@"\n"]) {
+        [_verificationCodeTF becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_verificationCodeTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_passwordTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF resignFirstResponder];
+    }
+    
+    return YES;
 }
 
 - (void)regAndLoginBtnClick:(UIButton *)btn

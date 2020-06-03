@@ -18,7 +18,7 @@
 #import "JQFMDB.h"
 #import <objc/runtime.h>
 
-@interface CQHRegisterView()
+@interface CQHRegisterView()<UITextFieldDelegate>
 @property (nonatomic , weak)  UIImageView *imageView;
 @property (nonatomic , weak)  UIView *line;
 @property (nonatomic , weak) UIButton *backBtn ;
@@ -76,6 +76,8 @@ static AFHTTPSessionManager *manager ;
         [self addSubview:backBtn];
         
         UITextField *usernameTF = [[UITextField alloc] init];
+        usernameTF.returnKeyType = UIReturnKeyNext;
+        usernameTF.delegate = self;
         usernameTF.textColor = [UIColor blackColor];
         usernameTF.clearButtonMode=UITextFieldViewModeWhileEditing;
         _usernameTF = usernameTF;
@@ -138,6 +140,8 @@ static AFHTTPSessionManager *manager ;
         
         /*******************************************************************************************************/
         UITextField *passwordTF = [[UITextField alloc] init];
+        passwordTF.delegate = self;
+        passwordTF.returnKeyType = UIReturnKeyDone;
         passwordTF.secureTextEntry = YES;
         passwordTF.textColor = [UIColor blackColor];
         passwordTF.clearButtonMode=UITextFieldViewModeWhileEditing;
@@ -222,6 +226,19 @@ static AFHTTPSessionManager *manager ;
 //        [self addSubview:registerBtn];
     }
     return self;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField isEqual:_usernameTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_passwordTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF resignFirstResponder];
+    }
+    
+    return YES;
 }
 
 - (void)loginBtnClick:(UIButton *)btn

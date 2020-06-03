@@ -17,7 +17,7 @@
 #import "CQHHUDView.h"
 #import "WSDK.h"
 
-@interface CQHPhoneBindingView()
+@interface CQHPhoneBindingView()<UITextFieldDelegate>
 
 @property (nonatomic , weak) UILabel *registerLabel ;
 @property (nonatomic , weak) UIButton *backBtn ;
@@ -92,6 +92,8 @@ static AFHTTPSessionManager *manager ;
         [self addSubview:contentLabel];
         
         UITextField *usernameTF = [[UITextField alloc] init];
+        usernameTF.returnKeyType = UIReturnKeyNext;
+        usernameTF.delegate = self;
         usernameTF.textColor = [UIColor blackColor];
         usernameTF.clearButtonMode=UITextFieldViewModeWhileEditing;
         _usernameTF = usernameTF;
@@ -138,6 +140,8 @@ static AFHTTPSessionManager *manager ;
         
         
         UITextField *verificationCodeTF = [[UITextField alloc] init];
+        verificationCodeTF.returnKeyType = UIReturnKeyDone;
+        verificationCodeTF.delegate = self;
         verificationCodeTF.textColor = [UIColor blackColor];
         _verificationCodeTF = verificationCodeTF;
         [verificationCodeTF setBackgroundColor:[UIColor whiteColor]];
@@ -199,6 +203,19 @@ static AFHTTPSessionManager *manager ;
         
     }
     return self;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField isEqual:_usernameTF] && [string isEqualToString:@"\n"]) {
+        [_verificationCodeTF becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_verificationCodeTF] && [string isEqualToString:@"\n"]) {
+        [_verificationCodeTF resignFirstResponder];
+    }
+    
+    return YES;
 }
 
 - (void)bindAndLoginClick:(UIButton *)btn

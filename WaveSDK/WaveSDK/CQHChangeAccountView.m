@@ -23,7 +23,7 @@
 #import "WSDK.h"
 #import <objc/runtime.h>
 
-@interface CQHChangeAccountView()<UITableViewDelegate , UITableViewDataSource>
+@interface CQHChangeAccountView()<UITableViewDelegate , UITableViewDataSource,UITextFieldDelegate>
 
 @property (nonatomic , weak) UILabel *registerLabel ;
 @property (nonatomic , weak) UIButton *backBtn ;
@@ -107,6 +107,8 @@ static AFHTTPSessionManager *manager ;
         
              /***************************************************************************************************/
                 UITextField *phoneTF = [[UITextField alloc] init];
+        phoneTF.delegate = self;
+                phoneTF.returnKeyType = UIReturnKeyNext;
                 phoneTF.textColor = [UIColor blackColor];
                 phoneTF.clearButtonMode=UITextFieldViewModeWhileEditing;
                 UIImageView *leftView1 = [[UIImageView alloc] init];
@@ -178,6 +180,8 @@ static AFHTTPSessionManager *manager ;
         
         /*******************************************************************************************************/
                 UITextField *passwordTF = [[UITextField alloc] init];
+        passwordTF.delegate = self;
+        passwordTF.returnKeyType = UIReturnKeyDone;
                 passwordTF.secureTextEntry = YES;
                 passwordTF.textColor = [UIColor blackColor];
                 passwordTF.clearButtonMode=UITextFieldViewModeWhileEditing;
@@ -314,6 +318,28 @@ static AFHTTPSessionManager *manager ;
 
     }
     return self;
+}
+
+
+
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//
+//    return YES;
+//}
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField isEqual:_phoneTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF becomeFirstResponder];
+    }
+    
+    if ([textField isEqual:_passwordTF] && [string isEqualToString:@"\n"]) {
+        [_passwordTF resignFirstResponder];
+    }
+ 
+    return YES;
 }
 
 #pragma mark点击眼睛图标
