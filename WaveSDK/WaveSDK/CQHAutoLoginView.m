@@ -83,6 +83,7 @@ static dispatch_once_t onceToken;
 - (void)setUserModel:(CQHUserModel *)userModel
 {
     _userModel = userModel;
+    NSString *username = userModel.accountName;
     if ([userModel.isWX isEqualToString:WXIS]) {
         userModel.accountName = @"微信登录";
     }
@@ -106,7 +107,7 @@ static dispatch_once_t onceToken;
     dict[@"channelId"] = [userDefaults objectForKey:CHANNELID];
     dict[@"platformCode"]=PLATFORMCODE;
     dict[@"nonceStr"]=nonceStr;
-    dict[@"username"] = userModel.username;
+    dict[@"username"] = username;
 //    dict[@"password"] =  [CQHTools md5:userModel.password];
     
 //    if (userModel.md5Password) {
@@ -130,7 +131,7 @@ static dispatch_once_t onceToken;
     dict1[@"channelId"] = [userDefaults objectForKey:CHANNELID];
     dict1[@"platformCode"]=PLATFORMCODE;
     dict1[@"nonceStr"]=nonceStr;
-    dict1[@"username"] = userModel.username;
+    dict1[@"username"] = username;
 //    dict1[@"password"] =  [CQHTools md5:userModel.password];
 //    dict1[@"password"] =  [CQHTools jiami:userModel.password];
     
