@@ -176,4 +176,23 @@
     return result;
 }
 
++ (NSString *)encodeToPercentEscapeString
+{
+    NSString*outputStr = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
+                                                                             
+                                                                             NULL, /* allocator */
+                                                                             
+                                                                             (__bridge CFStringRef)self,
+                                                                             
+                                                                             NULL, /* charactersToLeaveUnescaped */
+                                                                             
+                                                                             (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                             
+                                                                             kCFStringEncodingUTF8);
+    
+    
+    return
+    outputStr;
+}
+
 @end

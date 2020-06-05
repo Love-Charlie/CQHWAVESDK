@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "CQHKeyboardProcess.h"
 #import "CQHHUDView.h"
+#import "NSString+URL.h"
 #import <objc/runtime.h>
 
 @interface CQHRealNameVerificationView()<UITextFieldDelegate>
@@ -252,7 +253,8 @@ static dispatch_once_t onceToken;
     hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
     hud.label.text = NSLocalizedString(@"认证中...", @"HUD loading title");
     
-    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/bind/idno?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    
+    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/bind/idno?data=%@",BASE_URL,[newStr URLEncodedString]] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
