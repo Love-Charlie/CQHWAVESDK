@@ -38,6 +38,7 @@
 @property (nonatomic , weak) CQHButton *WXBtn;
 @property (nonatomic , weak) CQHButton *resetBtn;
 @property (nonatomic , weak) CQHButton *bangdingBtn;
+@property (nonatomic , weak) CQHButton *appleLoginBtn;
 @property (nonatomic , strong) UITableView *tableview;
 
 @property (nonatomic , strong) NSArray *userModelData;
@@ -219,14 +220,20 @@ static AFHTTPSessionManager *manager ;
                 passwordTF.leftView = contentLeftView2;
                 passwordTF.leftViewMode = UITextFieldViewModeAlways;
         
+        UIView *rightViewContent1 = [[UIView alloc] init];
+        rightViewContent1.frame = CGRectMake(0, 0, 30, 30);
+        
         UIButton *passwordTFRightView = [[UIButton alloc] init];
-        passwordTFRightView.frame = CGRectMake(0, 0, 44*W_Adapter, 44*H_Adapter);
+        passwordTFRightView.frame = CGRectMake(7.5, 7.5, 15, 15);
+        
+        
         [passwordTFRightView setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
         [passwordTFRightView setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
-        passwordTF.rightView = passwordTFRightView;
+        passwordTF.rightView = rightViewContent1;
         passwordTF.rightViewMode = UITextFieldViewModeAlways;
         [passwordTFRightView addTarget:self action:@selector(eyeClick:) forControlEvents:UIControlEventTouchUpInside];
                 
+        [rightViewContent1 addSubview:passwordTFRightView];
 //
 //                UIButton *usernameTFRightView2 = [[UIButton alloc] init];
 //                usernameTFRightView2.frame = CGRectMake(0, 0, 15*W_Adapter, 15*H_Adapter);
@@ -315,11 +322,40 @@ static AFHTTPSessionManager *manager ;
         [bangdingBtn sizeToFit];
         
         [btnContentView addSubview:bangdingBtn];
-
+        
+        
+        CQHButton *appleLoginBtn = [CQHButton buttonWithType:UIButtonTypeCustom];
+        _appleLoginBtn = appleLoginBtn;
+        [appleLoginBtn setImage:[CQHTools bundleForImage:@"apple-icon1" packageName:@""] forState:UIControlStateNormal];
+        [appleLoginBtn addTarget:self action:@selector(appleLoginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [appleLoginBtn.titleLabel setFont:[UIFont systemFontOfSize:10.0]];
+        [appleLoginBtn setTitle:@"Apple登录" forState:UIControlStateNormal];
+        [appleLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnContentView addSubview:appleLoginBtn];
+        
+        
+        /////////test btn//////
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setTitle:@"清除数据" forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [btn sizeToFit];
+        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:btn];
     }
     return self;
 }
 
+- (void)btnClick:(UIButton *)btn
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"2" forKey:ISAUTO];
+    [userDefaults synchronize];
+}
+
+- (void)appleLoginBtnClick:(UIButton *)btn
+{
+    [WSDK appleLogin];
+}
 
 
 //- (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -780,6 +816,10 @@ static AFHTTPSessionManager *manager ;
         userModel.accountName = @"";
         userModel.password = @"";
     }
+    if ([userModel.isAppleLogin isEqualToString:APPLELOGINIS]) {
+        userModel.accountName = @"";
+        userModel.password = @"";
+    }
     _phoneTF.text = userModel.accountName;
     _passwordTF.text = userModel.password;
 }
@@ -809,11 +849,18 @@ static AFHTTPSessionManager *manager ;
     _xinRegisterBtn.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+self.height/60.0, _xinRegisterBtn.width, _xinRegisterBtn.height);
     _forgetBtn.frame = CGRectMake(self.width - _forgetBtn.width - 25*W_Adapter, CGRectGetMaxY(_loginBtn.frame)+self.height/60.0, _forgetBtn.width, _forgetBtn.height);
     _line1.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_forgetBtn.frame)+self.height/60.0, self.width - 50*W_Adapter, 1);
+    
+    
     _btnContentView.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line1.frame), self.width - 50*W_Adapter, self.width - CGRectGetMaxY(_line1.frame));
+    
+    
     _WXBtn.frame = CGRectMake(0, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
     
-    CGFloat marge = (_btnContentView.width- 3*_WXBtn.width)*0.5;
-    _resetBtn.frame = CGRectMake(CGRectGetMaxX(_WXBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
+    CGFloat marge = (_btnContentView.width- 4*_WXBtn.width)/3.0;
+    
+    _appleLoginBtn.frame = CGRectMake(CGRectGetMaxX(_WXBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
+    
+    _resetBtn.frame = CGRectMake(CGRectGetMaxX(_appleLoginBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
     _bangdingBtn.frame = CGRectMake(CGRectGetMaxX(_resetBtn.frame)+marge, self.height/60.0, _btnContentView.height-self.height/60.0, _btnContentView.height-self.height/60.0);
 }
 

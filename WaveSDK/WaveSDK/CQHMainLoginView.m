@@ -23,14 +23,19 @@
 #import "CQHAutoLoginView.h"
 #import "JQFMDB.h"
 #import "CQHUserModel.h"
+#import "CQHButton.h"
 
 @interface CQHMainLoginView()
 
 @property (nonatomic , weak)  UIImageView *imageView;
 @property (nonatomic , weak)  UIView *line;
-@property (nonatomic , weak)  UIButton *wxBtn;
-@property (nonatomic , weak)  UIButton *phontBtn;
-@property (nonatomic , weak)  UIButton *kuaisuBtn;
+@property (nonatomic , weak)  CQHButton *wxBtn;
+@property (nonatomic , weak)  UILabel *wxLabel;
+@property (nonatomic , weak)  CQHButton *appleBtn;
+@property (nonatomic , weak)  UILabel *appleLabel;
+@property (nonatomic , weak)  CQHButton *phontBtn;
+@property (nonatomic , weak)  UILabel *phoneLabel;
+@property (nonatomic , weak)  CQHButton *kuaisuBtn;
 @property (nonatomic , weak)  UIButton *xieyiBtn;
 @property (nonatomic , weak)  UIButton *tongyiBtn;
 @property (nonatomic , weak)  UIView *redLine;
@@ -93,12 +98,16 @@ static dispatch_once_t onceToken;
         line.frame = CGRectMake(20, CGRectGetMaxY(imageView.frame), self.width - 40, 1);
         [self addSubview:line];
         
-        UIButton *wxBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [wxBtn setBackgroundImage:[CQHTools bundleForImage:@"微信登录" packageName:@""] forState:UIControlStateNormal];
+        CQHButton *wxBtn = [CQHButton buttonWithType:UIButtonTypeCustom];
+        [wxBtn setBackgroundImage:[CQHTools bundleForImage:@"wx登录" packageName:@""] forState:UIControlStateNormal];
         [wxBtn addTarget:self action:@selector(wxBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [wxBtn.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
+//        [wxBtn setTitle:@"微信登录" forState:UIControlStateNormal];
+        [wxBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [wxBtn sizeToFit];
 
-        wxBtn.layer.cornerRadius = 5.0;
-        wxBtn.layer.masksToBounds = YES;
+//        wxBtn.layer.cornerRadius = 5.0;
+//        wxBtn.layer.masksToBounds = YES;
         _wxBtn = wxBtn;
 //        [wxBtn setBackgroundColor:[UIColor colorWithRed:24/255.0 green:150/255.0 blue:104/255.0 alpha:1]];
 //        wxBtn.frame = CGRectMake(20, CGRectGetMaxY(line.frame)+20, self.width - 40, 40);
@@ -106,16 +115,57 @@ static dispatch_once_t onceToken;
 //        [wxBtn.imageView setContentMode:UIViewContentModeScaleToFill];
         [self addSubview:wxBtn];
         
-        UIButton *phontBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        UILabel *wxLabel = [[UILabel alloc] init];
+        _wxLabel = wxLabel;
+        wxLabel.text = @"微信登录";
+        [wxLabel setTextColor:[UIColor blackColor]];
+        [wxLabel setFont:[UIFont systemFontOfSize:13.0]];
+        wxLabel.textAlignment = NSTextAlignmentCenter;
+        [wxLabel sizeToFit];
+        [self addSubview:wxLabel];
+        
+        
+        CQHButton *appleBtn = [CQHButton buttonWithType:UIButtonTypeCustom];
+        _appleBtn = appleBtn;
+        [appleBtn addTarget:self action:@selector(appleBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [appleBtn setBackgroundImage:[CQHTools bundleForImage:@"apple-icon1" packageName:@""] forState:UIControlStateNormal];
+        [appleBtn.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
+        [appleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [appleBtn sizeToFit];
+        [self addSubview:appleBtn];
+        
+        UILabel *appleLabel = [[UILabel alloc] init];
+        _appleLabel = appleLabel;
+        appleLabel.text = @"Apple登录";
+        [appleLabel setTextColor:[UIColor blackColor]];
+        [appleLabel setFont:[UIFont systemFontOfSize:13.0]];
+        appleLabel.textAlignment = NSTextAlignmentCenter;
+        [appleLabel sizeToFit];
+        [self addSubview:appleLabel];
+        
+        
+        CQHButton *phontBtn = [CQHButton buttonWithType:UIButtonTypeCustom];
         [phontBtn addTarget:self action:@selector(phontBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _phontBtn = phontBtn;
-        [phontBtn setBackgroundImage:[CQHTools bundleForImage:@"手机登录" packageName:@""] forState:UIControlStateNormal];
-        phontBtn.layer.cornerRadius = 5.0;
-        phontBtn.layer.masksToBounds = YES;
+        [phontBtn setBackgroundImage:[CQHTools bundleForImage:@"绑定手机" packageName:@""] forState:UIControlStateNormal];
+//        phontBtn.layer.cornerRadius = 5.0;
+//        phontBtn.layer.masksToBounds = YES;
+        [phontBtn.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
+        [phontBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [phontBtn sizeToFit];
         [self addSubview:phontBtn];
         
+        UILabel *phoneLabel = [[UILabel alloc] init];
+        _phoneLabel = phoneLabel;
+        phoneLabel.text = @"手机登录";
+        [phoneLabel setTextColor:[UIColor blackColor]];
+        [phoneLabel setFont:[UIFont systemFontOfSize:13.0]];
+        phoneLabel.textAlignment = NSTextAlignmentCenter;
+        [phoneLabel sizeToFit];
+        [self addSubview:phoneLabel];
         
-        UIButton *kuaisuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        CQHButton *kuaisuBtn = [CQHButton buttonWithType:UIButtonTypeCustom];
         [kuaisuBtn addTarget:self action:@selector(kuaisuBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _kuaisuBtn = kuaisuBtn;
 //        [kuaisuBtn setBackgroundColor:[UIColor colorWithRed:216/255.0 green:58/255.0 blue:41/255.0 alpha:1]];
@@ -172,8 +222,16 @@ static dispatch_once_t onceToken;
         [youkeBtn sizeToFit];
         [self addSubview:youkeBtn];
         
+        
+    
+        
     }
     return self;
+}
+
+- (void)appleBtnClick:(UIButton *)btn
+{
+    [WSDK appleLogin];
 }
 
 - (void)xieyiBtnClick:(UIButton *)btn
@@ -396,16 +454,47 @@ static dispatch_once_t onceToken;
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    UIImage *image = [CQHTools bundleForImage:@"logo-en" packageName:@""];
+    /////////////////////////////////////////以前的界面//////////////////////////////////////////////////////////////////////////
+//    UIImage *image = [CQHTools bundleForImage:@"logo-en" packageName:@""];
+//    _imageView.frame = CGRectMake(self.width*0.5/3.0 , 10*H_Adapter, self.width*2.0/3.0, self.width*2.0/3.0 *image.size.height/image.size.width);
+//    _line.frame = CGRectMake(20, CGRectGetMaxY(_imageView.frame) +10*H_Adapter, self.width - 40, 1);
+//    _wxBtn.frame = CGRectMake(20, CGRectGetMaxY(_line.frame)+20*H_Adapter, self.width - 40, 40*H_Adapter);
+//    _phontBtn.frame = CGRectMake(20, CGRectGetMaxY(_wxBtn.frame) + 20*H_Adapter, self.width - 40, 40*H_Adapter);
+//    _kuaisuBtn.frame = CGRectMake(20, CGRectGetMaxY(_phontBtn.frame)+20*H_Adapter, self.width - 40, 40*H_Adapter);
+//    _xieyiBtn.frame = CGRectMake(20, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, 65, 20);
+//    _tongyiBtn.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, _tongyiBtn.width, 20);
+//    _redLine.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_tongyiBtn.frame), _tongyiBtn.width, 1);
+//    _youkeBtn.frame = CGRectMake(self.width -_youkeBtn.width - 20  , CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, _youkeBtn.width, 20);
+    
+    
+     UIImage *image = [CQHTools bundleForImage:@"logo-en" packageName:@""];
     _imageView.frame = CGRectMake(self.width*0.5/3.0 , 10*H_Adapter, self.width*2.0/3.0, self.width*2.0/3.0 *image.size.height/image.size.width);
     _line.frame = CGRectMake(20, CGRectGetMaxY(_imageView.frame) +10*H_Adapter, self.width - 40, 1);
-    _wxBtn.frame = CGRectMake(20, CGRectGetMaxY(_line.frame)+20*H_Adapter, self.width - 40, 40*H_Adapter);
-    _phontBtn.frame = CGRectMake(20, CGRectGetMaxY(_wxBtn.frame) + 20*H_Adapter, self.width - 40, 40*H_Adapter);
-    _kuaisuBtn.frame = CGRectMake(20, CGRectGetMaxY(_phontBtn.frame)+20*H_Adapter, self.width - 40, 40*H_Adapter);
-    _xieyiBtn.frame = CGRectMake(20, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, 65, 20);
-    _tongyiBtn.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, _tongyiBtn.width, 20);
+    
+    _kuaisuBtn.frame = CGRectMake(20, CGRectGetMaxY(_line.frame)+20*H_Adapter, self.width - 40, 40*H_Adapter);
+    
+    
+    _xieyiBtn.frame = CGRectMake(20, self.height - 20-_tongyiBtn.height,65, 20);
+    _tongyiBtn.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMinY(_xieyiBtn.frame), _tongyiBtn.width, 20);
     _redLine.frame = CGRectMake(CGRectGetMaxX(_xieyiBtn.frame)+8*W_Adapter, CGRectGetMaxY(_tongyiBtn.frame), _tongyiBtn.width, 1);
-    _youkeBtn.frame = CGRectMake(self.width -_youkeBtn.width - 20  , CGRectGetMaxY(_kuaisuBtn.frame)+25*H_Adapter, _youkeBtn.width, 20);
+    _youkeBtn.frame = CGRectMake(self.width -_youkeBtn.width - 20  , CGRectGetMinY(_xieyiBtn.frame), _youkeBtn.width, 20);
+    
+    
+    CGFloat H = (CGRectGetMinY(_xieyiBtn.frame) - CGRectGetMaxY(_kuaisuBtn.frame) -5 - _wxLabel.height)*0.5;
+    
+   
+    
+    _wxBtn.frame = CGRectMake(20, CGRectGetMaxY(_kuaisuBtn.frame) + H*0.5, H*0.9, H*0.9);
+    _wxLabel.frame = CGRectMake(20, CGRectGetMaxY(_wxBtn.frame)+5, _wxBtn.width, _wxLabel.height);
+    CGFloat marge = (self.width - 40  - _wxBtn.width*3)/2.0;
+    
+    _appleBtn.frame = CGRectMake(CGRectGetMaxX(_wxBtn.frame)+marge, CGRectGetMinY(_wxBtn.frame), _wxBtn.width, _wxBtn.height);
+    _appleLabel.frame = CGRectMake(CGRectGetMaxX(_wxBtn.frame)+marge, CGRectGetMaxY(_appleBtn.frame)+5, _wxBtn.width, _appleLabel.height);
+    
+    _phontBtn.frame = CGRectMake(CGRectGetMaxX(_appleBtn.frame)+marge, CGRectGetMinY(_wxBtn.frame), _wxBtn.width, _wxBtn.height);
+    _phoneLabel.frame = CGRectMake(CGRectGetMinX(_phontBtn.frame), CGRectGetMaxY(_wxBtn.frame)+5, _wxBtn.width, _phoneLabel.height);
+    
+
 }
 
 - (void)dealloc

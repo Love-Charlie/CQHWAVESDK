@@ -85,4 +85,10 @@
  *
  */
 + (void)payAppleWithServerId:(NSString *)serverId andServerName:(NSString *)serverName andProductName:(NSString *)productName andProductPrice:(NSString *)productPrice andProductCode:(NSString *)productCode andCpOrderId:(NSString *)cpOrderId andRoleId:(NSString *)roleId andRoleName:(NSString *)roleName andRoleLevel:(NSString *)rolLevel andRoleCreateTime:(NSString *)roleCreateTime andNotifyUrl:(NSString *)notifyUrl andExtendParams:(NSString *)extendParams andProduceCode:(NSString *)produceCode;
+
+/*! @brief 苹果登录
+*
+*
+*/
++ (void)appleLogin;
 @end

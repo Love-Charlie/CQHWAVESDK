@@ -15,6 +15,7 @@
 #import "MBProgressHUD.h"
 #import "CQHHUDView.h"
 #import "CQHMainLoginView.h"
+#import "NSString+URL.h"
 
 @interface CQHAutoLoginView()
 
@@ -84,8 +85,18 @@ static dispatch_once_t onceToken;
 {
     _userModel = userModel;
     NSString *username = userModel.accountName;
+    
+    NSLog(@"%@",userModel.isWX);
+    username = [username URLEncodedString];
+    
+//    NSString *
+    
     if ([userModel.isWX isEqualToString:WXIS]) {
         userModel.accountName = @"微信登录";
+    }
+    
+    if ([userModel.isAppleLogin isEqualToString:APPLELOGINIS]) {
+        userModel.accountName = @"苹果登录";
     }
     
     NSMutableAttributedString *Att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ , 正在登录...",userModel.accountName]];

@@ -18,6 +18,7 @@
     [aCoder encodeObject:self.userId forKey:@"userId"];
     [aCoder encodeObject:self.md5Password forKey:@"md5Password"];
     [aCoder encodeObject:self.isWX forKey:@"isWX"];
+    [aCoder encodeObject:self.isAppleLogin forKey:@"isAppleLogin"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -29,6 +30,7 @@
         self.userId = [aDecoder decodeObjectForKey:@"userId"];
         self.md5Password = [aDecoder decodeObjectForKey:@"md5Password"];
         self.isWX = [aDecoder decodeObjectForKey:@"isWX"];
+        self.isAppleLogin = [aDecoder decodeObjectForKey:@"isAppleLogin"];
     }
     return self;
 }

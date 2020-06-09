@@ -18,6 +18,9 @@
 #import "CQHVerfityOrderModel.h"
 #import "CQHMainLoginView.h"
 #import "CQHAutoLoginView.h"
+#import "LQAppleLogin.h"
+#import "NSString+URL.h"
+#import <AuthenticationServices/AuthenticationServices.h>
 //#import "CQHUserModel.h"
 
 @interface WSDK() <WXApiDelegate,YQInAppPurchaseToolDelegate>
@@ -52,6 +55,130 @@ static dispatch_once_t onceToken;
         sharedWSDK = [[self alloc] init];
     });
     return sharedWSDK;
+}
+
+//苹果登录
++ (void)appleLogin
+{
+//    [LQAppleLogin checkAuthorizationStateWithUser:@"userid" completeHandler:^(BOOL authorized, NSString * _Nonnull msg) {
+//        NSLog(@"检查%d----%@",authorized,msg);
+//    }];
+    
+    NSString *version = [UIDevice currentDevice].systemVersion;
+    if (version.doubleValue < 13.0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+        //        hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = NSLocalizedString(@"该手机系统不支持苹果登录！", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:2.f];
+        return;
+    }
+    
+    
+    [[LQAppleLogin shared] loginWithCompleteHandler:^(BOOL successed, NSString * _Nullable user, NSString * _Nullable familyName, NSString * _Nullable givenName, NSString * _Nullable email, NSString * _Nullable password, NSData * _Nullable identityToken, NSData * _Nullable authorizationCode, NSError * _Nullable error, NSString * _Nonnull msg) {
+//        NSLog(@"获取%@---%@----%@----%@",user,identityToken,authorizationCode,msg);
+        
+        NSString *token  =[[NSString alloc] initWithData:identityToken encoding:NSUTF8StringEncoding];
+//        NSString *user1  =[[NSString alloc] initWithData:user encoding:NSUTF8StringEncoding];
+
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            
+            //随机数
+            NSString *nonceStr = [CQHTools randomNumber];
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//            dict[@"sdkVersion"]=sdkVersion;
+            dict[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+            dict[@"deviceType"]= @"1";
+            dict[@"gameId"]=[userDefaults objectForKey:GAMEID];
+            dict[@"channelId"] = [userDefaults objectForKey:CHANNELID];
+            dict[@"platformCode"]=PLATFORMCODE;
+            dict[@"nonceStr"]=nonceStr;
+        dict[@"clientUser"] = user;
+        dict[@"token"] = token;
+            
+            
+            
+            NSString *stringA = [CQHTools sortArrWithDictionary:dict];
+            //sign
+            NSString *sign = [NSString stringWithFormat:@"%@&key=%@",stringA,[userDefaults objectForKey:SIGNKEY]];
+            //sign md5签名
+            NSString *md5String = [CQHTools md5:sign];
+            
+            NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
+            dict1[@"deviceId"]= [userDefaults objectForKey:DEVICEId];
+                dict1[@"deviceType"]= @"1";
+                dict1[@"gameId"]=[userDefaults objectForKey:GAMEID];
+                dict1[@"channelId"] = [userDefaults objectForKey:CHANNELID];
+                dict1[@"platformCode"]=PLATFORMCODE;
+                dict1[@"nonceStr"]=nonceStr;
+            dict1[@"clientUser"] = user;
+            dict1[@"token"] = token;
+            dict1[@"sign"] = md5String;
+            
+            NSString *dictString = [CQHTools convertToJsonData:dict1];
+            NSString *base64String = [CQHTools base64EncodeString:dictString];
+            
+            //字符串前两位
+            NSString *qianStr = [base64String substringToIndex:2];
+            //字符串第六位开始后面的字符
+            NSString *houStr = [base64String substringFromIndex:6];
+            NSMutableString *newStr = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%@%@",qianStr,houStr]];
+            NSString *jiequStr = [CQHTools stringJieQu:base64String];
+            [newStr insertString:jiequStr atIndex:newStr.length - 2];
+            NSMutableDictionary *dict3 = [NSMutableDictionary dictionary];
+            dict3[@"data"] = newStr;
+            
+            //    CQHNetworkingTools *tools =  [self sharedSingleton];
+            
+//            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+//            hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+//            hud.label.text = NSLocalizedString(@"登录中...", @"HUD loading title");
+            WSDK *wsdk = [WSDK sharedCQHSDK];
+            [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/ios/login?data=%@",BASE_URL,[newStr URLEncodedString] ] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                
+                if ([responseObject[@"code"] integerValue] == 200) {
+                    CQHUserModel *userModel = [[CQHUserModel alloc] init];
+                    userModel.accountName = responseObject[@"data"][@"accountName"];
+                    userModel.password = responseObject[@"data"][@"password"];
+                    userModel.md5Password = responseObject[@"data"][@"md5Password"];
+                    userModel.username = responseObject[@"data"][@"username"];
+//                    userModel.isWX = WXIS;
+                    userModel.isAppleLogin = APPLELOGINIS;
+                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
+                    [userDefaults setObject:@"1" forKey:ISAUTO];
+                    [userDefaults setObject:data forKey:CQHUSERMODEL];
+                    [userDefaults synchronize];
+                    
+                    NSMutableDictionary *respon = [NSMutableDictionary dictionaryWithDictionary:responseObject[@"data"]];
+                    [respon removeObjectForKey:@"md5Password"];
+                    [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
+                    [userDefaults synchronize];
+                    [respon removeObjectForKey:@"password"];
+                    
+                    [[CQHHUDView shareHUDView] removeFromSuperview];
+                    
+                     if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
+                                        [wsdk.delegate loginSuccessWithResponse:respon];
+                                        if ([responseObject[@"data"][@"authStatus"] integerValue] == 1) {
+                                            
+                                            if ([responseObject[@"data"][@"authInfo"][@"idno"] isEqualToString:@""]) {
+                    //                            NSLog(@"没有认证");
+                                                //
+                    //                            [CQHHUDView sharedCQHVerView];
+                                                [CQHHUDView showVerView];
+                                                
+                                            }
+                                        }
+                                    }
+                }else{
+                    
+                }
+//                NSLog(@"haha=%@",responseObject);
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+               
+            }];
+    }];
 }
 
 + (void)registerAppID:(NSString *)appID andUniversalLinks:(NSString *)UniversalLinks
@@ -220,6 +347,7 @@ static dispatch_once_t onceToken;
 //                [CQHHUDView dissCQHHUBView];
                 [[CQHAutoLoginView sharedAutoLoginView] removeFromSuperview];
                 [[CQHMainLoginView sharedMainLoginView] removeFromSuperview];
+                [[CQHHUDView shareHUDView] removeFromSuperview];
 //                [[CQHHUDView sharedCQHHUDView] removeFromSuperview];
                 if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                     [wsdk.delegate loginSuccessWithResponse:respon];
@@ -314,7 +442,7 @@ static dispatch_once_t onceToken;
             [hud hideAnimated:YES afterDelay:2.f];
         });
         
-        NSLog(@"初始化参数不全");
+//        NSLog(@"初始化参数不全");
         return;
     }
     
@@ -374,7 +502,7 @@ static dispatch_once_t onceToken;
     hud.label.text = NSLocalizedString(@"初始化...", @"HUD loading title");
     //    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantPast]];
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/init?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",responseObject[@"message"]);
+//        NSLog(@"%@",responseObject[@"message"]);
         if ([responseObject[@"code"] integerValue] == 200) {
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:responseObject[@"deviceId"] forKey:DEVICEId];
@@ -513,6 +641,7 @@ static dispatch_once_t onceToken;
 
 + (void)payAppleWithServerId:(NSString *)serverId andServerName:(NSString *)serverName andProductName:(NSString *)productName andProductPrice:(NSString *)productPrice andProductCode:(NSString *)productCode andCpOrderId:(NSString *)cpOrderId andRoleId:(NSString *)roleId andRoleName:(NSString *)roleName andRoleLevel:(NSString *)rolLevel andRoleCreateTime:(NSString *)roleCreateTime andNotifyUrl:(NSString *)notifyUrl andExtendParams:(NSString *)extendParams andProduceCode:(NSString *)produceCode
 {
+    roleName = [roleName URLEncodedString];
     if ([serverId isEqualToString:@""]) {
         serverId = nil;
     }

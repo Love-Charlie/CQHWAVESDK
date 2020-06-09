@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 #import <WaveSDK/WSDK.h>
-#import <WaveSDK/CQHConfig.h>
-#import <WaveSDK/CQHTools.h>
+//#import <WaveSDK/CQHConfig.h>
+//#import <WaveSDK/CQHTools.h>
 
 @interface AppDelegate ()
 

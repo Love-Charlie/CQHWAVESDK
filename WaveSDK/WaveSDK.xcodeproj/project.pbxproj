@@ -113,6 +113,8 @@
 		CBDAE2BE244C42F9004AD9E8 /* CQHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */; };
 		CBDB4261244C08320073A900 /* CQHChangeAccountView.h in Headers */ = {isa = PBXBuildFile; fileRef = CBDB425F244C08320073A900 /* CQHChangeAccountView.h */; };
 		CBDB4262244C08320073A900 /* CQHChangeAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBDB4260244C08320073A900 /* CQHChangeAccountView.m */; };
+		D48EAEED248E09E100B294DF /* LQAppleLogin.h in Headers */ = {isa = PBXBuildFile; fileRef = D48EAEEB248E09E100B294DF /* LQAppleLogin.h */; };
+		D48EAEEE248E09E100B294DF /* LQAppleLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = D48EAEEC248E09E100B294DF /* LQAppleLogin.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +226,8 @@
 		CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHButton.m; sourceTree = "<group>"; };
 		CBDB425F244C08320073A900 /* CQHChangeAccountView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CQHChangeAccountView.h; sourceTree = "<group>"; };
 		CBDB4260244C08320073A900 /* CQHChangeAccountView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CQHChangeAccountView.m; sourceTree = "<group>"; };
+		D48EAEEB248E09E100B294DF /* LQAppleLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LQAppleLogin.h; sourceTree = "<group>"; };
+		D48EAEEC248E09E100B294DF /* LQAppleLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LQAppleLogin.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +348,8 @@
 				206E140C2418D7810045B947 /* WaveSDK.h */,
 				20D1FF382420AC6100A70374 /* WSDK.h */,
 				20D1FF392420AC6100A70374 /* WSDK.m */,
+				D48EAEEB248E09E100B294DF /* LQAppleLogin.h */,
+				D48EAEEC248E09E100B294DF /* LQAppleLogin.m */,
 				CBDAE2BB244C42F9004AD9E8 /* CQHButton.h */,
 				CBDAE2BC244C42F9004AD9E8 /* CQHButton.m */,
 				200C005D243F2221007DB6A5 /* CQHVerfityOrderModel.h */,
@@ -450,6 +456,7 @@
 				2013E6AD246A8A3A00675537 /* CQHResetPasswordView.h in Headers */,
 				CBCF66DF247A69E50059722E /* CQHEditPasswordView.h in Headers */,
 				20EE208F2429EE12002B4D7B /* CQHMainLoginView.h in Headers */,
+				D48EAEED248E09E100B294DF /* LQAppleLogin.h in Headers */,
 				202A39372437172300BD42AC /* CQHForgetPasswordView.h in Headers */,
 				200C004F243F1599007DB6A5 /* FMDatabaseAdditions.h in Headers */,
 				202A394024372E2700BD42AC /* UIResponder+FirstResponder.h in Headers */,
@@ -591,7 +598,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		2027F45B2418EAF4000B546D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -604,7 +611,7 @@
 		};
 		206E14612418E1820045B947 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -613,7 +620,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -636,6 +643,7 @@
 				200C0060243F2221007DB6A5 /* CQHVerfityOrderModel.m in Sources */,
 				202486782435C5CB0025AEEC /* CQHVerificationSuccessView.m in Sources */,
 				2024867C2435D9CE0025AEEC /* CQHTipsView.m in Sources */,
+				D48EAEEE248E09E100B294DF /* LQAppleLogin.m in Sources */,
 				201C0A93244701AC0026568B /* CQHAutoLoginView.m in Sources */,
 				200C0057243F1599007DB6A5 /* FMResultSet.m in Sources */,
 				20D1FF3B2420AC6100A70374 /* WSDK.m in Sources */,

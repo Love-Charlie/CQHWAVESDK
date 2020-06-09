@@ -18,5 +18,6 @@
 @property (nonatomic , copy) NSString *md5Password;
 
 @property (nonatomic , copy) NSString *isWX;
+@property (nonatomic , copy) NSString *isAppleLogin;
 
 @end

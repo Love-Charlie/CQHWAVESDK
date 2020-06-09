@@ -161,6 +161,21 @@ static AFHTTPSessionManager *manager ;
         passwordTF.placeholder=@"请输入密码(6-16位)";
 //        [passwordTF setValue:[UIFont boldSystemFontOfSize:12.0] forKeyPath:@"_placeholderLabel.font"];
         
+        UIView *rightViewContent1 = [[UIView alloc] init];
+               rightViewContent1.frame = CGRectMake(0, 0, 30, 30);
+               
+               UIButton *passwordTFRightView = [[UIButton alloc] init];
+               passwordTFRightView.frame = CGRectMake(7.5, 7.5, 15, 15);
+               
+               
+               [passwordTFRightView setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
+               [passwordTFRightView setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
+               passwordTF.rightView = rightViewContent1;
+               passwordTF.rightViewMode = UITextFieldViewModeAlways;
+               [passwordTFRightView addTarget:self action:@selector(eyeClick:) forControlEvents:UIControlEventTouchUpInside];
+                       
+               [rightViewContent1 addSubview:passwordTFRightView];
+        
         Ivar ivar1 =  class_getInstanceVariable([UITextField class], "_placeholderLabel");
         UILabel *placeholderLabel1 = object_getIvar(passwordTF, ivar1);
         placeholderLabel1.text = @"请输入密码(6-16位)";
@@ -186,13 +201,13 @@ static AFHTTPSessionManager *manager ;
         usernameTFRightView1.frame = CGRectMake(0, 0, 15*W_Adapter, 15*H_Adapter);
         [usernameTFRightView1 setImage:[CQHTools bundleForImage:@"6" packageName:@"1"] forState:UIControlStateNormal];
         
-        UIButton *passwordTFRightView = [[UIButton alloc] init];
-        passwordTFRightView.frame = CGRectMake(0, 0, 44*W_Adapter, 44*H_Adapter);
-        [passwordTFRightView setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
-        [passwordTFRightView setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
-        passwordTF.rightView = passwordTFRightView;
-        passwordTF.rightViewMode = UITextFieldViewModeAlways;
-        [passwordTFRightView addTarget:self action:@selector(eyeClick:) forControlEvents:UIControlEventTouchUpInside];
+//        UIButton *passwordTFRightView = [[UIButton alloc] init];
+//        passwordTFRightView.frame = CGRectMake(0, 0, 44*W_Adapter, 44*H_Adapter);
+//        [passwordTFRightView setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
+//        [passwordTFRightView setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
+//        passwordTF.rightView = passwordTFRightView;
+//        passwordTF.rightViewMode = UITextFieldViewModeAlways;
+//        [passwordTFRightView addTarget:self action:@selector(eyeClick:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:passwordTF];
         
@@ -227,6 +242,28 @@ static AFHTTPSessionManager *manager ;
     }
     return self;
 }
+
+//#pragma mark点击眼睛图标
+//- (void)eyeClick1:(UIButton *)btn
+//{
+//    btn.selected = !btn.selected;
+//    self.passwordTF1.secureTextEntry = !btn.selected;
+//    NSString *psd = self.passwordTF1.text;
+//    self.passwordTF1.text = @"";
+//    self.passwordTF1.text = psd;
+//    
+//}
+//
+//#pragma mark点击眼睛图标
+//- (void)eyeClick2:(UIButton *)btn
+//{
+//    btn.selected = !btn.selected;
+//    self.passwordTF2.secureTextEntry = !btn.selected;
+//    NSString *psd = self.passwordTF2.text;
+//    self.passwordTF2.text = @"";
+//    self.passwordTF2.text = psd;
+//    
+//}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {

@@ -146,6 +146,21 @@ static AFHTTPSessionManager *manager ;
         passwordTF1.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         _passwordTF1 = passwordTF1;
         passwordTF1.placeholder=@" 请输入新密码";
+        
+        UIView *rightViewContent1 = [[UIView alloc] init];
+        rightViewContent1.frame = CGRectMake(0, 0, 30, 30);
+        
+        UIButton *passwordTFRightView = [[UIButton alloc] init];
+        passwordTFRightView.frame = CGRectMake(7.5, 7.5, 15, 15);
+        
+        
+        [passwordTFRightView setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
+        [passwordTFRightView setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
+        passwordTF1.rightView = rightViewContent1;
+        passwordTF1.rightViewMode = UITextFieldViewModeAlways;
+        [passwordTFRightView addTarget:self action:@selector(eyeClick1:) forControlEvents:UIControlEventTouchUpInside];
+                
+        [rightViewContent1 addSubview:passwordTFRightView];
                
         NSAttributedString *attrString1 = [[NSAttributedString alloc] initWithString:@" 请输入新密码" attributes:
                @{NSForegroundColorAttributeName:[UIColor grayColor],
@@ -189,6 +204,22 @@ static AFHTTPSessionManager *manager ;
         passwordTF2.tintColor = [UIColor colorWithRed:214.0/255.0 green:6.0/255.0 blue:0/255.0 alpha:1];
         _passwordTF2 = passwordTF2;
         passwordTF2.placeholder=@" 请再次输入新密码";
+        
+        
+        UIView *rightViewContent2 = [[UIView alloc] init];
+        rightViewContent2.frame = CGRectMake(0, 0, 30, 30);
+        
+        UIButton *passwordTFRightView2 = [[UIButton alloc] init];
+        passwordTFRightView2.frame = CGRectMake(7.5, 7.5, 15, 15);
+        
+        
+        [passwordTFRightView2 setImage:[CQHTools bundleForImage:@"7" packageName:@""] forState:UIControlStateNormal];
+        [passwordTFRightView2 setImage:[CQHTools bundleForImage:@"9" packageName:@""] forState:UIControlStateSelected];
+        passwordTF2.rightView = rightViewContent2;
+        passwordTF2.rightViewMode = UITextFieldViewModeAlways;
+        [passwordTFRightView2 addTarget:self action:@selector(eyeClick2:) forControlEvents:UIControlEventTouchUpInside];
+                
+        [rightViewContent2 addSubview:passwordTFRightView2];
                
         NSAttributedString *attrString2 = [[NSAttributedString alloc] initWithString:@" 请再次输入新密码" attributes:
                @{NSForegroundColorAttributeName:[UIColor grayColor],
@@ -223,6 +254,28 @@ static AFHTTPSessionManager *manager ;
                 [self addSubview:editAndLoginBtn];
     }
     return self;
+}
+
+#pragma mark点击眼睛图标
+- (void)eyeClick1:(UIButton *)btn
+{
+    btn.selected = !btn.selected;
+    self.passwordTF1.secureTextEntry = !btn.selected;
+    NSString *psd = self.passwordTF1.text;
+    self.passwordTF1.text = @"";
+    self.passwordTF1.text = psd;
+
+}
+
+#pragma mark点击眼睛图标
+- (void)eyeClick2:(UIButton *)btn
+{
+    btn.selected = !btn.selected;
+    self.passwordTF2.secureTextEntry = !btn.selected;
+    NSString *psd = self.passwordTF2.text;
+    self.passwordTF2.text = @"";
+    self.passwordTF2.text = psd;
+
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -408,7 +461,10 @@ static AFHTTPSessionManager *manager ;
      _backBtn.frame = CGRectMake(25*W_Adapter, self.height/25.0, _registerLabel.height , _registerLabel.height);
      
       _line.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_registerLabel.frame)+self.height/30.0, self.width - 50*W_Adapter, 1);
-     _contentLabel.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+self.height/60.0, self.width - 50*W_Adapter, _contentLabel.height*2);
+    
+    
+    
+     _contentLabel.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_line.frame)+self.height/60.0, self.width - 50*W_Adapter, _contentLabel.height);
     
     _passwordTF.frame = CGRectMake(25*W_Adapter, CGRectGetMaxY(_contentLabel.frame)+self.height/60.0,  self.width - 50*W_Adapter, self.height/7.0);
     

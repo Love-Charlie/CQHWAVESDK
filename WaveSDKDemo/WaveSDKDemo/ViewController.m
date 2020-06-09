@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 #import <WaveSDK/WSDK.h>
+//#import <AuthenticationServices/AuthenticationServices.h>
 
 @interface ViewController ()<WAVESDKDelegate>
 
@@ -57,9 +58,28 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+//    [WSDK appleLogin];
 //    [WSDK wechatLogin];
     [WSDK payAppleWithServerId:@"1" andServerName:@"1" andProductName:@"com.klw.game" andProductPrice:@"1" andProductCode:@"1" andCpOrderId:@"1" andRoleId:@"1" andRoleName:@"1" andRoleLevel:@"1" andRoleCreateTime:@"1" andNotifyUrl:@"" andExtendParams:@"1" andProduceCode:@"com.klw.game"];
+    
+    
+    
+//    if (@available(iOS 13.0,*)) {
+////        ASAuthorizationAppleIDButton *btn = [a]
+//
+//    }
+//    if (@available(iOS 13.0, *)) {
+//        ASAuthorizationAppleIDButton *loginBtn = [[ASAuthorizationAppleIDButton alloc]initWithAuthorizationButtonType:ASAuthorizationAppleIDButtonTypeSignIn authorizationButtonStyle:ASAuthorizationAppleIDButtonStyleWhite];
+//          [loginBtn addTarget:self action:@selector(signInWithApple) forControlEvents:UIControlEventTouchUpInside];
+//                loginBtn.center = self.view.center;
+//                loginBtn.bounds = CGRectMake(0, 0, 200, 40);
+//
+//
+//        [self.view addSubview:loginBtn];
+//    } else {
+//        // Fallback on earlier versions
+//    }
+      
 }
-
 
 @end

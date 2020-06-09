@@ -43,6 +43,8 @@
 #define KEYWINDOW [[[UIApplication sharedApplication] delegate] window]
 //判断是否为微信登录
 #define WXIS @"isWX"
+//判断是否为apple登录
+#define APPLELOGINIS @"isAppleLogin"
 
 //签名key
 #define SIGNKEY @"signKey"
