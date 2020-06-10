@@ -254,7 +254,7 @@ static dispatch_once_t onceToken;
     hud.label.text = NSLocalizedString(@"认证中...", @"HUD loading title");
     
     
-    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/bind/idno?data=%@",BASE_URL,[newStr URLEncodedString]] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/user/bind/idno?data=%@",BASE_URL,[[newStr URLEncodedString]URLEncodedString]] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {

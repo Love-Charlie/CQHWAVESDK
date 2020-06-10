@@ -136,7 +136,7 @@ static dispatch_once_t onceToken;
 //            hud.label.text = NSLocalizedString(@"登录中...", @"HUD loading title");
             WSDK *wsdk = [WSDK sharedCQHSDK];
             [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/ios/login?data=%@",BASE_URL,[newStr URLEncodedString] ] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                
+                NSLog(@"%@",responseObject);
                 if ([responseObject[@"code"] integerValue] == 200) {
                     CQHUserModel *userModel = [[CQHUserModel alloc] init];
                     userModel.accountName = responseObject[@"data"][@"accountName"];
@@ -173,10 +173,15 @@ static dispatch_once_t onceToken;
                                     }
                 }else{
                     
+                    if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
+                        [wsdk.delegate loginFailed];
+                    }
                 }
 //                NSLog(@"haha=%@",responseObject);
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-               
+               if ([wsdk.delegate respondsToSelector:@selector(loginFailed)]) {
+                   [wsdk.delegate loginFailed];
+               }
             }];
     }];
 }
