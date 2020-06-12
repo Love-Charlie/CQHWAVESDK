@@ -90,9 +90,15 @@
 //    [WSDK appleLogin];
 //    [WSDK wechatLogin];
     
-    [WSDK payAppleWithServerId:@"1" andServerName:@"1" andProductName:@"60元宝" andProductPrice:@"1" andProductCode:@"1" andCpOrderId:@"1" andRoleId:@"1" andRoleName:@"1" andRoleLevel:@"1" andRoleCreateTime:@"1" andNotifyUrl:@"" andExtendParams:@"1" andProduceCode:@"com.klw.game"];
+//    [WSDK payAppleWithServerId:@"1" andServerName:@"1" andProductName:@"60元宝" andProductPrice:@"1" andProductCode:@"1" andCpOrderId:@"1" andRoleId:@"1" andRoleName:@"1" andRoleLevel:@"1" andRoleCreateTime:@"1" andNotifyUrl:@"" andExtendParams:@"1" andProduceCode:@"com.klw.game"];
+    [WSDK payAppleWithServerId:@"1" andServerName:@"测试1服" andProductName:@"60元宝" andProductPrice:@"1" andProductCode:@"fengshen_yuanbao6" andCpOrderId:@"00000043000010150602200006072629" andRoleId:@"101506" andRoleName:@"ha" andRoleLevel:@"1" andRoleCreateTime:@"1591944014" andNotifyUrl:@"" andExtendParams:@"00000043000010150602200006072629" andProduceCode:@"fengshen_yuanbao6"];
     
-      
+    NSInteger a = 1;
+    
+    NSNumber *longNumber = [NSNumber numberWithLong:a];
+    NSString *longStr = [longNumber stringValue];
+//    NSString *b = [NSString stringWithFormat:@"%d",a];
+    NSLog(@"%@",longStr);
 }
 
 @end

@@ -667,7 +667,21 @@ static dispatch_once_t onceToken;
 
 + (void)payAppleWithServerId:(NSString *)serverId andServerName:(NSString *)serverName andProductName:(NSString *)productName andProductPrice:(NSString *)productPrice andProductCode:(NSString *)productCode andCpOrderId:(NSString *)cpOrderId andRoleId:(NSString *)roleId andRoleName:(NSString *)roleName andRoleLevel:(NSString *)rolLevel andRoleCreateTime:(NSString *)roleCreateTime andNotifyUrl:(NSString *)notifyUrl andExtendParams:(NSString *)extendParams andProduceCode:(NSString *)produceCode
 {
+    serverId = [serverId URLEncodedString];
+    serverName = [serverName URLEncodedString];
+    productPrice = [productPrice URLEncodedString];
+    productCode = [productCode URLEncodedString];
+    cpOrderId = [cpOrderId URLEncodedString];
+    roleId = [roleId URLEncodedString];
     roleName = [roleName URLEncodedString];
+    rolLevel = [rolLevel URLEncodedString];
+    roleCreateTime = [roleCreateTime URLEncodedString];
+    notifyUrl = [notifyUrl URLEncodedString];
+    extendParams = [extendParams URLEncodedString];
+    produceCode = [produceCode URLEncodedString];
+    
+//    roleName = [roleName URLEncodedString];
+    productName = [productName URLEncodedString];
     if ([serverId isEqualToString:@""]) {
         serverId = nil;
     }
@@ -751,6 +765,7 @@ static dispatch_once_t onceToken;
         
         if ([responseObject[@"code"] integerValue] == 200) {
 //            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+            NSLog(@"%@",responseObject);
             [userDefaults setObject:responseObject[@"data"][@"outTradeNo"] forKey:OUTTradeNo];
             [userDefaults synchronize];
             
@@ -791,13 +806,16 @@ static dispatch_once_t onceToken;
 + (void)IAPToolGotProducts:(NSMutableArray *)products
 {
     if (products.count <= 0) {
-        
-        [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"无法获取商品信息";//NSLocalizedString(@"Message here!", @"HUD message title");
-        hud.label.textColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
-        [hud hideAnimated:YES afterDelay:2.f];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
+                   
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+                                  hud.mode = MBProgressHUDModeText;
+                                  hud.label.text = @"无法获取商品信息";//NSLocalizedString(@"Message here!", @"HUD message title");
+                                  hud.label.textColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+                                  [hud hideAnimated:YES afterDelay:2.f];
+                                  return;
+        }];
         return;
     }
     
