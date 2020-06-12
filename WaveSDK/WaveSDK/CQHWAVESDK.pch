@@ -41,6 +41,9 @@
 #define H_Adapter SCREENH/((isPortrait)?(667.0):(375.0))//667.0
 
 #define KEYWINDOW [[[UIApplication sharedApplication] delegate] window]
+
+//#define KEYWINDOW [[UIApplication sharedApplication] keyWindow]
+
 //判断是否为微信登录
 #define WXIS @"isWX"
 //判断是否为apple登录

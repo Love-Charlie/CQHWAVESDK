@@ -19,9 +19,9 @@
 		206E143F2418D7BA0045B947 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 206E143E2418D7BA0045B947 /* main.m */; };
 		206E14492418D7BA0045B947 /* WaveSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 206E14482418D7BA0045B947 /* WaveSDKDemoTests.m */; };
 		206E14542418D7BA0045B947 /* WaveSDKDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 206E14532418D7BA0045B947 /* WaveSDKDemoUITests.m */; };
-		208B1B58248A434000ACABBC /* WaveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 208B1B57248A434000ACABBC /* WaveSDK.framework */; };
 		20C92256243D6B6800826D75 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20C92255243D6B6800826D75 /* StoreKit.framework */; };
 		20EE208C2429EDDE002B4D7B /* waveimage.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20EE208B2429EDDE002B4D7B /* waveimage.bundle */; };
+		D4FCB2F4249218E30045F512 /* WaveSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FCB2F3249218E30045F512 /* WaveSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,10 +62,10 @@
 		206E144F2418D7BA0045B947 /* WaveSDKDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WaveSDKDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		206E14532418D7BA0045B947 /* WaveSDKDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WaveSDKDemoUITests.m; sourceTree = "<group>"; };
 		206E14552418D7BA0045B947 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		208B1B57248A434000ACABBC /* WaveSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WaveSDK.framework; sourceTree = "<group>"; };
 		20C92255243D6B6800826D75 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		20EE208B2429EDDE002B4D7B /* waveimage.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = waveimage.bundle; sourceTree = "<group>"; };
 		D49982C6248DDE020022764C /* WaveSDKDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WaveSDKDemo.entitlements; sourceTree = "<group>"; };
+		D4FCB2F3249218E30045F512 /* WaveSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WaveSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +75,7 @@
 			files = (
 				203A153A24221116000C6247 /* libc++.tbd in Frameworks */,
 				203A153124220E97000C6247 /* WebKit.framework in Frameworks */,
-				208B1B58248A434000ACABBC /* WaveSDK.framework in Frameworks */,
+				D4FCB2F4249218E30045F512 /* WaveSDK.framework in Frameworks */,
 				203A152F24220E8E000C6247 /* CoreGraphics.framework in Frameworks */,
 				20C92256243D6B6800826D75 /* StoreKit.framework in Frameworks */,
 				203A152D24220E84000C6247 /* Security.framework in Frameworks */,
@@ -136,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				D49982C6248DDE020022764C /* WaveSDKDemo.entitlements */,
-				208B1B57248A434000ACABBC /* WaveSDK.framework */,
+				D4FCB2F3249218E30045F512 /* WaveSDK.framework */,
 				20EE208B2429EDDE002B4D7B /* waveimage.bundle */,
 				206E142F2418D7BA0045B947 /* AppDelegate.h */,
 				206E14302418D7BA0045B947 /* AppDelegate.m */,

@@ -19,7 +19,7 @@
 - (void)loginFailed;
 
 //换绑成功的回调
-- (void)mobilePhoneRenewalSuccess;
+//- (void)mobilePhoneRenewalSuccess;
 
 //购买成功的回调
 
@@ -27,6 +27,11 @@
 
 //购买失败的回调
 -(void)pFailed;
+
+
+- (void)initSDKWithSuccess;
+
+- (void)initSDKWithFailed;
 
 @end
 
@@ -85,4 +90,13 @@
  *
  */
 + (void)payAppleWithServerId:(NSString *)serverId andServerName:(NSString *)serverName andProductName:(NSString *)productName andProductPrice:(NSString *)productPrice andProductCode:(NSString *)productCode andCpOrderId:(NSString *)cpOrderId andRoleId:(NSString *)roleId andRoleName:(NSString *)roleName andRoleLevel:(NSString *)rolLevel andRoleCreateTime:(NSString *)roleCreateTime andNotifyUrl:(NSString *)notifyUrl andExtendParams:(NSString *)extendParams andProduceCode:(NSString *)produceCode;
+
+/*! @brief 苹果登录
+*
+*
+*/
++ (void)appleLogin;
+
+
++ (void)cqhLogin;
 @end

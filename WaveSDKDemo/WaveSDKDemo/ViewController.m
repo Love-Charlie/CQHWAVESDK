@@ -34,8 +34,37 @@
 //    view.frame = CGRectMake(0, statusBarFrame.size.height, statusBarFrame.size.width, 44);
 //    [self.view addSubview:view];
     
+    CQHConfig *config = [CQHConfig sharedConfig];
+    //    config.gameId = @"1132";
+    //    config.packageId = @"100";
+    //    config.channelId = @"100002";
+    //    config.key = @"cvFbf3rdmTqcpQWSTu5eIG8Av5L17Flv";
+    //    config.configId = @"0";
+    //    config.appleID = @"wx343790ea3256d6dc";
+        
+        config.gameId = @"1166";
+        config.packageId = @"100";
+        config.channelId = @"ios1";
+        config.key = @"zvqt9jcAhbRHRQFBKRV1j0BaB0aoNQY6";
+        config.configId = @"0";
+        config.appleID = @"wx343790ea3256d6dc";
+        [WSDK initWithSDKWithConfig:config];
+    
 }
 
+//初始化成功
+- (void)initSDKWithSuccess
+{
+    //登陆
+    [WSDK cqhLogin];
+
+}
+
+//初始化失败
+- (void)initSDKWithFailed
+{
+    
+}
 - (void)loginSuccessWithResponse:(id)response
 {
     NSLog(@"%s,%@,登录成功",__func__,response);
@@ -60,25 +89,9 @@
 {
 //    [WSDK appleLogin];
 //    [WSDK wechatLogin];
-    [WSDK payAppleWithServerId:@"1" andServerName:@"1" andProductName:@"com.klw.game" andProductPrice:@"1" andProductCode:@"1" andCpOrderId:@"1" andRoleId:@"1" andRoleName:@"1" andRoleLevel:@"1" andRoleCreateTime:@"1" andNotifyUrl:@"" andExtendParams:@"1" andProduceCode:@"com.klw.game"];
     
+    [WSDK payAppleWithServerId:@"1" andServerName:@"1" andProductName:@"60元宝" andProductPrice:@"1" andProductCode:@"1" andCpOrderId:@"1" andRoleId:@"1" andRoleName:@"1" andRoleLevel:@"1" andRoleCreateTime:@"1" andNotifyUrl:@"" andExtendParams:@"1" andProduceCode:@"com.klw.game"];
     
-    
-//    if (@available(iOS 13.0,*)) {
-////        ASAuthorizationAppleIDButton *btn = [a]
-//
-//    }
-//    if (@available(iOS 13.0, *)) {
-//        ASAuthorizationAppleIDButton *loginBtn = [[ASAuthorizationAppleIDButton alloc]initWithAuthorizationButtonType:ASAuthorizationAppleIDButtonTypeSignIn authorizationButtonStyle:ASAuthorizationAppleIDButtonStyleWhite];
-//          [loginBtn addTarget:self action:@selector(signInWithApple) forControlEvents:UIControlEventTouchUpInside];
-//                loginBtn.center = self.view.center;
-//                loginBtn.bounds = CGRectMake(0, 0, 200, 40);
-//
-//
-//        [self.view addSubview:loginBtn];
-//    } else {
-//        // Fallback on earlier versions
-//    }
       
 }
 

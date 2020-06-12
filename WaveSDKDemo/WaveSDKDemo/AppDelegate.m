@@ -23,14 +23,23 @@
     [UIApplication sharedApplication].statusBarHidden = YES;
     [WSDK registerAppID:@"wx343790ea3256d6dc" andUniversalLinks:@"https://www.waveinspire.com/universallinks/"];
     
-    CQHConfig *config = [CQHConfig sharedConfig];
-    config.gameId = @"1132";
-    config.packageId = @"100";
-    config.channelId = @"100002";
-    config.key = @"cvFbf3rdmTqcpQWSTu5eIG8Av5L17Flv";
-    config.configId = @"0";
-    config.appleID = @"wx343790ea3256d6dc";
-    [WSDK initWithSDKWithConfig:config];
+    
+    
+//    CQHConfig *config = [CQHConfig sharedConfig];
+//    config.gameId = @"1132";
+//    config.packageId = @"100";
+//    config.channelId = @"100002";
+//    config.key = @"cvFbf3rdmTqcpQWSTu5eIG8Av5L17Flv";
+//    config.configId = @"0";
+//    config.appleID = @"wx343790ea3256d6dc";
+    
+//    config.gameId = @"1166";
+//    config.packageId = @"100";
+//    config.channelId = @"ios1";
+//    config.key = @"zvqt9jcAhbRHRQFBKRV1j0BaB0aoNQY6";
+//    config.configId = @"0";
+//    config.appleID = @"wx343790ea3256d6dc";
+//    [WSDK initWithSDKWithConfig:config];
     
     return YES;
 }

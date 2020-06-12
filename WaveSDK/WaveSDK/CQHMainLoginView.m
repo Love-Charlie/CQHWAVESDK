@@ -347,7 +347,7 @@ static dispatch_once_t onceToken;
             [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
             [userDefaults setObject:@"1" forKey:ISAUTO];
            
-            
+            [[CQHHUDView shareHUDView] removeFromSuperview];
             
             JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
             CQHUserModel *userModel = [[CQHUserModel alloc] init];
@@ -382,6 +382,11 @@ static dispatch_once_t onceToken;
             
             if ([wsdk.delegate respondsToSelector:@selector(loginSuccessWithResponse:)]) {
                 [wsdk.delegate loginSuccessWithResponse:respon];
+                
+                
+                if ([responseObject[@"data"][@"authStatus"] integerValue] == 0) {
+                    [[CQHHUDView shareHUDView] removeFromSuperview];
+                }
                 
                 if ([responseObject[@"data"][@"authStatus"] integerValue] == 1) {
                     

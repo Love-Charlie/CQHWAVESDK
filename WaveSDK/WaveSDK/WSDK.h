@@ -19,7 +19,7 @@
 - (void)loginFailed;
 
 //换绑成功的回调
-- (void)mobilePhoneRenewalSuccess;
+//- (void)mobilePhoneRenewalSuccess;
 
 //购买成功的回调
 
@@ -27,6 +27,11 @@
 
 //购买失败的回调
 -(void)pFailed;
+
+
+- (void)initSDKWithSuccess;
+
+- (void)initSDKWithFailed;
 
 @end
 
@@ -91,4 +96,7 @@
 *
 */
 + (void)appleLogin;
+
+
++ (void)cqhLogin;
 @end
