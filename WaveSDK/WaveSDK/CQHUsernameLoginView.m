@@ -16,6 +16,8 @@
 #import "WSDK.h"
 #import "CQHMainLoginView.h"
 #import "CQHHUDView.h"
+#import "CQHUserModel.h"
+#import "JQFMDB.h"
 #import <objc/runtime.h>
 
 
@@ -281,11 +283,32 @@ static AFHTTPSessionManager *manager ;
     WSDK *wsdk = [WSDK sharedCQHSDK];
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/login?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        NSLog(@"%@",responseObject);
         [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
             
+            CQHUserModel *userModel = [[CQHUserModel alloc] init];
+            
+            userModel.accountName = self.usernameTF.text;
+            userModel.password = self.passwordTF.text;
+            
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
+            [userDefaults setObject:data forKey:CQHUSERMODEL];
+            
             [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
+            [userDefaults setObject:@"1" forKey:ISAUTO];
             [userDefaults synchronize];
+            
+            
+            JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+//            CQHUserModel *userModel = [[CQHUserModel alloc] init];
+            if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+            }
+
+//            userModel.accountName = responseObject[@"data"][@"accountName"];
+//            userModel.password = self.passwordTF.text;
+            [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
             
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];

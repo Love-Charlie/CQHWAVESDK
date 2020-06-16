@@ -502,9 +502,9 @@ static dispatch_once_t onceToken;
     NSMutableDictionary *dict3 = [NSMutableDictionary dictionary];
     dict3[@"data"] = newStr;
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
-    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
-    hud.label.text = NSLocalizedString(@"初始化...", @"HUD loading title");
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+//    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+//    hud.label.text = NSLocalizedString(@"初始化...", @"HUD loading title");
     //    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantPast]];
     WSDK *wsdk = [WSDK sharedCQHSDK];
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/init?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -591,14 +591,14 @@ static dispatch_once_t onceToken;
     
 //    CQHNetworkingTools *tools =  [self sharedSingleton];
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
-    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
-    hud.label.text = NSLocalizedString(@"初始化...", @"HUD loading title");
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+//    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+//    hud.label.text = NSLocalizedString(@"初始化...", @"HUD loading title");
     WSDK *wsdk = [WSDK sharedCQHSDK];
 
     [[self sharedManager] POST:[NSString stringWithFormat:@"%@sdk/activate?data=%@",BASE_URL,newStr] parameters:dict3 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [hud hideAnimated:YES];
+//        [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
             
              if ([wsdk.delegate respondsToSelector:@selector(initSDKWithSuccess)]) {
@@ -606,12 +606,12 @@ static dispatch_once_t onceToken;
             }
             
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
-            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
-            [hud hideAnimated:YES afterDelay:1.f];
-            
+//            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
+//            hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
+//            hud.mode = MBProgressHUDModeText;
+//            hud.label.text = NSLocalizedString(responseObject[@"message"], @"HUD message title");
+//            [hud hideAnimated:YES afterDelay:1.f];
+//
 //            NSInteger isAuto = [[userDefaults objectForKey:ISAUTO] integerValue];;
 //            if (isAuto == 1) {
 //                [WSDK showAutoView];
@@ -633,7 +633,7 @@ static dispatch_once_t onceToken;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
-        [hud hideAnimated:YES];
+//        [hud hideAnimated:YES];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
         hud.contentColor = [UIColor colorWithRed:30/255.0 green:175/255.0 blue:170/255.0 alpha:1];
         hud.mode = MBProgressHUDModeText;

@@ -737,6 +737,12 @@ static AFHTTPSessionManager *manager ;
         [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
             
+            BOOL isYou = NO;
+            for (CQHUserModel *userModel in self.userModelData) {
+                if ([userModel.accountName isEqualToString:self.phoneTF.text]) {
+                    isYou = YES;
+                }
+            }
             
             CQHUserModel *userModel = [[CQHUserModel alloc] init];
             userModel.accountName = responseObject[@"data"][@"accountName"];
@@ -745,9 +751,36 @@ static AFHTTPSessionManager *manager ;
             NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel];
             
             [userDefaults setObject:data forKey:CQHUSERMODEL];
-            
+            [userDefaults setObject:@"1" forKey:ISAUTO];
             [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
             [userDefaults synchronize];
+            
+            JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+            
+            if (!isYou) {
+                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+                }
+                
+                [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+            }
+//            if (isYou) {
+//            //更新
+//                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+//                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+//                }
+//                [db jq_updateTable:CQHUSERMODELTABLE dicOrModel:userModel whereFormat:@"where ro"];
+//
+//            }else{
+//            //插入
+//
+//                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+//                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+//                }
+////                userModel.accountName = responseObject[@"data"][@"accountName"];
+////                userModel.password = self.passwordTF.text;
+//                [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+//            }
             
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];

@@ -20,10 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
     [UIApplication sharedApplication].statusBarHidden = YES;
     [WSDK registerAppID:@"wx343790ea3256d6dc" andUniversalLinks:@"https://www.waveinspire.com/universallinks/"];
     
-    
+    NSLog(@"%@",NSStringFromCGRect([[UIApplication sharedApplication] statusBarFrame]));
     
 //    CQHConfig *config = [CQHConfig sharedConfig];
 //    config.gameId = @"1132";
