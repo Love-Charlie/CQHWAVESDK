@@ -125,31 +125,31 @@ static CQHAgreementView *agreementView;
 
 - (NSString *)mimeType:(NSURL *)url
 {
-    
+
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
+
     //使用同步方法后去MIMEType
     NSURLResponse *response = nil;
-    
+
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    
+
     return response.MIMEType;
 }
-
-//网页加载完成
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    [webView.scrollView.subviews enumerateObjectsUsingBlock:^( id obj, NSUInteger idx, BOOL * _Nonnull stop)
-     {
-         if ([obj isKindOfClass:[UIImageView class]]) {
-             UIImageView * imageView = [[UIImageView alloc] init];
-             imageView = obj;
-             //必须先设置imageView的image为空的，否则颜色显示偏灰，之前默认的颜色会对背景颜色有影响，然后再设置背景颜色
-             imageView.image = [UIImage imageNamed:@""];
-             imageView.backgroundColor = [UIColor colorWithRed:27/255.0 green:172/255.0 blue:177/255.0 alpha:1];;
-         }
-     }];
-}
+//
+////网页加载完成
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    [webView.scrollView.subviews enumerateObjectsUsingBlock:^( id obj, NSUInteger idx, BOOL * _Nonnull stop)
+//     {
+//         if ([obj isKindOfClass:[UIImageView class]]) {
+//             UIImageView * imageView = [[UIImageView alloc] init];
+//             imageView = obj;
+//             //必须先设置imageView的image为空的，否则颜色显示偏灰，之前默认的颜色会对背景颜色有影响，然后再设置背景颜色
+//             imageView.image = [UIImage imageNamed:@""];
+//             imageView.backgroundColor = [UIColor colorWithRed:27/255.0 green:172/255.0 blue:177/255.0 alpha:1];;
+//         }
+//     }];
+//}
 
 - (void)backBtnClick:(UIButton *)btn
 {

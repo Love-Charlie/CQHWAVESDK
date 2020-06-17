@@ -757,30 +757,32 @@ static AFHTTPSessionManager *manager ;
             
             JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
             
-            if (!isYou) {
+//            if (!isYou) {
+//                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+//                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+//                }
+//
+//               [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+//            }
+            
+            
+            if (isYou) {
+            //更新
                 if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
                     [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
                 }
-                
-                [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
-            }
-//            if (isYou) {
-//            //更新
-//                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
-//                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
-//                }
-//                [db jq_updateTable:CQHUSERMODELTABLE dicOrModel:userModel whereFormat:@"where ro"];
-//
-//            }else{
-//            //插入
-//
-//                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
-//                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
-//                }
+                [db jq_updateTable:CQHUSERMODELTABLE dicOrModel:userModel whereFormat:[NSString stringWithFormat:@"where accountName = %@",userModel.accountName]];
+
+            }else{
+            //插入
+
+                if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                    [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+                }
 ////                userModel.accountName = responseObject[@"data"][@"accountName"];
 ////                userModel.password = self.passwordTF.text;
-//                [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
-//            }
+                [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+            }
             
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];

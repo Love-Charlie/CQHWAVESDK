@@ -15,6 +15,7 @@
 #import "AFNetworking.h"
 #import "CQHUserModel.h"
 #import "CQHHUDView.h"
+#import "JQFMDB.h"
 #import "WSDK.h"
 
 @interface CQHEditPasswordView()<UITextFieldDelegate>
@@ -28,6 +29,8 @@
 @property (nonatomic , weak) UITextField *passwordTF1;
 @property (nonatomic , weak) UITextField *passwordTF2;
 @property (nonatomic , weak) UIButton *editAndLoginBtn;
+@property (nonatomic , strong) NSArray *userModelData;
+
 
 @end
 
@@ -46,6 +49,19 @@ static AFHTTPSessionManager *manager ;
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"application/json",@"text/json",@"text/javascript", nil];
     });
     return manager;
+}
+
+- (NSArray *)userModelData
+{
+    if (!_userModelData) {
+        JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+        if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+            [db jq_createTable:CQHUSERMODELTABLE dicOrModel:[CQHUserModel class]];
+        }
+        NSArray *arr =  [db jq_lookupTable:CQHUSERMODELTABLE dicOrModel:[CQHUserModel class] whereFormat:nil];
+        _userModelData = arr;
+    }
+    return _userModelData;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -389,6 +405,13 @@ static AFHTTPSessionManager *manager ;
         [hud hideAnimated:YES];
         if ([responseObject[@"code"] integerValue] == 200) {
             
+            BOOL isYou = NO;
+            for (CQHUserModel *userModel in self.userModelData) {
+                if ([userModel.accountName isEqualToString:responseObject[@"data"][@"accountName"]]) {
+                    isYou = YES;
+                }
+            }
+            
             
             CQHUserModel *userModel = [[CQHUserModel alloc] init];
             userModel.accountName = responseObject[@"data"][@"accountName"];
@@ -400,6 +423,28 @@ static AFHTTPSessionManager *manager ;
             
             [userDefaults setObject:responseObject[@"data"][@"userId"] forKey:@"userId"];
             [userDefaults synchronize];
+            
+            
+            
+            JQFMDB *db = [JQFMDB shareDatabase:CQHUSERMODELDB];
+                        
+                        if (isYou) {
+                        //更新
+                            if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                                [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+                            }
+                            [db jq_updateTable:CQHUSERMODELTABLE dicOrModel:userModel whereFormat:[NSString stringWithFormat:@"where accountName = %@",userModel.accountName]];
+
+                        }else{
+                        //插入
+
+                            if (![db jq_isExistTable:CQHUSERMODELTABLE]) {
+                                [db jq_createTable:CQHUSERMODELTABLE dicOrModel:userModel];
+                            }
+                            [db jq_insertTable:CQHUSERMODELTABLE dicOrModel:userModel];
+                        }
+            
+            
             
             [MBProgressHUD hideHUDForView:KEYWINDOW animated:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:KEYWINDOW animated:YES];
